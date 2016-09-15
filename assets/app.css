@@ -1,5 +1,5 @@
 html, body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size:14px;
   height:100%;
   margin: 0px;
@@ -16,7 +16,11 @@ html, body {
   width: 36px;
 }
 
-
+md-toolbar h1 {
+  margin-left: 16px;
+  font-family: 'Alegreya SC', serif;
+}
+}
 md-toolbar h3 {
   margin: auto;
   font-weight: 500;
