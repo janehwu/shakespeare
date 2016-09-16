@@ -24,9 +24,12 @@ function AppController(navService, $mdSidenav, $scope) {
     var self = this;
     self.selected;
     self.plays = [];
+    self.searchTerm = "";
+    self.searchMode = false;
+    self.selectPlay = selectPlay;
 
     self.toggleList = togglePlaysList;
-    self.selectPlay = selectPlay;
+    self.toggleSearch = toggleSearchMode;
 
     // Load all plays
     navService
@@ -40,15 +43,15 @@ function AppController(navService, $mdSidenav, $scope) {
     /**
      * Hide or Show the 'left' sideNav area
      */
-    function togglePlaysList() {
-      // $mdSidenav('left').toggle();
+    function togglePlaysList(e) {
+      if (e.target.type !== "text") $mdSidenav('left').toggle();
     }
 
-    /**
-     * Select the current avatars
-     * @param menuId
-     */
+    function toggleSearchMode() {
+      self.searchMode = !self.searchMode;
+    }
+
     function selectPlay (play) {
       self.selected = angular.isNumber(play) ? self.plays[play] : play;
-    }   
+    }
 }
