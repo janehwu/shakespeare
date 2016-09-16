@@ -10,16 +10,17 @@ angular
           .accentPalette('red');
 
   })
-  .controller('AppController', ['playService', '$mdSidenav', '$scope', AppController]);
+  .controller('AppController', ['navService', '$mdSidenav', '$scope', AppController])
+  .service('navService', ['$q', NavService]);
 
 /**
  * Main Controller for the Angular Material Starter App
- * @param $scope
+ * @param navService
  * @param $mdSidenav
  * @param $scope
  * @constructor
  */
-function AppController(playService, $mdSidenav, $scope) {
+function AppController(navService, $mdSidenav, $scope) {
     var self = this;
     self.selected;
     self.plays = [];
@@ -28,7 +29,7 @@ function AppController(playService, $mdSidenav, $scope) {
     self.selectPlay = selectPlay;
 
     // Load all plays
-    playService
+    navService
           .loadAllPlays()
           .then( function(plays) {
             self.plays    = [].concat(plays);
