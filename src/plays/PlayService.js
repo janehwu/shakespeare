@@ -1,19 +1,13 @@
-(function(){
-  'use strict';
-
-  angular.module('users')
-         .service('userService', ['$q', UserService]);
-
-  /**
-   * Users DataService
+/**
+   * Plays DataService
    * Uses embedded, hard-coded data model; acts asynchronously to simulate
    * remote data service call(s).
    *
    * @returns {{loadAll: Function}}
    * @constructor
    */
-  function UserService($q){
-    var users = [
+function PlayService($q){
+    var plays = [
       {
         name: 'All\'s Well That Ends Well',
         avatar: 'svg-1',
@@ -55,7 +49,7 @@
         content: 'Webtwo ipsum dolor sit amet, eskobo chumby doostang bebo. Bubbli greplin stypi prezi mzinga heroku wakoopa, shopify airbnb dogster dopplr gooru jumo, reddit plickers edmodo stypi zillow etsy.'
       },
       {
-        name: 'Henry V,',
+        name: 'Henry V',
         avatar: 'svg-5',
         content: 'Webtwo ipsum dolor sit amet, eskobo chumby doostang bebo. Bubbli greplin stypi prezi mzinga heroku wakoopa, shopify airbnb dogster dopplr gooru jumo, reddit plickers edmodo stypi zillow etsy.'
       },
@@ -188,11 +182,9 @@
 
     // Promise-based API
     return {
-      loadAllUsers : function() {
+      loadAllPlays : function() {
         // Simulate async nature of real remote calls
-        return $q.when(users);
+        return $q.when(plays);
       }
     };
   }
-
-})();
