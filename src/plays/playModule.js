@@ -1,7 +1,7 @@
 angular
 	.module('playModule',['ngMaterial'])
 	.controller('PlayController', function($scope) {
-		this.play = $scope.play;
+		this.feature = $scope.feature;
 	})
 	.directive('playPage', function() {
 		return {
