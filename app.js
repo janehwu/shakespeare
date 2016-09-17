@@ -39,9 +39,9 @@ function AppController(navService, $mdSidenav, $scope) {
     // Load all plays
     navService
           .loadAllPlays()
-          .then( function(plays) {
+          .then(function(plays) {
             self.plays    = [].concat(plays);
-            self.selected = plays[0];
+            //self.selected = plays[0];
           });
 
 
