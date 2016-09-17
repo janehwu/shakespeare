@@ -28,6 +28,11 @@ function AppController(navService, $mdSidenav, $scope) {
     self.searchMode = false;
     self.selectPlay = selectPlay;
 
+    self.showYears = false;
+
+    self.sortBy = "name";
+    self.sortList = sortList;
+
     self.toggleList = togglePlaysList;
     self.toggleSearch = toggleSearchMode;
 
@@ -53,5 +58,11 @@ function AppController(navService, $mdSidenav, $scope) {
 
     function selectPlay (play) {
       self.selected = angular.isNumber(play) ? self.plays[play] : play;
+    }
+
+    function sortList(sortBy) {
+      self.sortBy = sortBy;
+      self.showYears = (sortBy == 'year');
+      self.showGenres = (sortBy == 'genre');
     }
 }
