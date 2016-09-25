@@ -10,44 +10,65 @@ angular
           .accentPalette('red');
 
   })
-  .controller('AppController', ['playService', '$mdSidenav', '$scope', AppController]);
+  .controller('AppController', ['navService', '$mdSidenav', '$scope', AppController])
+  .service('navService', ['$q', NavService]);
 
 /**
  * Main Controller for the Angular Material Starter App
- * @param $scope
+ * @param navService
  * @param $mdSidenav
  * @param $scope
  * @constructor
  */
-function AppController(playService, $mdSidenav, $scope) {
+function AppController(navService, $mdSidenav, $scope) {
     var self = this;
     self.selected;
     self.plays = [];
-
-    self.toggleList = togglePlaysList;
+    self.searchTerm = "";
+    self.searchMode = false;
     self.selectPlay = selectPlay;
 
+    self.showYears = false;
+
+    self.sortBy = "name";
+    self.sortList = sortList;
+
+    self.toggleList = togglePlaysList;
+    self.toggleSearch = toggleSearchMode;
+
+    self.viewHomePage = viewHomePage;
+
     // Load all plays
-    playService
+    navService
           .loadAllPlays()
-          .then( function(plays) {
+          .then(function(plays) {
             self.plays    = [].concat(plays);
-            self.selected = plays[0];
+            //self.selected = plays[0];
           });
 
+
+    function viewHomePage() {
+      self.selected = null;
+    }
 
     /**
      * Hide or Show the 'left' sideNav area
      */
-    function togglePlaysList() {
-      // $mdSidenav('left').toggle();
+    function togglePlaysList(e) {
+      if (e.target.type !== "text") $mdSidenav('left').toggle();
     }
 
-    /**
-     * Select the current avatars
-     * @param menuId
-     */
+    function toggleSearchMode() {
+      self.searchMode = !self.searchMode;
+    }
+
     function selectPlay (play) {
       self.selected = angular.isNumber(play) ? self.plays[play] : play;
-    }   
+    }
+
+    function sortList(sortBy) {
+      self.sortBy = sortBy;
+      self.showYears = (sortBy == 'year');
+      self.showGenres = (sortBy == 'genre');
+    }
 }
