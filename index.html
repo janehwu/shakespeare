@@ -21,7 +21,7 @@
       <md-button class="menu" hide-gt-sm ng-click="ctrl.toggleList($event)" aria-label="Show Play List">
         <md-icon md-svg-icon="menu" ></md-icon>
       </md-button>
-      <h1>Visualizing Shakespeare</h1>
+      <h1 class="title" ng-click="ctrl.viewHomePage()">Visualizing Shakespeare</h1>
     </md-toolbar>
 
     <div flex layout="row">
@@ -65,22 +65,17 @@
         <!--Play content-->
         <md-content flex id="content">
         <play-page ng-show="ctrl.selected" play="ctrl.selected"></play-page>
-
-        <div ng-show="!ctrl.selected" flex-xs flex-gt-xs="50" layout="column">
+        <div ng-show="!ctrl.selected">
           <md-card md-theme="default" md-theme-watch>
             <md-card-title>
               <md-card-title-text>
-                <span class="md-headline">Card with image</span>
-                <span class="md-subhead">Medium</span>
+                <span class="md-headline">Shakespeare is hard to read - we're making it easier.</span>
               </md-card-title-text>
-              <md-card-title-media>
-                <div class="md-media-md card-media"></div>
-              </md-card-title-media>
             </md-card-title>
-            <md-card-actions layout="row" layout-align="end center">
-              <md-button>Action 1</md-button>
-              <md-button>Action 2</md-button>
-            </md-card-actions>
+            <md-card-media>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Shakespeare.jpg">
+            </md-card-media>
+            </md-card-content>
           </md-card>
         </div>
         </md-content>
