@@ -1,9 +1,0 @@
-name,color
-Macbeth,"d3.hsl(0, 1, .5)"
-Lennox,"d3.hsl(45, 1, .5)"
-Porter,"d3.hsl(90, 1, .5)"
-Macduff,"d3.hsl(135, 1, .5)"
-Lady Macbeth,"d3.hsl(180, 1, .5)"
-Banquo,"d3.hsl(225, 1, .5)"
-Donalbain,"d3.hsl(270, 1, .5)"
-Malcom,"d3.hsl(315, 1, .5)"
