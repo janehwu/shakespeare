@@ -1,4 +1,60 @@
-<md-icon md-svg-icon="{{ctrl.play.avatar}}" class="avatar"></md-icon>
-<h2 id='playName'>{{play.name}}</h2>
-<p>{{play.content}}</p>
-<speak-chord ng-show="ctrl.selected"></speak-chord>
+<div layout="column" style="height:500px;" ng-cloak>
+
+  <section layout="row" flex>
+
+    <md-content flex layout-padding>
+
+      <div layout="column" layout-align="top center">
+      	<!-- Play Heading -->
+        <md-content layout="row" flex id="content">
+			<h1> {{ctrl.play["name"]}} </h1>
+			<md-icon md-svg-icon="{{ctrl.play.avatar}}" class="avatar"></md-icon>
+        </md-content>
+
+        <md-card md-theme="default" md-theme-watch ng-repeat="item in ctrl.features">
+            <md-card-title>
+              <md-card-title-text>
+                <span class="md-headline">{{item.name}}</span>
+              </md-card-title-text>
+              <md-card-title-media>
+                <div class="md-media-md card-media"></div>
+              </md-card-title-media>
+            </md-card-title>
+            <md-card-actions layout="row" layout-align="end center">
+              <p>{{ctrl.play["content"]}}</p>
+            </md-card-actions>
+          </md-card>
+          <speak-chord ng-show="ctrl.selected"></speak-chord>
+      </div>
+        
+      <div flex></div>
+
+    </md-content>
+
+    <md-sidenav
+        class="md-sidenav-right"
+        md-component-id="right"
+        md-is-locked-open="$mdMedia('gt-md')"
+        md-whiteframe="4">
+
+      <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">Features</h1>
+      </md-toolbar>
+
+      <md-content layout-padding>
+			<md-list>
+			    <md-list-item ng-repeat="item in ctrl.features">
+			        <md-button style="padding-left:12px" ng-click="ctrl.selectLink(item)" ng-class="{'selected': item === ctrl.selected }">
+			            <div layout="row">
+			            	<div>{{item.name}}</div>
+			            </div>
+			        </md-button>
+			    </md-list-item>
+			</md-list>
+		</md-content>
+
+    </md-sidenav>
+
+  </section>
+
+</div>

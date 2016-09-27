@@ -1,9 +1,23 @@
-  angular
+
+    angular
        .module('playModule')
        .controller('PlayController', [
-          'featureService', '$mdSidenav', '$mdBottomSheet', '$timeout', '$log',
-          PlayController
-       ]);
+          'navBarService', '$mdSidenav', '$mdBottomSheet', '$timeout', '$log',
+          PlayController])
+       .service('navBarService', ['$q', NavBarService]);
+
+  var dict = {
+    'All\'s Well That Ends Well': 'AWW',
+    'Antony and Cleopatra': 'Ant',
+    'As You Like It': 'AYL',
+    'Coriolanus': 'Cor',
+    'Cymbeline': 'Cym',
+    'Comedy of Errors': 'Err',
+    'Henry IV': 'H4',
+    'Henry V': 'H5',
+    'Hamlet': 'Ham'
+  }
+
 
   /**
    * Main Controller for the Angular Material Starter App
@@ -12,26 +26,59 @@
    * @param avatarsService
    * @constructor
    */
-  function PlayController( featureService, $mdSidenav, $mdBottomSheet, $timeout, $log ) {
+  function PlayController( navBarService, $scope) {
     var self = this;
 
     self.selected     = null;
     self.featureLinks = [ ];
     self.selectLink   = selectLink;
+    //self.getPlayInfo  = getPlayInfo;
+    self.getSpeakFrequency = getSpeakFrequency;
+    self.play = $scope.play;
+
 
     // Load all registered users
 
-    featureService
+    navBarService
           .loadAllFeatures()
           .then( function( features ) {
             self.features    = [].concat(features);
-            self.selected = features[0];
+            //self.selected = features[0];
           });
+
+
 
     // *********************************
     // Internal methods
     // *********************************
 
+    $scope.init = function() {
+      console.log("in init");
+      var name = play["name"];
+      var fileName = dict[name];
+      console.log(fileName);
+      var playName, playSummary, playChars;
+      $.getJSON("../assets/AWW.json", function(data) {
+        console.log("JSON Data: " + data);
+        $.each(data, function(key, val) {
+            console.log(key + "value:: " + val);
+            playName = data.name;
+            playChars = data.characters;
+            playSummary = data.summary;
+        })
+        .done(function() {
+          console.log("second success");
+        })
+        .fail(function() {
+          console.log("error");
+        })
+        .always(function() {
+          console.log("complete");
+        });
+      });
+
+    }
+    //$scope.init();
     /**
      * Select the current avatars
      * @param menuId
@@ -40,13 +87,15 @@
       self.selected = angular.isNumber(feature) ? $scope.features[feature] : feature;
     }
 
-    /**
+
+
+/**
      * We get 'play' value from clicking a play in the left navbar
      * This function reads play info from a JSON file
      */
-    function getPlayInfo ( play ) {
+      
 
-    }
+    
 
     /**
      * We need to know which play page we're on to get value of 'play'
@@ -56,4 +105,43 @@
 
     }
 
+  }
+
+
+/**
+   * Plays DataService
+   * Uses embedded, hard-coded data model; acts asynchronously to simulate
+   * remote data service call(s).
+   *
+   * @returns {{loadAll: Function}}
+   * @constructor
+   */
+function NavBarService($q){
+    var features = [
+      {
+        name: 'Summary',
+        avatar: 'svg-1'
+      },
+      {
+        name: 'Visualizations',
+        avatar: 'svg-2'
+      },
+      {
+        name: 'Character List',
+        avatar: 'svg-3'
+      },
+      {
+        name: 'Reader',
+        avatar: 'svg-4',
+      }
+    ];
+
+    // Promise-based API
+    return {
+      loadAllFeatures : function() {
+        // Simulate async nature of real remote calls
+        console.log(features);
+        return $q.when(features);
+      }
+    };
   }

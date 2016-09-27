@@ -1,17 +1,18 @@
 angular
 	.module('playModule',['ngMaterial'])
-	.controller('PlayController', function($scope) {
-		this.feature = $scope.feature;
-	})
+	// .service('navBarService', ['$q', NavBarService])
+	// .controller('PlayController', function($scope) {
+	// 	this.feature = $scope.feature;
+	// })
 	.directive('playPage', function() {
 		return {
 			restrict: "E",
          	controller: 'PlayController',
 			controllerAs: 'ctrl',
   			scope: {
-  				play: '='
+  				play: '=',
   			},
-         	templateUrl: './src/plays/play.html'
+         	templateUrl: './src/plays/play.html',
+         	bindToController: true
 		};
-	})
-	.service('playService', ['$q', PlayService]);
+	});
