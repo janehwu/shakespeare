@@ -1,0 +1,67 @@
+{
+    "name": "chart",
+    "children": [
+        {
+            "name": "Macbeth",
+            "children": [
+                {"name": "Macbeth", "size": 190}
+            ]
+        },
+        {
+            "name": "Lady Macbeth",
+            "children": [
+                {"name": "Lady Macbeth", "size": 50}
+            ]
+        },
+        {
+            "name": "Lennox",
+            "children": [
+                {"name": "Lennox", "size": 25}
+            ]
+        },
+        {
+            "name": "Macduff",
+            "children": [
+                {"name": "Macduff", "size": 100}
+            ]
+        },
+        {
+            "name": "Porter",
+            "children": [
+                {"name": "Porter", "size": 85}
+            ]
+        },
+        {
+            "name": "Banquo",
+            "children": [
+                {"name": "Banquo", "size": 60}
+            ]
+        },
+        {
+            "name": "Donalbain",
+            "children": [
+                {"name": "Donalbain", "size": 55}
+            ]
+        },
+        {
+            "name": "Malcom",
+            "children": [
+                {"name": "Malcom", "size": 33}
+            ]
+        },
+        {
+            "name": "First Witch",
+            "children": [
+                {"name": "First Witch", "size": 70} 
+            ]
+        },
+        {
+            "name": "Steward",
+            "children": [
+                {"name": "Steward", "size": 130}
+            ]
+        }
+        
+    ]
+    
+}
