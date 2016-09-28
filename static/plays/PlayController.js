@@ -32,9 +32,12 @@
     self.selected     = null;
     self.featureLinks = [ ];
     self.selectLink   = selectLink;
-    //self.getPlayInfo  = getPlayInfo;
+    self.getPlayInfo  = getPlayInfo;
     self.getSpeakFrequency = getSpeakFrequency;
     self.play = $scope.play;
+    self.playName = "";
+    self.playChars = [];
+    self.playSummary = "";
 
 
     // Load all registered users
@@ -45,40 +48,41 @@
             self.features    = [].concat(features);
             //self.selected = features[0];
           });
+    
+    function getPlayInfo() {
+      //Get file
+      if (!self.play) return;
+      var name = self.play["name"];
+      var fileName = dict[name];
+      console.log(fileName);
 
+      // Currently hard coded for Hamlet until JSON files fixed.
+      $.ajax({
+      type : "POST",
+      url : "get_play_content",
+      data: "Ham",
+      contentType: 'application/json;charset=UTF-8',
+      success: function(data) {
+          console.log(data);
+          $.each(data, function(key, val) {
+            console.log(key + "value:: " + val);
+            self.playName = data.name;
+            self.playChars = data.characters;
+            self.playSummary = data.summary;
+          });
+        }
+      });
 
+    }
+
+    $(document).on("playSelected", function(e) {
+      self.getPlayInfo();
+    });
 
     // *********************************
     // Internal methods
     // *********************************
 
-    $scope.init = function() {
-      console.log("in init");
-      var name = play["name"];
-      var fileName = dict[name];
-      console.log(fileName);
-      var playName, playSummary, playChars;
-      $.getJSON("../assets/AWW.json", function(data) {
-        console.log("JSON Data: " + data);
-        $.each(data, function(key, val) {
-            console.log(key + "value:: " + val);
-            playName = data.name;
-            playChars = data.characters;
-            playSummary = data.summary;
-        })
-        .done(function() {
-          console.log("second success");
-        })
-        .fail(function() {
-          console.log("error");
-        })
-        .always(function() {
-          console.log("complete");
-        });
-      });
-
-    }
-    //$scope.init();
     /**
      * Select the current avatars
      * @param menuId
@@ -89,12 +93,10 @@
 
 
 
-/**
+    /**
      * We get 'play' value from clicking a play in the left navbar
      * This function reads play info from a JSON file
      */
-      
-
     
 
     /**

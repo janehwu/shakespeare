@@ -64,6 +64,7 @@ function AppController(navService, $mdSidenav, $scope) {
 
     function selectPlay (play) {
       self.selected = angular.isNumber(play) ? self.plays[play] : play;
+      $(document).trigger("playSelected");
     }
 
     function sortList(sortBy) {
