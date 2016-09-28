@@ -16,7 +16,6 @@ def get_play_content():
 		SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 		json_url = os.path.join(SITE_ROOT, 'static', "plays/json/" + request.data + ".json")
 		data = json.load(open(json_url))
-		print data
 		return jsonify(data)
 
 ##############################################

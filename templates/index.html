@@ -18,7 +18,7 @@
   <body ng-app="shakespeareApp" layout="column" ng-controller="AppController as ctrl">
     <!--Toolbar-->
     <md-toolbar layout="row">
-      <md-button class="menu" hide-gt-sm ng-click="ctrl.toggleList($event)" aria-label="Show Play List">
+      <md-button class="menu" ng-click="ctrl.toggleList($event)" aria-label="Show Play List">
         <md-icon md-svg-icon="menu" ></md-icon>
       </md-button>
       <h1 class="title" ng-click="ctrl.viewHomePage()">Visualizing Shakespeare</h1>
@@ -27,7 +27,7 @@
 {% raw %}
     <div flex layout="row">
 
-        <md-sidenav  md-component-id='left' ng-click="ctrl.toggleList($event)" md-is-locked-open="$mdMedia('gt-sm')" class="md-whiteframe-z2" >
+        <md-sidenav  md-component-id='left' ng-click="ctrl.toggleList($event)" class="md-whiteframe-z2" >
           <md-subheader class="nav-menu">
             <md-menu style="padding-right:8px">
               <md-button class="md-no-focus sort" ng-click="$mdOpenMenu($event)">

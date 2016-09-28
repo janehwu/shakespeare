@@ -49,10 +49,8 @@
             //self.selected = features[0];
           });
     
-    function getPlayInfo() {
-      //Get file
-      if (!self.play) return;
-      var name = self.play["name"];
+    function getPlayInfo(play) {
+      var name = play["name"];
       var fileName = dict[name];
       console.log(fileName);
 
@@ -75,8 +73,8 @@
 
     }
 
-    $(document).on("playSelected", function(e) {
-      self.getPlayInfo();
+    $(document).on("playSelected", function(e, playName) {
+      self.getPlayInfo(playName);
     });
 
     // *********************************

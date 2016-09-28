@@ -10,22 +10,22 @@
 			<h1> {{ctrl.play["name"]}} </h1>
 			<md-icon md-svg-icon="{{ctrl.play.avatar}}" class="avatar"></md-icon>
         </md-content>
-
-        <md-card md-theme="default" md-theme-watch ng-repeat="item in ctrl.features">
-            <md-card-title>
-              <md-card-title-text>
-                <span class="md-headline">{{item.name}}</span>
-              </md-card-title-text>
-              <md-card-title-media>
-                <div class="md-media-md card-media"></div>
-              </md-card-title-media>
-            </md-card-title>
-           <div layout="row">
-               <div ng-show="item.name == 'Summary'"> <p>{{ctrl.playSummary}}</p></div>  
-              <div class="{{item.name}}"></div>
-                
-          </div>
+        <div ng-repeat="item in ctrl.features">
+          <md-card ng-show="item.name != 'Reader'" style="min-width:100%;padding:16px" md-theme="default" md-theme-watch>
+              <h2 class="md-headline">{{item.name}}</h2>
+              </md-card-title>
+              <div layout="row">
+                 <div ng-show="item.name == 'Summary'"> <p>{{ctrl.playSummary}}</p></div>  
+                 <div ng-show="item.name == 'Character List'">
+                    <div ng-repeat="char in ctrl.playChars">
+                      {{char}}
+                    </div>
+                 </div> 
+                <div class="{{item.name}}"></div>
+                  
+              </div>
           </md-card>
+        </div>
           <speak-chord ng-show="ctrl.selected"></speak-chord>
       </div>
         
