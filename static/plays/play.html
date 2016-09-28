@@ -1,4 +1,4 @@
-<div layout="column" style="height:500px;" ng-cloak>
+<div layout="column" style="height:100%; overflow:scroll;" ng-cloak>
 
   <section layout="row" flex>
 
@@ -20,9 +20,11 @@
                 <div class="md-media-md card-media"></div>
               </md-card-title-media>
             </md-card-title>
-            <md-card-actions layout="row" layout-align="end center">
-              <p>{{ctrl.play["content"]}}</p>
-            </md-card-actions>
+           <div layout="row">
+               <div ng-show="item.name == 'Summary'"> <p>{{ctrl.play["content"]}}</p></div>  
+              <div class="{{item.name}}"></div>
+                
+          </div>
           </md-card>
           <speak-chord ng-show="ctrl.selected"></speak-chord>
       </div>
