@@ -151,3 +151,16 @@ span.name {
 .search-bar:focus {
   outline: none;
 }
+
+.title:focus {
+  outline: none;
+}
+
+.title:hover {
+  cursor:pointer;
+}
+
+.play-name:hover {
+  cursor:pointer;
+  font-weight:bold;
+}

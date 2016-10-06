@@ -24,6 +24,9 @@ function AppController(navService, $mdSidenav, $scope) {
     var self = this;
     self.selected;
     self.plays = [];
+    self.comedies = [];
+    self.histories = [];
+    self.tragedies = [];
     self.searchTerm = "";
     self.searchMode = false;
     self.selectPlay = selectPlay;
@@ -43,7 +46,12 @@ function AppController(navService, $mdSidenav, $scope) {
           .loadAllPlays()
           .then(function(plays) {
             self.plays    = [].concat(plays);
-            //self.selected = plays[0];
+            plays.forEach(function(play) {
+              if (play.genre == "Comedy") self.comedies.push(play);
+              else if (play.genre == "History") self.histories.push(play);
+              else if (play.genre == "Tragedy") self.tragedies.push(play);
+              else;
+            });
           });
 
 

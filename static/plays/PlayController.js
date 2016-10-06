@@ -15,7 +15,8 @@
     'Comedy of Errors': 'Err',
     'Henry IV': 'H4',
     'Henry V': 'H5',
-    'Hamlet': 'Ham'
+    'Hamlet': 'Ham',
+    'Macbeth': 'Mac'
   }
 
 
@@ -58,7 +59,7 @@
       $.ajax({
       type : "POST",
       url : "get_play_content",
-      data: "Ham",
+      data: String(fileName),
       contentType: 'application/json;charset=UTF-8',
       success: function(data) {
           console.log(data);
@@ -73,8 +74,8 @@
 
     }
 
-    $(document).on("playSelected", function(e, playName) {
-      self.getPlayInfo(playName);
+    $(document).on("playSelected", function(e, play) {
+      self.getPlayInfo(play);
     });
 
     // *********************************
