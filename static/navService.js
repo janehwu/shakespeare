@@ -7,6 +7,7 @@ function NavService($q){
     var plays = [
       {
         name: 'All\'s Well That Ends Well',
+        filename: 'AWW',
         year: "1602",
         genre: "Comedy",
         avatar: 'svg-1',
@@ -14,6 +15,7 @@ function NavService($q){
       },
       {
         name: 'Antony and Cleopatra',
+        filename: 'Ant',
         year: "1606",
         genre: "Tragedy",
         avatar: 'svg-2',
@@ -21,6 +23,7 @@ function NavService($q){
       },
       {
         name: 'As You Like It',
+        filename: 'AYL',
         year: "1599",
         genre: "Comedy",
         avatar: 'svg-3',
@@ -28,6 +31,7 @@ function NavService($q){
       },
       {
         name: 'Comedy of Errors',
+        filename: 'Err',
         year: "1589",
         genre: "Comedy",
         avatar: 'svg-4',
@@ -35,6 +39,7 @@ function NavService($q){
       },
       {
         name: 'Coriolanus',
+        filename: 'Cor',
         year: "1607",
         genre: "Tragedy",
         avatar: 'svg-5',
@@ -42,6 +47,7 @@ function NavService($q){
       },
       {
         name: 'Cymbeline',
+        filename: 'Cym',
         year: "1609",
         genre: "Tragedy",
         avatar: 'svg-6',
@@ -49,6 +55,7 @@ function NavService($q){
       },
       {
         name: 'Hamlet',
+        filename: 'Ham',
         year: "1600",
         genre: "Tragedy",
         avatar: 'svg-5',
@@ -56,6 +63,7 @@ function NavService($q){
       },
       {
         name: 'Henry IV',
+        filename: 'H4',
         year: "1597",
         genre: "History",
         avatar: 'svg-5',
@@ -63,6 +71,7 @@ function NavService($q){
       },
       {
         name: 'Henry V',
+        filename: 'H5',
         year: "1598",
         genre: "History",
         avatar: 'svg-5',
@@ -70,6 +79,7 @@ function NavService($q){
       },
       {
         name: 'Henry VI',
+        filename: 'H6',
         year: "1590-1591",
         genre: "History",
         avatar: 'svg-5',
@@ -77,6 +87,7 @@ function NavService($q){
       },
       {
         name: 'Henry VIII',
+        filename: 'H8',
         year: "1612",
         genre: "History",
         avatar: 'svg-5',
@@ -84,6 +95,7 @@ function NavService($q){
       },
       {
         name: 'Julius Caesar',
+        filename: 'JC',
         year: "1599",
         genre: "Tragedy",
         avatar: 'svg-5',
@@ -91,6 +103,7 @@ function NavService($q){
       },
       {
         name: 'King John',
+        filename: 'Jn',
         year: "1596",
         genre: "History",
         avatar: 'svg-5',
@@ -98,6 +111,7 @@ function NavService($q){
       },
       {
         name: 'King Lear',
+        filename: 'Lr',
         year: "1605",
         genre: "Tragedy",
         avatar: 'svg-1',
@@ -105,6 +119,7 @@ function NavService($q){
       },
       {
         name: 'Love\'s Labour\'s Lost',
+        filename: 'LLL',
         year: "1594",
         genre: "Comedy",
         avatar: 'svg-2',
@@ -112,6 +127,7 @@ function NavService($q){
       },
       {
         name: 'Macbeth',
+        filename: 'Mac',
         year: "1605",
         genre: "Tragedy",
         avatar: 'svg-3',
@@ -119,6 +135,7 @@ function NavService($q){
       },
       {
         name: 'Measure for Measure',
+        filename: 'MM',
         year: "1604",
         genre: "Comedy",
         avatar: 'svg-4',
@@ -126,6 +143,7 @@ function NavService($q){
       },
       {
         name: 'Merchant of Venice',
+        filename: 'MV',
         year: "1596",
         genre: "Comedy",
         avatar: 'svg-5',
@@ -133,6 +151,7 @@ function NavService($q){
       },
       {
         name: 'Merry Wives of Windsor',
+        filename: 'Wiv',
         year: "1600",
         genre: "Comedy",
         avatar: 'svg-6',
@@ -140,6 +159,7 @@ function NavService($q){
       },
       {
         name: 'Midsummer Night\'s Dream',
+        filename: 'MND',
         year: "1595",
         genre: "Comedy",
         avatar: 'svg-1',
@@ -147,6 +167,7 @@ function NavService($q){
       },
       {
         name: 'Much Ado about Nothing',
+        filename: 'Ado',
         year: "1598",
         genre: "Comedy",
         avatar: 'svg-2',
@@ -154,6 +175,7 @@ function NavService($q){
       },
       {
         name: 'Othello',
+        filename: 'Oth',
         year: "1604",
         genre: "Tragedy",
         avatar: 'svg-3',
@@ -161,6 +183,7 @@ function NavService($q){
       },
       {
         name: 'Pericles',
+        filename: 'Per',
         year: "1608",
         genre: "History",
         avatar: 'svg-4',
@@ -168,6 +191,7 @@ function NavService($q){
       },
       {
         name: 'Richard II',
+        filename: 'R2',
         year: "1595",
         genre: "History",
         avatar: 'svg-5',
@@ -175,6 +199,7 @@ function NavService($q){
       },
       {
         name: 'Richard III',
+        filename: 'R3',
         year: "1592",
         genre: "History",
         avatar: 'svg-6',
@@ -182,6 +207,7 @@ function NavService($q){
       },
       {
         name: 'Romeo and Juliet',
+        filename: 'Rom',
         year: "1594",
         genre: "Tragedy",
         avatar: 'svg-1',
@@ -189,6 +215,7 @@ function NavService($q){
       },
       {
         name: 'Taming of the Shrew',
+        filename: 'Shr',
         year: "1593",
         genre: "Comedy",
         avatar: 'svg-2',
@@ -196,6 +223,7 @@ function NavService($q){
       },
       {
         name: 'Tempest',
+        filename: 'Tmp',
         year: "1611",
         genre: "Comedy",
         avatar: 'svg-3',
@@ -203,6 +231,7 @@ function NavService($q){
       },
       {
         name: 'Timon of Athens',
+        filename: 'Tim',
         year: "1607",
         genre: "Tragedy",
         avatar: 'svg-4',
@@ -210,6 +239,7 @@ function NavService($q){
       },
       {
         name: 'Titus Andronicus',
+        filename: 'Tit',
         year: "1593",
         genre: "Tragedy",
         avatar: 'svg-5',
@@ -217,6 +247,7 @@ function NavService($q){
       },
       {
         name: 'Troilus and Cressida',
+        filename: 'Tro',
         year: "1601",
         genre: "Tragedy",
         avatar: 'svg-6',
@@ -224,13 +255,15 @@ function NavService($q){
       },
       {
         name: 'Twelfth Night',
+        filename: 'TN',
         year: "1599",
         genre: "Comedy",
         avatar: 'svg-3',
         content: "Raw denim pour-over readymade Etsy Pitchfork. Four dollar toast pickled locavore bitters McSweeney's blog. Try-hard art party Shoreditch selfies. Odd Future butcher VHS, disrupt pop-up Thundercats chillwave vinyl jean shorts taxidermy master cleanse letterpress Wes Anderson mustache Helvetica. Schlitz bicycle rights chillwave irony lumberhungry Kickstarter next level sriracha typewriter Intelligentsia, migas kogi heirloom tousled. Disrupt 3 wolf moon lomo four loko. Pug mlkshk fanny pack literally hoodie bespoke, put a bird on it Marfa messenger bag kogi VHS."
       },
       {
-        name: 'Two Gentlement of Verona',
+        name: 'Two Gentlemen of Verona',
+        filename: 'TGV',
         year: "1594",
         genre: "Comedy",
         avatar: 'svg-4',
@@ -238,6 +271,7 @@ function NavService($q){
       },
       {
         name: 'Winter\'s Tale',
+        filename: 'WT',
         year: "1601",
         genre: "Comedy",
         avatar: 'svg-5',
