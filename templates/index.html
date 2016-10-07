@@ -18,7 +18,7 @@
   <body ng-app="shakespeareApp" layout="column" ng-controller="AppController as ctrl">
     <!--Toolbar-->
     <md-toolbar layout="row">
-      <md-button class="menu" hide-gt-sm ng-click="ctrl.toggleList($event)" aria-label="Show Play List">
+      <md-button class="menu" ng-show="ctrl.selected" ng-click="ctrl.toggleList($event)" aria-label="Show Play List">
         <md-icon md-svg-icon="menu" ></md-icon>
       </md-button>
       <h1 class="title" ng-click="ctrl.viewHomePage()">Visualizing Shakespeare</h1>
@@ -27,7 +27,7 @@
 {% raw %}
     <div flex layout="row">
 
-        <md-sidenav  md-component-id='left' ng-click="ctrl.toggleList($event)" md-is-locked-open="$mdMedia('gt-sm')" class="md-whiteframe-z2" >
+        <md-sidenav  md-component-id='left' ng-click="ctrl.toggleList($event)" class="md-whiteframe-z2" >
           <md-subheader class="nav-menu">
             <md-menu style="padding-right:8px">
               <md-button class="md-no-focus sort" ng-click="$mdOpenMenu($event)">
@@ -63,20 +63,40 @@
         </md-sidenav>
 
         <!--Play content-->
-        <md-content flex id="content">
+        <md-content style="overflow:scroll" flex id="content">
         <play-page ng-show="ctrl.selected" play="ctrl.selected"></play-page>
         <div ng-show="!ctrl.selected">
-          <md-card md-theme="default" md-theme-watch>
-            <md-card-title>
-              <md-card-title-text>
-                <span class="md-headline">Shakespeare is hard to read - we're making it easier.</span>
-              </md-card-title-text>
-            </md-card-title>
-            <md-card-media>
+           <div style="margin:16px" class="md-headline">Shakespeare is hard to read - we're making it easier.</div>
+<!--             <md-card-media>
               <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Shakespeare.jpg">
-            </md-card-media>
-            </md-card-content>
-          </md-card>
+            </md-card-media> -->
+            <div layout="row">
+              <md-card md-theme="default" md-theme-watch style="width:30%;display:inline-block">
+                <md-card-content>
+                  <h2>Comedies</h2>
+                  <div ng-repeat="item in ctrl.comedies">
+                        <div class="play-name" ng-click="ctrl.selectPlay(item)">{{item.name}}</div>
+                  </div>
+                </md-card-content>
+              </md-card>
+
+              <md-card md-theme="default" md-theme-watch style="width:30%;display:inline-block">
+                <md-card-content>
+                  <h2>Histories</h2>
+                   <div ng-repeat="item in ctrl.histories" layout="column">
+                        <div class="play-name" ng-click="ctrl.selectPlay(item)">{{item.name}}</div>
+                  </div>
+                </md-card-content>
+              </md-card>
+              <md-card md-theme="default" md-theme-watch style="width:30%;display:inline-block">
+                <md-card-content>
+                <h2>Tragedies</h2>
+                 <div ng-repeat="item in ctrl.tragedies" layout="column">
+                      <div class="play-name" ng-click="ctrl.selectPlay(item)">{{item.name}}</div>
+                </div>
+              </md-card-content>
+            </md-card>
+          </div>
         </div>
         </md-content>
 
