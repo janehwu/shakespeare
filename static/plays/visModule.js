@@ -13,8 +13,8 @@ angular
                     var csv = "./static/visualizations/csvDat/" + play.filename + ".csv";
                     var json = "./static/visualizations/matrixDat/" + play.filename + ".json";
 
-                    var width = 800,
-                        height = 800,
+                    var width = 600,
+                        height = 600,
                         outerRadius = Math.min(width, height) / 2 - 100,
                         innerRadius = outerRadius - 24;
 

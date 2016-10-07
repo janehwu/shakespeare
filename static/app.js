@@ -72,6 +72,7 @@ function AppController(navService, $mdSidenav, $scope) {
 
     function selectPlay (play) {
       self.selected = angular.isNumber(play) ? self.plays[play] : play;
+      self.searchTerm = ""
       $(document).trigger("playSelected", self.selected);
     }
 

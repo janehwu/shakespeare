@@ -186,3 +186,9 @@ path.chord {
   position: absolute;
   right: 0px;
 }
+
+.top-search-bar {
+  padding: 8px;
+  margin-right: 12px;
+  color: white;
+}

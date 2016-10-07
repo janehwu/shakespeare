@@ -21,15 +21,18 @@
       <md-button class="menu" ng-show="ctrl.selected" ng-click="ctrl.toggleList($event)" aria-label="Show Play List">
         <md-icon>menu</md-icon>
       </md-button>
-      <md-button class="menu" ng-show="ctrl.selected" ng-click="ctrl.viewHomePage()">
+      <md-button class="menu" ng-click="ctrl.viewHomePage()">
                 <md-icon>home</md-icon>
       </md-button>
       <h1 class="title">Visualizing Shakespeare</h1>
+      <div style="position:absolute;right:0px;top:16px">
+        <md-icon style="padding-right:8px">search</md-icon>
+        <input class="top-search-bar search-bar" ng-model="ctrl.searchTerm" type="text" placeholder="Search">
+      </div>
     </md-toolbar>
 
 {% raw %}
     <div flex layout="row">
-
         <md-sidenav md-component-id='left' ng-click="ctrl.toggleList($event)" class="md-whiteframe-z2" >
           <md-subheader class="nav-menu">
             <md-menu style="padding-right:8px">
@@ -70,9 +73,6 @@
         <play-page ng-show="ctrl.selected" play="ctrl.selected"></play-page>
         <div ng-show="!ctrl.selected">
            <div style="margin:16px" class="md-headline">Shakespeare is hard to read - we're making it easier.</div>
-<!--             <md-card-media>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Shakespeare.jpg">
-            </md-card-media> -->
             <div layout="row">
               <md-card md-theme="default" md-theme-watch style="width:33%;display:inline-block">
                 <md-card-content>
@@ -82,7 +82,6 @@
                   </div>
                 </md-card-content>
               </md-card>
-
               <md-card md-theme="default" md-theme-watch style="width:33%;display:inline-block">
                 <md-card-content>
                   <h2>Histories</h2>
@@ -102,9 +101,8 @@
           </div>
         </div>
         </md-content>
-
     </div>
-            {% endraw %}
+{% endraw %}
 
     <!-- Angular Dependencies -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>

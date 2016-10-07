@@ -93,8 +93,6 @@ function NavBarService($q){
     // Promise-based API
     return {
       loadAllFeatures : function() {
-        // Simulate async nature of real remote calls
-        console.log(features);
         return $q.when(features);
       }
     };
