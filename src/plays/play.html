@@ -26,7 +26,10 @@
                 
           </div>
           </md-card>
-          <speak-chord ng-show="ctrl.selected"></speak-chord>
+          <script type="text/javascript"> console.log("YOOO");</script>
+          <speak-chord ng-show="ctrl.selected" ng-hi="{{ctrl.dict[ctrl.play.name]}}" play="ctrl.selected"></speak-chord>
+                    <script type="text/javascript"> console.log("YOOO");</script>
+
       </div>
         
       <div flex></div>

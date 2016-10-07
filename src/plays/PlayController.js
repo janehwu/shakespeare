@@ -7,15 +7,40 @@
        .service('navBarService', ['$q', NavBarService]);
 
   var dict = {
-    'All\'s Well That Ends Well': 'AWW',
-    'Antony and Cleopatra': 'Ant',
-    'As You Like It': 'AYL',
-    'Coriolanus': 'Cor',
-    'Cymbeline': 'Cym',
-    'Comedy of Errors': 'Err',
-    'Henry IV': 'H4',
-    'Henry V': 'H5',
-    'Hamlet': 'Ham'
+      'All\'s Well That Ends Well': 'AWW',
+      'Antony and Cleopatra': 'Ant',
+      'As You Like It': 'AYL',
+      'Coriolanus': 'Cor',
+      'Cymbeline': 'Cym',
+      'Comedy of Errors': 'Err',
+      'Henry IV': 'H4',
+      'Henry V': 'H5',
+      'Hamlet': 'Ham',
+      'Henry VI': '', // name
+      'Henry VIII': 'H8',
+      'Julius Caesar':'JC',
+      'King John': 'Jn',
+      'King Lear': 'Lr',
+      'Love\'s Labour\'s Lost': 'LLL',
+      'Macbeth': 'Mac',
+      'Measure for Measure': 'MM',
+      'Merchant of Venice': 'MV',
+      'Merry Wives of Windsor': 'Wiv',
+      'Midsummer Night\'s Dream': 'MND',
+      'Much Ado about Nothing': 'Ado',
+      'Othello': 'Oth',
+      'Pericles': 'Per',
+      'Richard II': 'R2',
+      'Richard III': 'R3',
+      'Romeo and Juliet': 'Rom',
+      'Taming of the Shrew': 'Shr',
+      'Tempest': 'Tmp',
+      'Timon of Athens': 'Tim',
+      'Titus Andronicus': 'Tit',
+      'Troilus and Cressida': 'Tro',
+      'Twelfth Night': 'TN',
+      'Two Gentlemen of Verona': 'TGV',
+      'Winter\'s Tale': 'WT'
   }
 
 
@@ -35,6 +60,7 @@
     //self.getPlayInfo  = getPlayInfo;
     self.getSpeakFrequency = getSpeakFrequency;
     self.play = $scope.play;
+    self.dict = dict;
 
 
     // Load all registered users

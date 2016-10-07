@@ -1,16 +1,38 @@
 import xml.etree.ElementTree
 import sys
 
+filenames = {
+    "a_and_c": "Ant" ,  "all_well": "AWW",
+    "as_you": "AYL"  ,  "com_err": "Err" ,
+    "coriolan": "Cor",  "cymbelin": "Cym",
+    "dream": "MND"   ,  "hamlet": "Ham"  ,
+    "hen_iv_1": "H41",  "hen_iv_2": "H42",
+    "hen_v": "H5"    ,  "hen_vi_1": "H61",
+    "hen_vi_2": "H62",  "hen_vi_3": "H63",
+    "hen_viii": "H8" ,  "j_caesar": "JC" ,
+    "john":"Jn"      ,  "lear": "Lr"     , 
+    "lll": "LLL"     ,  "m_for_m": "MM"  , 
+    "m_wives": "Wiv" ,  "macbeth": "Mac" ,
+    "merchant": "MV" ,  "much_ado": "Ado" ,
+    "othello": "Oth" ,  "pericles": "Per",
+    "r_and_j": "Rom" ,  "rich_ii": "R2"  ,
+    "rich_iii": "R3" ,  "t_night": "TN"  ,
+    "taming": "Shr"  ,  "tempest": "Tmp" ,
+    "timon": "Tim"   ,  "titus": "Tit"   ,
+    "troilus": "Tro" ,  "two_gent": "TGV",
+    "win_tale": "WT"
+}
 
-for filename in sys.argv:
-    if filename == "charParser.py":
+for arg in sys.argv:
+    if arg == "scripts/charParser.py":
         continue  
-    slashIndex = filename.index("/")
-    extensionIndex = filename.index(".xml")
-    file = filename[slashIndex + 1: extensionIndex - 1]
+    print arg
+    slashIndex = arg.index("/")
+    extensionIndex = arg.index(".xml")
+    file = arg[slashIndex + 1: extensionIndex]
+    filename = filenames[file]
     
-    
-    e = xml.etree.ElementTree.parse(filename).getroot()
+    e = xml.etree.ElementTree.parse(arg).getroot()
     
     # chars: list of all characters; sceneChars: 2d list of characters per scene
     chars = []
@@ -54,8 +76,8 @@ for filename in sys.argv:
                 if index1 != index2 :
                     matrix[index1][index2] += 1
     
-    colorAddition = 360.0/len(chars)
-    color = 0
+    luminAddition = 75.0/len(chars)
+    lumin = 20
     
     csv = ""
     
@@ -66,16 +88,16 @@ for filename in sys.argv:
     print "------------------------"
     for char in chars:
         csv += char.capitalize()
-        csv +=  ",\"d3.hsl(" 
-        csv += str(color)
-        csv += ", 1, .5)\"\n"
-        color += colorAddition
+        csv +=  ",\"d3.hsl(185, 1, " 
+        csv += str(lumin/100.0)
+        csv += ")\"\n"
+        lumin += luminAddition
        
 
 
-    f = open("csvDat/" + file + ".csv", 'a+')
+    f = open("./src/visualizations/csvDat/" + filename + ".csv", 'w+')
     f.write(csv)
     
-    f = open("matrixDat/" + file + ".json", 'a+')
+    f = open("./src/visualizations/matrixDat/" + filename + ".json", 'w+')
     f.write(str(matrix))
 
