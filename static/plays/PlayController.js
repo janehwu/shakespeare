@@ -51,9 +51,7 @@
           });
     
     function getPlayInfo(play) {
-      var name = play["name"];
-      var fileName = dict[name];
-      console.log(fileName);
+      var fileName = play["filename"];
 
       // Currently hard coded for Hamlet until JSON files fixed.
       $.ajax({
@@ -62,9 +60,7 @@
       data: String(fileName),
       contentType: 'application/json;charset=UTF-8',
       success: function(data) {
-          console.log(data);
           $.each(data, function(key, val) {
-            console.log(key + "value:: " + val);
             self.playName = data.name;
             self.playChars = data.characters;
             self.playSummary = data.summary;
