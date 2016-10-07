@@ -21,7 +21,10 @@
       <md-button class="menu" ng-show="ctrl.selected" ng-click="ctrl.toggleList($event)" aria-label="Show Play List">
         <md-icon>menu</md-icon>
       </md-button>
-      <h1 class="title" ng-click="ctrl.viewHomePage()">Visualizing Shakespeare</h1>
+      <md-button class="menu" ng-show="ctrl.selected" ng-click="ctrl.viewHomePage()">
+                <md-icon>home</md-icon>
+      </md-button>
+      <h1 class="title">Visualizing Shakespeare</h1>
     </md-toolbar>
 
 {% raw %}
@@ -71,7 +74,7 @@
               <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Shakespeare.jpg">
             </md-card-media> -->
             <div layout="row">
-              <md-card md-theme="default" md-theme-watch style="width:30%;display:inline-block">
+              <md-card md-theme="default" md-theme-watch style="width:33%;display:inline-block">
                 <md-card-content>
                   <h2>Comedies</h2>
                   <div ng-repeat="item in ctrl.comedies">
@@ -80,7 +83,7 @@
                 </md-card-content>
               </md-card>
 
-              <md-card md-theme="default" md-theme-watch style="width:30%;display:inline-block">
+              <md-card md-theme="default" md-theme-watch style="width:33%;display:inline-block">
                 <md-card-content>
                   <h2>Histories</h2>
                    <div ng-repeat="item in ctrl.histories" layout="column">
@@ -88,7 +91,7 @@
                   </div>
                 </md-card-content>
               </md-card>
-              <md-card md-theme="default" md-theme-watch style="width:30%;display:inline-block">
+              <md-card md-theme="default" md-theme-watch style="width:33%;display:inline-block">
                 <md-card-content>
                 <h2>Tragedies</h2>
                  <div ng-repeat="item in ctrl.tragedies" layout="column">

@@ -13,7 +13,7 @@ html, body {
   border: none;
   height: 38px;
   margin: 16px;
-  width: 36px;
+  min-width: 1%;
 }
 
 md-toolbar h1 {
@@ -176,11 +176,13 @@ path.chord {
   outline: none;
 }
 
-.title:hover {
-  cursor:pointer;
-}
-
 .play-name:hover {
   cursor:pointer;
   font-weight:bold;
+}
+
+.feature-tabs {
+  min-width:50%;
+  position: absolute;
+  right: 0px;
 }
