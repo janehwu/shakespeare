@@ -133,3 +133,22 @@ span.name {
   font-size:1.1em;
   padding-left:5px;
 }
+/*D3 Speak Chord style*/
+
+#circle circle {
+  fill: none;
+  pointer-events: all;
+}
+
+.group path {
+  fill-opacity: .5;
+}
+
+path.chord {
+  stroke: #000;
+  stroke-width: .25px;
+}
+
+#circle:hover path.fade {
+  display: none;
+}
