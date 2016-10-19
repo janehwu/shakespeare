@@ -70,7 +70,7 @@
 
         <!--Play content-->
         <md-content style="overflow:scroll" flex id="content">
-        <play-page ng-show="ctrl.selected" play="ctrl.selected"></play-page>
+        <play-page ng-show="ctrl.selected" play="ctrl.selected" height="100%"></play-page>
         <div ng-show="!ctrl.selected">
            <div style="margin:16px" class="md-headline">Shakespeare is hard to read - we're making it easier.</div>
             <div layout="row">
@@ -121,6 +121,7 @@
     
     <!--D3 Dependencies-->
     <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+      <script src="//d3js.org/d3.v4.min.js" charset="utf-8"></script>
     <script src="//d3js.org/queue.v1.min.js"></script>
     
   </body>

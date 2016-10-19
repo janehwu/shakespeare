@@ -157,6 +157,8 @@ span.name {
 #circle circle {
   fill: none;
   pointer-events: all;
+    height: 100%;
+    width: 100%;
 }
 
 .group path {
@@ -181,6 +183,10 @@ path.chord {
   font-weight:bold;
 }
 
+.Visualizations {
+    height: 100%;
+}
+/*no longer d3 stuff*/
 .feature-tabs {
   min-width:50%;
   position: absolute;
