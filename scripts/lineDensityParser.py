@@ -4,15 +4,42 @@
 
 import xml.etree.ElementTree
 import sys
+import os
+
+
+filenames = {
+    "a_and_c": "Ant" ,  "all_well": "AWW",
+    "as_you": "AYL"  ,  "com_err": "Err" ,
+    "coriolan": "Cor",  "cymbelin": "Cym",
+    "dream": "MND"   ,  "hamlet": "Ham"  ,
+    "hen_iv_1": "H41",  "hen_iv_2": "H42",
+    "hen_v": "H5"    ,  "hen_vi_1": "H61",
+    "hen_vi_2": "H62",  "hen_vi_3": "H63",
+    "hen_viii": "H8" ,  "j_caesar": "JC" ,
+    "john":"Jn"      ,  "lear": "Lr"     , 
+    "lll": "LLL"     ,  "m_for_m": "MM"  , 
+    "m_wives": "Wiv" ,  "macbeth": "Mac" ,
+    "merchant": "MV" ,  "much_ado": "Ado" ,
+    "othello": "Oth" ,  "pericles": "Per",
+    "r_and_j": "Rom" ,  "rich_ii": "R2"  ,
+    "rich_iii": "R3" ,  "t_night": "TN"  ,
+    "taming": "Shr"  ,  "tempest": "Tmp" ,
+    "timon": "Tim"   ,  "titus": "Tit"   ,
+    "troilus": "Tro" ,  "two_gent": "TGV",
+    "win_tale": "WT"
+}
 
 # for filename in sys.argv: 
-# 	if filename == "lineDensityParses.py":
+# 	if filename == "lineDensityParser.py":
 # 		continue
 # 	slashIndex = filename.index("/")
 # 	extensionIndex = filename.index(".xml")
 # 	file = filename[slashIndex + 1: extensionIndex - 1]
+# 	filename = filenames[file]
 
-filename = "macbeth.xml"
+filename = "testing.xml"
+extensionIndex = filename.index(".xml")
+directory = filename[:extensionIndex]
 
 e = xml.etree.ElementTree.parse(filename).getroot()
 
@@ -77,6 +104,13 @@ print characterLines
 
 #for character in chars:
 #for i in range(totalScenes):
+
+#create directory for each play
+path = "../src/visualizations/tsvDat/"
+
+if not os.path.isdir(path + directory):
+	os.mkdir(path + directory, 0755)
+
 counterForIndex = -1
 for scene in characters: #also get index of this and should be good
 	counterForIndex += 1
@@ -103,6 +137,40 @@ print "hopefuly correct", characterLines
 # 	[([1,3], 6)], 
 # 	[([1,1], 1)]
 # ]
+
+#create all the tsv files for each play:
+
+def deleteContent(fileToDelete):
+	fileToDelete.seek(0)
+	fileToDelete.truncate()
+
+
+
+print directory
+
+#print file
+print "------------------------"
+
+#generates files for each character of a play and puts it in folder for that play
+characterLines = [['Act1_S1', 2, 'Act2_S1', 1], ['Act1_S2', 4, 'Act2_S2', 3], ['Act1_S3', 6], ['Act1_S1', 1]]
+chars = ['First Witch', 'Second Witch', 'Third Witch', 'Fifth Witch']
+for numLines in range(len(characterLines)):
+	tsv = ""
+	print "numLines", numLines
+	for i in range(0, len(characterLines[numLines]) - 1, 2):
+		print i
+		tsv += str(characterLines[numLines][i])
+		tsv += "\t" + str(characterLines[numLines][i+1])
+		tsv += "\n"
+	print "character: ", numLines, "lines: ", tsv
+	charFilename = chars[numLines].replace(" ", "")
+	f = open("../src/visualizations/tsvDat/" + directory + "/" + charFilename + ".tsv", 'w+')
+	f.write(tsv)
+
+
+
+
+
 
 
 
