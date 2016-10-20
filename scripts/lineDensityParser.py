@@ -43,18 +43,6 @@ for play in filenames:
 	print "filenameNew2", filenameNew2
 	directory = filenames[filenameNew2]
 
-	# for filename in sys.argv: 
-	# 	if filename == "lineDensityParser.py":
-	# 		continue
-	# 	print "filename", filename
-	# 	slashIndex = filename.index("/")
-	# 	extensionIndex = filename.index(".xml")
-	# 	file = filename[slashIndex + 1: extensionIndex - 1]
-	# 	directory = filenames[file]
-
-	# filename = "macbeth.xml"
-	# extensionIndex = filename.index(".xml")
-	# directory = filename[:extensionIndex]
 
 	e = xml.etree.ElementTree.parse(filename).getroot()
 
@@ -63,8 +51,6 @@ for play in filenames:
 
 	#what i want is a 2d array where the rows are all the characters and the
 	#columns are tuples with the scene number and the number of lines. 
-
-	#sceneChars = [[]]
 
 	chars = []
 	actCount = 0;
@@ -80,7 +66,6 @@ for play in filenames:
 		for scene in act.iter("SCENE"):
 			sceneLines = {}
 			playFormat += [[actCount, sceneCount]]
-			#print "playFormat", playFormat
 			for speech in scene.iter("SPEECH"):
 				for speaker in speech.iter("SPEAKER"):
 
