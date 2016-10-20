@@ -18,6 +18,14 @@ def get_play_content():
 		data = json.load(open(json_url))
 		return jsonify(data)
 
+@app.route('/static/visualizations/wordCloud/get_word_frequencies', methods=["POST"])
+def get_word_frequencies():
+	if request.method == "POST":
+		SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+		json_url = os.path.join(SITE_ROOT, 'static', "visualizations/wordCloud/json/" + request.data + ".json")
+		data = json.load(open(json_url))
+		return jsonify(data)
+
 ##############################################
 
 if __name__ == "__main__":
