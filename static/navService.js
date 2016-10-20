@@ -63,7 +63,7 @@ function NavService($q){
       },
       {
         name: 'Henry IV, Part I',
-        filename: 'H4P1',
+        filename: 'H41',
         year: "1597",
         genre: "History",
         avatar: 'svg-5',
@@ -71,7 +71,7 @@ function NavService($q){
       },
       {
         name: 'Henry IV, Part II',
-        filename: 'H4P2',
+        filename: 'H42',
         year: "1597",
         genre: "History",
         avatar: 'svg-5',
@@ -87,7 +87,7 @@ function NavService($q){
       },
       {
         name: 'Henry VI, Part I',
-        filename: 'H6P1',
+        filename: 'H61',
         year: "1591",
         genre: "History",
         avatar: 'svg-5',
@@ -95,7 +95,7 @@ function NavService($q){
       },
       {
         name: 'Henry VI, Part II',
-        filename: 'H6P2',
+        filename: 'H62',
         year: "1590",
         genre: "History",
         avatar: 'svg-5',
@@ -103,7 +103,7 @@ function NavService($q){
       },
       {
         name: 'Henry VI, Part III',
-        filename: 'H6P3',
+        filename: 'H63',
         year: "1590",
         genre: "History",
         avatar: 'svg-5',
