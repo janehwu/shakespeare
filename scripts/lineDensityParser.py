@@ -30,6 +30,7 @@ filenames = {
 }
 
 
+
 directory = ""
 for play in filenames:
 	relpath = "../xml/" + play + ".xml"
@@ -114,19 +115,40 @@ for play in filenames:
 	counterForIndex = -1
 	for scene in allCharsLines: #also get index of this and should be good
 		counterForIndex += 1
-		for key in scene:
-			print "key", key
-			if key in chars:
-				print "actAndScene", playFormat[counterForIndex]
-				whichScene = "Act" + str(playFormat[counterForIndex][0]) + "_S" + str(playFormat[counterForIndex][1])
-				index = chars.index(key)
-				print "index", index
+		for character in chars:
+			print "character", character
+			print "actAndScene", playFormat[counterForIndex]
+			whichScene = "Act" + str(playFormat[counterForIndex][0]) + "_S" + str(playFormat[counterForIndex][1])
+			index = chars.index(character)
+			print "index", index
+			if character in scene:
 				if characterLines[index] == []:
-					characterLines[index] = [whichScene, scene[key]]
+					characterLines[index] = [whichScene, scene[character]]
 				else:
-					characterLines[index] += [whichScene, scene[key]]
-				print "characterLines", characterLines
+					characterLines[index] += [whichScene, scene[character]]
+			else :
+				if characterLines[index] == []:
+					characterLines[index] = [whichScene, 0]
+				else:
+					characterLines[index] += [whichScene, 0]
+			print "characterLines", characterLines
 		#counterForIndex += 1
+
+	# counterForIndex = -1
+	# for scene in allCharsLines: #also get index of this and should be good
+	# 	counterForIndex += 1
+	# 	for key in scene:
+	# 		print "key", key
+	# 		if key in scene:
+	# 			print "actAndScene", playFormat[counterForIndex]
+	# 			whichScene = "Act" + str(playFormat[counterForIndex][0]) + "_S" + str(playFormat[counterForIndex][1])
+	# 			index = chars.index(key)
+	# 			print "index", index
+	# 			if characterLines[index] == []:
+	# 				characterLines[index] = [whichScene, scene[key]]
+	# 			else:
+	# 				characterLines[index] += [whichScene, scene[key]]
+	# 			print "characterLines", characterLines
 
 	print "hopefuly correct", characterLines
 
