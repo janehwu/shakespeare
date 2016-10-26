@@ -31,6 +31,8 @@ filenames = {
     "win_tale": "WT"
 }
 
+# Common words across plays
+commonWords = []
 for play in filenames:
 	relpath = "../../xml/" + play + ".xml"
 	filename = os.path.join(os.path.dirname(__file__), relpath)
@@ -40,7 +42,6 @@ for play in filenames:
 	# Dictionary with key: word, value: word count
 	wordCounts = {}
 	# Format for D3
-	commonWords = []
 	frequency_list = []
 
 	# Common Shakespeare words
@@ -61,21 +62,18 @@ for play in filenames:
 				for word in words:
 					if (word not in stopwords.words('english')) and (word not in shakespeareStopWords):
 						if not (word in wordCounts):
-							if word == 'hath':
-								print word
 							wordCounts[word] = 1
 						else:
 							wordCounts[word] += 1
+	
+	sorted_list = sorted(wordCounts.items(), key=operator.itemgetter(1))
+	sorted_list = sorted_list[-50:]
+	print sorted_list
+
 
 	for word in wordCounts:
-		if wordCounts[word] > 4:
+		if (word, wordCounts[word]) in sorted_list:
 			frequency_list.append({"text":word,"size":wordCounts[word]})
-
-	sorted_list = sorted(wordCounts.items(), key=operator.itemgetter(1))
-	for tup in sorted_list:
-		word = tup[0]
-		if wordCounts[word] >= 12:
-			commonWords.append(word)
 
 	# Write result to file
 	relpath = "json/" + filenames[play] + ".json"

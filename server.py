@@ -18,7 +18,7 @@ def get_play_content():
 		data = json.load(open(json_url))
 		return jsonify(data)
 
-@app.route('/static/visualizations/wordCloud/get_word_frequencies', methods=["POST"])
+@app.route('/get_word_frequencies', methods=["POST"])
 def get_word_frequencies():
 	if request.method == "POST":
 		SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
