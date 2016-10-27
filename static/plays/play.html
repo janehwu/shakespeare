@@ -4,6 +4,7 @@
       <h1 style="margin-top:8px"> {{ctrl.play["name"]}} </h1>
       <md-tabs class="feature-tabs" md-autoselect md-no-pagination="true">
         <md-tab style="width:100px" ng-click="ctrl.showFeature('Summary')">Summary</md-tab>
+        <md-tab style="width:100px" ng-click="ctrl.showFeature('Themes')">Themes</md-tab>
         <md-tab style="width:100px" ng-click="ctrl.showFeature('Visualizations')">Character Relationships</md-tab>
         <md-tab style="width:100px" ng-click="ctrl.showFeature('Characters')">Characters</md-tab>
         <md-tab style="width:100px" ng-click="ctrl.showFeature('Reader')">Reader</md-tab>
@@ -21,8 +22,11 @@
     </md-card>
     <div style="text-align: center" ng-show="ctrl.selected == 'Visualizations'" class="Visualizations"></div>
     <div style="text-align: center" ng-show="ctrl.selected == 'Characters'" id="chart"></div>
+    <div style="text-align: center" ng-show="ctrl.selected == 'Themes'" class="Themes"></div>
 
     <speak-chord></speak-chord>
     <heat-map></heat-map>
+    <word-cloud></word-cloud>
+
   </md-content>
 </div>

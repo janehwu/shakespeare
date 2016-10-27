@@ -1,5 +1,5 @@
 angular
-  .module('shakespeareApp', ['ngMaterial', 'playModule', 'visModule', 'heatMapModule'])
+  .module('shakespeareApp', ['ngMaterial', 'playModule', 'visModule', 'heatMapModule', 'wordCloudModule'])
   .config(function($mdThemingProvider, $mdIconProvider){
       $mdIconProvider
           .defaultIconSet("../static/svg/avatars.svg", 128)
