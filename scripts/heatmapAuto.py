@@ -43,6 +43,13 @@ def getLineData(fileName):
 							lineDensities[act][scene][word] = 0
 						if len(wordL) > characterLen:
 							lineDensities[act][scene][word] += 1
+			elif "/" in character:
+				split = character.split("/")
+				for word in split:						
+					if word not in lineDensities[act][scene]:
+						lineDensities[act][scene][word] = 0
+					if len(wordL) > characterLen:
+						lineDensities[act][scene][word] += 1
 			else:
 				if character not in lineDensities[act][scene]:
 					lineDensities[act][scene][character] = 0
@@ -56,6 +63,10 @@ def getLineData(fileName):
 				for word in split:
 					if word != "AND":
 						lineDensities[act][scene][word] += 1
+			elif "/" in character:
+				split = character.split("/")
+				for word in split:
+					lineDensities[act][scene][word] += 1
 			else:
 				lineDensities[act][scene][character] += 1
 		else:
@@ -99,7 +110,7 @@ def formatCharacterList(characterList):
 
 #character	scene	value
 def makeTSV(lineDensities, characterList):
-	f = open("Mac.tsv", 'w')
+	f = open("Ham.tsv", 'w')
 	f.write("character	scene	value\n")
 	sceneNum = 0
 	for act in lineDensities:
@@ -112,7 +123,7 @@ def makeTSV(lineDensities, characterList):
 
 	f.close()
 
-lineDensities = getLineData("Mac.txt")
+lineDensities = getLineData("Ham.txt")
 characterList = characterList(lineDensities)
 print formatCharacterList(characterList)
 print sceneList(lineDensities)
