@@ -188,7 +188,7 @@ path.chord {
 }
 /*no longer d3 stuff*/
 .feature-tabs {
-  min-width:50%;
+  min-width:60%;
   position: absolute;
   right: 0px;
 }
@@ -197,4 +197,15 @@ path.chord {
   padding: 8px;
   margin-right: 12px;
   color: white;
+}
+
+.legend {
+  border: 1px solid #555555;
+  border-radius: 5px 5px 5px 5px;
+  font-size: 0.8em;
+  margin: 10px;
+  padding: 8px;
+}
+.bld {
+  font-weight: bold;
 }

@@ -10,7 +10,7 @@ angular
             link: function(scope, elem, attrs){
                 $(document).on("playSelected", function(e, play) {
                         
-                        var csv = "./static/visualizations/csvDat/" + play.filename + ".csv";
+                    var csv = "./static/visualizations/csvDat/" + play.filename + ".csv";
                     var json = "./static/visualizations/matrixDat/" + play.filename + ".json";
 
                     
