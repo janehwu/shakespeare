@@ -20,33 +20,51 @@ angular
                         contentType: 'application/json;charset=UTF-8',
                         success: function(data) {
                             frequency_list = data;
-                            console.log(data);
-                            var color = d3.scale.linear()
-                            .domain([0,1,2,3,4,5,6,10,15,20,100])
-                            .range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"]);
 
-                            d3.layout.cloud().size([800, 300])
+                            var width = 1000;
+                            var height = 400;
+                            var min = 100;
+                            var max = 0;
+
+                            // Find min and max values
+                            frequency_list.forEach(function(word) {
+                              if (word.size < min) min = word.size;
+                              if (word.size > max) max = word.size;
+                            });
+
+                            var padding_val = 100/(max - min);
+                            console.log("Padding: " + padding_val);
+                            // teal, orange, blue, pink, green
+                            var color = d3.scale.ordinal().range(["#66c2a5","#fc8d62","#8da0cb","#e78ac3","#a6d854"]);
+                            var sizeScale = d3.scale.linear()
+                            .domain([min, max])
+                            .range([20,60]);
+
+                            d3.layout.cloud().size([width, height])
                                 .words(frequency_list)
+                                .padding(5)
                                 .rotate(0)
-                                .padding(8)
-                                .fontSize(function(d) { return d.size; })
+                                .fontSize(function(d) { return sizeScale(d.size); })
                                 .on("end", draw)
                                 .start();
                                 function draw(words) {
                                   d3.select(".Themes").append("svg")
-                                      .attr("width", 800)
-                                      .attr("height", 300)
-                                    .append("g")
-                                      .attr("transform", "translate(" + 800 / 2 + "," + 300 / 2 + ")")
+                                      .attr("width", width)
+                                      .attr("height", height)
+                                      .append("g")
+                                      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
                                     .selectAll("text")
                                       .data(words)
                                     .enter().append("text")
                                       .style("font-size", function(d) { return d.size + "px"; })
-                                      //.style("font-family", "Impact")
                                       .style("fill", function(d, i) { return color(i); })
                                       .attr("text-anchor", "middle")
+                                      .attr("cursor", "pointer")
                                       .attr("transform", function(d) {
                                         return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                                      })
+                                      .on('click', function(d) {
+                                          console.log(d.text);
                                       })
                                       .text(function(d) { return d.text; });
                                 }
