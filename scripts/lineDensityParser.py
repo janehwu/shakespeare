@@ -94,16 +94,16 @@ for play in filenames:
 						else:
 							sceneLines[speaker.text] = (lineCount+1)/2 
 						lineCount = 0
-			print "sceneLines with scene: ", sceneCount, sceneLines
+			#print "sceneLines with scene: ", sceneCount, sceneLines
 			allCharsLines += [sceneLines]
 			sceneCount += 1
 
 		
 
 	#print "sceneLines: ", sceneLines
-	print "playFormat: ", playFormat
-	print "allCharsLines: ", allCharsLines
-	print "characters: ", chars
+	#print "playFormat: ", playFormat
+	#print "allCharsLines: ", allCharsLines
+	#print "characters: ", chars
 
 	#actAndScene = [[1, 1], [1, 2], [1, 3], [2, 1], [2, 2]]
 	#characters = [{'First Witch': 2, 'Fifth Witch': 1}, {'Second Witch': 4}, {'Third Witch': 6}, {'First Witch': 1}, {'Second Witch': 3}]
@@ -115,13 +115,13 @@ for play in filenames:
 	print "totalScenes", totalScenes
 	print "totalChars", totalChars
 	characterLines = [[]]*totalChars
-	print characterLines
+	#print characterLines
 
 	#for character in chars:
 	#for i in range(totalScenes):
 
 	#create directory for each play
-	path = "../src/visualizations/tsvDat/"
+	path = "../static/visualizations/tsvDat/"
 
 	if not os.path.isdir(path + directory):
 		os.mkdir(path + directory, 0755)
@@ -130,11 +130,11 @@ for play in filenames:
 	for scene in allCharsLines: #also get index of this and should be good
 		counterForIndex += 1
 		for character in chars:
-			print "character", character
-			print "actAndScene", playFormat[counterForIndex]
+			#print "character", character
+			#print "actAndScene", playFormat[counterForIndex]
 			whichScene = "" + roman[str(playFormat[counterForIndex][0])] + "." + str(playFormat[counterForIndex][1])
 			index = chars.index(character)
-			print "index", index
+			#print "index", index
 			if character in scene:
 				if characterLines[index] == []:
 					characterLines[index] = [whichScene, scene[character]]
@@ -145,7 +145,7 @@ for play in filenames:
 					characterLines[index] = [whichScene, 0]
 				else:
 					characterLines[index] += [whichScene, 0]
-			print "characterLines", characterLines
+			#print "characterLines", characterLines
 		#counterForIndex += 1
 
 	# counterForIndex = -1
@@ -202,7 +202,7 @@ for play in filenames:
 			tsv += "\n"
 		print "character: ", numLines, "lines: ", tsv
 		charFilename = chars[numLines].replace(" ", "")
-		f = open("../src/visualizations/tsvDat/" + directory + "/" + charFilename + ".tsv", 'w+')
+		f = open("../static/visualizations/tsvDat/" + directory + "/" + charFilename + ".tsv", 'w+')
 		f.write(tsv)
 
 

@@ -31,7 +31,7 @@ var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
 var g = svg.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var path = "../src/visualizations/tsvDat/";
+var path = "../static/visualizations/tsvDat/";
 
 d3.tsv("PRINCE.tsv", function(d) {
   d.numLines = +d.numLines;
