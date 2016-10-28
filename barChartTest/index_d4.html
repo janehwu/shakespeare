@@ -11,11 +11,11 @@
 }
 
 .axis--x path {
-  display: none;
+  display: "";
 }
 
 </style>
-<svg width="960" height="500"></svg>
+<svg width="960" height="250"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 
@@ -24,13 +24,16 @@ var svg = d3.select("svg"),
     width = +svg.attr("width") - margin.left - margin.right + 30,
     height = +svg.attr("height") - margin.top - margin.bottom;
 
+
 var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
     y = d3.scaleLinear().rangeRound([height, 0]);
 
 var g = svg.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.tsv("data.tsv", function(d) {
+var path = "../src/visualizations/tsvDat/";
+
+d3.tsv("PRINCE.tsv", function(d) {
   d.numLines = +d.numLines;
   return d;
 }, function(error, data) {
@@ -54,14 +57,34 @@ d3.tsv("data.tsv", function(d) {
       .attr("text-anchor", "end")
       .text("Frequency");
 
-  g.selectAll(".bar")
+  var bars = g.selectAll(".bar")
     .data(data)
     .enter().append("rect")
       .attr("class", "bar")
       .attr("x", function(d) { return x(d.scene); })
       .attr("y", function(d) { return y(d.numLines); })
       .attr("width", x.bandwidth())
-      .attr("height", function(d) { return height - y(d.numLines); });
+      .attr("height", function(d) { return height - y(d.numLines); })
+      .on("mouseover", function(){
+        d3.select(this)
+          .attr("fill", "orangered");
+      });
+
+  bars.append("title").text(function(d) {
+    return "" + d.numLines;
+  });
+
+  function mouseover(d, i) {
+    // bars.classed("fade", function(p) {
+    //   return p.source.index != i
+    //     && p.target.index != i;
+    // });
+  }
+      // .on("mouseover", function() {
+      //   d3.select(this).
+      //     .attr()
+      // })
+
 });
 
 </script>

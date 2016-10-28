@@ -29,6 +29,20 @@ filenames = {
     "win_tale": "WT"
 }
 
+roman = {
+	"1": "I",
+	"2": "II", 
+	"3": "III", 
+	"4": "IV", 
+	"5": "V", 
+	"6": "VI", 
+	"7": "VII", 
+	"8": "VIII", 
+	"9": "IX", 
+	"10": "X"
+
+}
+
 
 
 directory = ""
@@ -118,7 +132,7 @@ for play in filenames:
 		for character in chars:
 			print "character", character
 			print "actAndScene", playFormat[counterForIndex]
-			whichScene = "Act" + str(playFormat[counterForIndex][0]) + "_S" + str(playFormat[counterForIndex][1])
+			whichScene = "" + roman[str(playFormat[counterForIndex][0])] + "." + str(playFormat[counterForIndex][1])
 			index = chars.index(character)
 			print "index", index
 			if character in scene:
@@ -179,6 +193,8 @@ for play in filenames:
 	for numLines in range(len(characterLines)):
 		tsv = ""
 		print "numLines", numLines
+		tsv += "scene" + "\t" + "numLines"
+		tsv += "\n"
 		for i in range(0, len(characterLines[numLines]) - 1, 2):
 			print i
 			tsv += str(characterLines[numLines][i])
