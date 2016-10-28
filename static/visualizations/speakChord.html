@@ -61,8 +61,8 @@ svg.append("circle")
     .attr("r", outerRadius);
 
 queue()
-    .defer(d3.csv, "../static/visualizations/Macbeth.csv")
-    .defer(d3.json, "../static/visualizations/Macbeth.json")
+    .defer(d3.csv, "./src/visualizations/Macbeth.csv")
+    .defer(d3.json, "./src/visualizations/Macbeth.json")
     .await(ready);
 
 function ready(error, cities, matrix) {

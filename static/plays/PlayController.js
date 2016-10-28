@@ -6,20 +6,6 @@
           PlayController])
        .service('navBarService', ['$q', NavBarService]);
 
-  var dict = {
-    'All\'s Well That Ends Well': 'AWW',
-    'Antony and Cleopatra': 'Ant',
-    'As You Like It': 'AYL',
-    'Coriolanus': 'Cor',
-    'Cymbeline': 'Cym',
-    'Comedy of Errors': 'Err',
-    'Henry IV': 'H4',
-    'Henry V': 'H5',
-    'Hamlet': 'Ham',
-    'Macbeth': 'Mac'
-  }
-
-
   /**
    * Main Controller for the Angular Material Starter App
    * @param $scope
@@ -30,11 +16,9 @@
   function PlayController( navBarService, $scope) {
     var self = this;
 
-    self.selected     = null;
-    self.featureLinks = [ ];
-    self.selectLink   = selectLink;
+    self.selected = "Summary";
     self.getPlayInfo  = getPlayInfo;
-    self.getSpeakFrequency = getSpeakFrequency;
+    self.showFeature = showFeature;
     self.play = $scope.play;
     self.playName = "";
     self.playChars = [];
@@ -42,18 +26,14 @@
 
 
     // Load all registered users
-
     navBarService
           .loadAllFeatures()
           .then( function( features ) {
             self.features    = [].concat(features);
-            //self.selected = features[0];
           });
     
     function getPlayInfo(play) {
-      var name = play["name"];
-      var fileName = dict[name];
-      console.log(fileName);
+      var fileName = play["filename"];
 
       // Currently hard coded for Hamlet until JSON files fixed.
       $.ajax({
@@ -62,9 +42,7 @@
       data: String(fileName),
       contentType: 'application/json;charset=UTF-8',
       success: function(data) {
-          console.log(data);
           $.each(data, function(key, val) {
-            console.log(key + "value:: " + val);
             self.playName = data.name;
             self.playChars = data.characters;
             self.playSummary = data.summary;
@@ -74,38 +52,13 @@
 
     }
 
+    function showFeature(feature) {
+      self.selected = feature;
+    }
+
     $(document).on("playSelected", function(e, play) {
       self.getPlayInfo(play);
     });
-
-    // *********************************
-    // Internal methods
-    // *********************************
-
-    /**
-     * Select the current avatars
-     * @param menuId
-     */
-    function selectLink ( feature ) {
-      self.selected = angular.isNumber(feature) ? $scope.features[feature] : feature;
-    }
-
-
-
-    /**
-     * We get 'play' value from clicking a play in the left navbar
-     * This function reads play info from a JSON file
-     */
-    
-
-    /**
-     * We need to know which play page we're on to get value of 'play'
-     * This function gets the appropriate visualization and loads it into the webpage
-     */
-    function getSpeakFrequency ( play ) {
-
-    }
-
   }
 
 
@@ -140,8 +93,6 @@ function NavBarService($q){
     // Promise-based API
     return {
       loadAllFeatures : function() {
-        // Simulate async nature of real remote calls
-        console.log(features);
         return $q.when(features);
       }
     };
