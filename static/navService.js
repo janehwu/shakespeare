@@ -62,8 +62,16 @@ function NavService($q){
         content: 'Webtwo ipsum dolor sit amet, eskobo chumby doostang bebo. Bubbli greplin stypi prezi mzinga heroku wakoopa, shopify airbnb dogster dopplr gooru jumo, reddit plickers edmodo stypi zillow etsy.'
       },
       {
-        name: 'Henry IV',
-        filename: 'H4',
+        name: 'Henry IV, Part I',
+        filename: 'H41',
+        year: "1597",
+        genre: "History",
+        avatar: 'svg-5',
+        content: 'Webtwo ipsum dolor sit amet, eskobo chumby doostang bebo. Bubbli greplin stypi prezi mzinga heroku wakoopa, shopify airbnb dogster dopplr gooru jumo, reddit plickers edmodo stypi zillow etsy.'
+      },
+      {
+        name: 'Henry IV, Part II',
+        filename: 'H42',
         year: "1597",
         genre: "History",
         avatar: 'svg-5',
@@ -78,9 +86,25 @@ function NavService($q){
         content: 'Webtwo ipsum dolor sit amet, eskobo chumby doostang bebo. Bubbli greplin stypi prezi mzinga heroku wakoopa, shopify airbnb dogster dopplr gooru jumo, reddit plickers edmodo stypi zillow etsy.'
       },
       {
-        name: 'Henry VI',
-        filename: 'H6',
-        year: "1590-1591",
+        name: 'Henry VI, Part I',
+        filename: 'H61',
+        year: "1591",
+        genre: "History",
+        avatar: 'svg-5',
+        content: 'Webtwo ipsum dolor sit amet, eskobo chumby doostang bebo. Bubbli greplin stypi prezi mzinga heroku wakoopa, shopify airbnb dogster dopplr gooru jumo, reddit plickers edmodo stypi zillow etsy.'
+      },
+      {
+        name: 'Henry VI, Part II',
+        filename: 'H62',
+        year: "1590",
+        genre: "History",
+        avatar: 'svg-5',
+        content: 'Webtwo ipsum dolor sit amet, eskobo chumby doostang bebo. Bubbli greplin stypi prezi mzinga heroku wakoopa, shopify airbnb dogster dopplr gooru jumo, reddit plickers edmodo stypi zillow etsy.'
+      },
+      {
+        name: 'Henry VI, Part III',
+        filename: 'H63',
+        year: "1590",
         genre: "History",
         avatar: 'svg-5',
         content: 'Webtwo ipsum dolor sit amet, eskobo chumby doostang bebo. Bubbli greplin stypi prezi mzinga heroku wakoopa, shopify airbnb dogster dopplr gooru jumo, reddit plickers edmodo stypi zillow etsy.'

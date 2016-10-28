@@ -3,20 +3,21 @@ angular
 	.directive('speakChord', function($window) {
 		return {
             restrict:'EA',
-            template:"<svg></svg>",
+            template:"<svg width='100%' height='100%'></svg>",
   			scope: {
   				play: '='
   			},
             link: function(scope, elem, attrs){
                 $(document).on("playSelected", function(e, play) {
-                    
+                        
                     var csv = "./static/visualizations/csvDat/" + play.filename + ".csv";
                     var json = "./static/visualizations/matrixDat/" + play.filename + ".json";
 
-                    var width = 600,
-                        height = 600,
-                        outerRadius = Math.min(width, height) / 2 - 100,
-                        innerRadius = outerRadius - 24;
+                    
+                    var width = 900,
+                        height = 900,
+                        outerRadius = Math.min(width, height) / 2 - 150,
+                        innerRadius = outerRadius - 15;
 
                     var formatPercent = d3.format("1");
 
@@ -75,6 +76,7 @@ angular
                       // Add a text label.
                         group.append("svg:text")
                           .each(function(d) { d.angle = (d.startAngle + d.endAngle) / 2; })
+                          .attr("font-size", "75%")
                           .attr("dy", ".35em")
                           .attr("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
                           .attr("transform", function(d) {
@@ -111,6 +113,7 @@ angular
                       }
                     }
 
+                    
                     
                 });
                 

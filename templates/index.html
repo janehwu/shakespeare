@@ -70,7 +70,7 @@
 
         <!--Play content-->
         <md-content style="overflow:scroll" flex id="content">
-        <play-page ng-show="ctrl.selected" play="ctrl.selected"></play-page>
+        <play-page ng-show="ctrl.selected" play="ctrl.selected" height="100%"></play-page>
         <div ng-show="!ctrl.selected">
            <div style="margin:16px" class="md-headline">Shakespeare is hard to read - we're making it easier.</div>
             <div layout="row">
@@ -111,17 +111,21 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 
+        <!--D3 Dependencies-->
+    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <!-- <script src="//d3js.org/d3.v4.min.js" charset="utf-8"></script> -->
+    <script src="//d3js.org/queue.v1.min.js"></script>
+
     <!--App Dependencies-->
     <script src="{{ url_for('static', filename='../static/plays/visModule.js') }}"></script>
     <script src="{{ url_for('static', filename='../static/plays/playService.js') }}"></script>
     <script src="{{ url_for('static', filename='../static/plays/playModule.js') }}"></script>
     <script src="{{ url_for('static', filename='../static/plays/PlayController.js') }}"></script>
+    <script src="{{ url_for('static', filename='../static/visualizations/wordCloud/wordCloudModule.js') }}"></script>
+    <script src="{{ url_for('static', filename='../static/visualizations/wordCloud/d3.layout.cloud.js') }}"></script>
     <script src="{{ url_for('static', filename='../static/navService.js') }}"></script>
     <script src="{{ url_for('static', filename='../static/app.js') }}"></script>
-    
-    <!--D3 Dependencies-->
-    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script src="//d3js.org/queue.v1.min.js"></script>
+    <script src="{{ url_for('static', filename='../static/visualizations/heatMap/heatMapModule.js') }}"></script>
     
   </body>
 </html>
