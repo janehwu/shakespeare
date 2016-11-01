@@ -1,6 +1,9 @@
 angular
   .module('shakespeareApp', ['ngMaterial', 'playModule', 'speakChordModule', 'heatMapModule', 'wordCloudModule', 'themeGraphModule'])
   .config(function($mdThemingProvider){
+      $mdThemingProvider.theme('default')
+          .primaryPalette('brown')
+          .accentPalette('red');
   })
   .controller('AppController', 
     ['navService', '$mdSidenav', '$scope', AppController])
