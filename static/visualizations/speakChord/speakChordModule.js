@@ -1,5 +1,5 @@
 angular
-	.module('visModule',['ngMaterial'])
+	.module('speakChordModule',['ngMaterial'])
 	.directive('speakChord', function($window) {
 		return {
             restrict:'EA',
@@ -10,8 +10,8 @@ angular
             link: function(scope, elem, attrs){
                 $(document).on("playSelected", function(e, play) {
                         
-                    var csv = "./static/visualizations/csvDat/" + play.filename + ".csv";
-                    var json = "./static/visualizations/matrixDat/" + play.filename + ".json";
+                    var csv = "./static/visualizations/speakChord/csv/" + play.filename + ".csv";
+                    var json = "./static/visualizations/speakChord/matrix/" + play.filename + ".json";
 
                     
                     var width = 900,

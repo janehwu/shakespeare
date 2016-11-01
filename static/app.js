@@ -1,9 +1,6 @@
 angular
-  .module('shakespeareApp', ['ngMaterial', 'playModule', 'visModule', 'heatMapModule', 'wordCloudModule'])
+  .module('shakespeareApp', ['ngMaterial', 'playModule', 'speakChordModule', 'heatMapModule', 'wordCloudModule', 'themeGraphModule'])
   .config(function($mdThemingProvider){
-      $mdThemingProvider.theme('default')
-          .primaryPalette('brown')
-          .accentPalette('red');
   })
   .controller('AppController', 
     ['navService', '$mdSidenav', '$scope', AppController])
@@ -36,7 +33,7 @@ function AppController(navService, $mdSidenav, $scope) {
     self.toggleSearch = toggleSearchMode;
 
     self.viewHomePage = viewHomePage;
-
+	
     // Load all plays
     navService
           .loadAllPlays()
@@ -52,6 +49,8 @@ function AppController(navService, $mdSidenav, $scope) {
 
     function viewHomePage() { self.selected = null; }
 
+	
+	
     /**
      * Hide or Show the 'left' sideNav area
      */
