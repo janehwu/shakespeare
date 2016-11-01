@@ -22,11 +22,13 @@
     </md-card>
     <div style="text-align: center" ng-show="ctrl.selected == 'Visualizations'" class="Visualizations"></div>
     <div style="text-align: center" ng-show="ctrl.selected == 'Characters'" id="chart"></div>
-    <div style="text-align: center" ng-show="ctrl.selected == 'Themes'" class="Themes"></div>
+    <div style="text-align: center" ng-show="ctrl.selected == 'Themes'" class="Themes" ng-controller="PlayController"></div>
+  	<div style="text-align: center" ng-show="ctrl.selected == 'Themes'" class="themeGraph" ng-controller="PlayController"></div>
 
     <speak-chord></speak-chord>
     <heat-map></heat-map>
     <word-cloud></word-cloud>
+	<theme-graph></theme-graph>
 
   </md-content>
 </div>

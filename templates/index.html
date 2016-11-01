@@ -113,11 +113,10 @@
 
         <!--D3 Dependencies-->
     <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <!-- <script src="//d3js.org/d3.v4.min.js" charset="utf-8"></script> -->
+<!--    <script src="//d3js.org/d3.v4.min.js" charset="utf-8"></script> -->
     <script src="//d3js.org/queue.v1.min.js"></script>
 
     <!--App Dependencies-->
-    <script src="{{ url_for('static', filename='../static/plays/visModule.js') }}"></script>
     <script src="{{ url_for('static', filename='../static/plays/playService.js') }}"></script>
     <script src="{{ url_for('static', filename='../static/plays/playModule.js') }}"></script>
     <script src="{{ url_for('static', filename='../static/plays/PlayController.js') }}"></script>
@@ -125,7 +124,11 @@
     <script src="{{ url_for('static', filename='../static/visualizations/wordCloud/d3.layout.cloud.js') }}"></script>
     <script src="{{ url_for('static', filename='../static/navService.js') }}"></script>
     <script src="{{ url_for('static', filename='../static/app.js') }}"></script>
+	<script src="{{ url_for('static', filename='../static/visualizations/speakChord/speakChordModule.js') }}">
+	</script>
     <script src="{{ url_for('static', filename='../static/visualizations/heatMap/heatMapModule.js') }}"></script>
-    
+    <script src="{{ url_for('static', filename='../static/visualizations/themeGraph/themeGraphModule.js') }}"></script>
+	  
+	  
   </body>
 </html>

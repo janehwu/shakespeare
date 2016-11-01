@@ -63,8 +63,11 @@ angular
                                       .attr("transform", function(d) {
                                         return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
                                       })
-                                      .on('click', function(d) {
-                                          console.log(d.text);
+                                      .on('click', function(d, i) {
+                                      	
+									  $(document).trigger("themeSelected", {"text":d.text, "color":color(i)});
+									  
+									  console.log(color(i));
                                       })
                                       .text(function(d) { return d.text; });
                                 }

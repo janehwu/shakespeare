@@ -56,9 +56,13 @@
       self.selected = feature;
     }
 
+
     $(document).on("playSelected", function(e, play) {
       self.getPlayInfo(play);
     });
+	  
+
+	  
   }
 
 
@@ -97,3 +101,4 @@ function NavBarService($q){
       }
     };
   }
+
