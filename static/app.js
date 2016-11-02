@@ -1,20 +1,16 @@
 angular
   .module('shakespeareApp', ['ngMaterial', 'playModule', 'speakChordModule', 'heatMapModule', 'wordCloudModule', 'themeGraphModule'])
-  .config(function($mdThemingProvider, $mdIconProvider){
-      $mdIconProvider
-          .defaultIconSet("../static/svg/avatars.svg", 128)
-          .icon("menu"       , "../static/svg/menu.svg"        , 24);
-
+  .config(function($mdThemingProvider){
       $mdThemingProvider.theme('default')
           .primaryPalette('brown')
           .accentPalette('red');
-
   })
-  .controller('AppController', ['navService', '$mdSidenav', '$scope', AppController])
+  .controller('AppController', 
+    ['navService', '$mdSidenav', '$scope', AppController])
   .service('navService', ['$q', NavService]);
 
 /**
- * Main Controller for the Angular Material Starter App
+ * Main Controller for Shakespeare app
  * @param navService
  * @param $mdSidenav
  * @param $scope
@@ -54,10 +50,7 @@ function AppController(navService, $mdSidenav, $scope) {
             });
           });
 
-
-    function viewHomePage() {
-      self.selected = null;
-    }
+    function viewHomePage() { self.selected = null; }
 
 	
 	
@@ -68,6 +61,9 @@ function AppController(navService, $mdSidenav, $scope) {
       if (e.target.type !== "text") $mdSidenav('left').toggle();
     }
 
+    /**
+     * Whether we are searching for a play
+     */
     function toggleSearchMode() {
       self.searchMode = !self.searchMode;
     }
