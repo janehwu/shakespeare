@@ -64,7 +64,7 @@ angular
 
                       // Add a mouseover title.
                       group.append("title").text(function(d, i) {
-                        return cities[i].name + ": " + formatPercent(d.value) + " of origins";
+                        return cities[i].name + " shares scenes with " + formatPercent(d.value) + " characters";
                       });
 
                       // Add the group arc.
@@ -98,11 +98,9 @@ angular
                       // Add an elaborate mouseover title for each chord.
                       chord.append("title").text(function(d) {
                         return cities[d.source.index].name
-                            + " → " + cities[d.target.index].name
-                            + ": " + formatPercent(d.source.value)
-                            + "\n" + cities[d.target.index].name
-                            + " → " + cities[d.source.index].name
-                            + ": " + formatPercent(d.target.value);
+                            + " & " + cities[d.target.index].name
+                            + "\nshare " + formatPercent(d.source.value)
+                            + " scenes";
                       });
 
                       function mouseover(d, i) {

@@ -46,17 +46,12 @@ for play in filenames:
 	frequency_list = {}
 	charColorMap = {}
 	
-	for personae in e.iter("PERSONAE"):
-		for persona in personae.iter("PERSONA"):
-			try:
-				commaIndex = persona.text.index(',')
-			except ValueError:
-				try:
-					commaIndex = persona.text.index('.')
-				except ValueError:
-					commaIndex = len(persona.text)
-			char = persona.text[0:commaIndex]
-			charColorMap[char] = 0
+	for scene in e.iter("SCENE"):
+		for speech in scene.iter("SPEECH"):
+			for speaker in speech.iter("SPEAKER"):
+			
+				char = speaker.text
+				charColorMap[char] = 0
 	
 	charCount = len(charColorMap)
 	marginalColor = 360*1.0/charCount
