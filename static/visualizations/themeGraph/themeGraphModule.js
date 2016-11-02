@@ -10,11 +10,14 @@ angular
             link: function(scope, elem, attrs){
                 $(document).on("themeSelected", function (e,data) {
 					var text = data.text;
-					var color = data.color;
+
 					d3.selectAll(".themeBar")
 					  .attr("fill", function(d) {  
+						
 						var themes = d.theme.split(",");
-
+						var hue = d.color;
+						var color = d3.hsl(parseInt(hue, 10), 1, .5);
+						
 						if(themes.includes(text)){ 
 							return color;
 						}

@@ -35,7 +35,7 @@ filenames = {
 # Common words across plays
 commonWords = []
 for play in filenames:
-	relpath = "../../../xml/" + play + ".xml"
+	relpath = "../xml/" + play + ".xml"
 	filename = os.path.join(os.path.dirname(__file__), relpath)
 	print filename
 	e = xml.etree.ElementTree.parse(filename).getroot()
@@ -44,11 +44,33 @@ for play in filenames:
 	wordCounts = {}
 	# Format for D3
 	frequency_list = {}
+	charColorMap = {}
+	
+	for personae in e.iter("PERSONAE"):
+		for persona in personae.iter("PERSONA"):
+			try:
+				commaIndex = persona.text.index(',')
+			except ValueError:
+				try:
+					commaIndex = persona.text.index('.')
+				except ValueError:
+					commaIndex = len(persona.text)
+			char = persona.text[0:commaIndex]
+			charColorMap[char] = 0
+	
+	charCount = len(charColorMap)
+	marginalColor = 360*1.0/charCount
+	color = 0
+	
+	for character in charColorMap:
+		charColorMap[character] = str(color)
+		color += marginalColor
 	
 
+	print charColorMap
 	# Common Shakespeare words
 	shakespeareStopWords = []
-	with open("../../stopwords.txt") as f:
+	with open("./scripts/wordCloud/stopwords.txt") as f:
 	    shakespeareStopWords = f.readlines()
 	for i in range(len(shakespeareStopWords)):
 		shakespeareStopWords[i] = shakespeareStopWords[i].strip("\n")
@@ -97,7 +119,13 @@ for play in filenames:
 						if word in line.text or word.capitalize() in line.text:
 							themes += word + ","
 							quote = line.text
-					json_list.append({"theme":themes,"character":character,"quote":quote,"act":actCount,"scene":sceneCount})
+				
+					try:
+						color = charColorMap[character]
+					except KeyError:
+						color = "0"
+						
+					json_list.append({"theme":themes,"character":character,"quote":quote,"act":actCount,"scene":sceneCount, "color":color})
 					themes = ""
 					quote = ""
 					
@@ -107,7 +135,7 @@ for play in filenames:
 
 
 	# Write result to file
-	relpath = "json/" + filenames[play] + ".json"
+	relpath = "../static/visualizations/themeGraph/json/" + filenames[play] + ".json"
 	output_file = os.path.join(os.path.dirname(__file__), relpath)
 	print output_file
 	with open(output_file, 'w') as outfile:
