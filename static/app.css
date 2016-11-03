@@ -104,7 +104,7 @@ path.chord {
 }
 /*no longer d3 stuff*/
 .feature-tabs {
-  min-width:60%;
+  min-width:64%;
   position: absolute;
   right: 0px;
 }

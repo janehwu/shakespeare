@@ -7,10 +7,9 @@
        .service('navBarService', ['$q', NavBarService]);
 
   /**
-   * Main Controller for the Angular Material Starter App
+   * Controller for Play page
+   * @param navBarService
    * @param $scope
-   * @param $mdSidenav
-   * @param avatarsService
    * @constructor
    */
   function PlayController( navBarService, $scope) {
@@ -23,6 +22,8 @@
     self.playName = "";
     self.playChars = [];
     self.playSummary = "";
+    self.playScenes = [];
+    self.file = "";
 
 
     // Load all registered users
@@ -46,6 +47,7 @@
             self.playName = data.name;
             self.playChars = data.characters;
             self.playSummary = data.summary;
+            self.playScenes = data.scenes;
           });
         }
       });
@@ -56,13 +58,10 @@
       self.selected = feature;
     }
 
-
     $(document).on("playSelected", function(e, play) {
       self.getPlayInfo(play);
-    });
-	  
-
-	  
+      self.file = play["filename"];
+    });	  
   }
 
 

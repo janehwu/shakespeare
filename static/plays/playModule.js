@@ -1,9 +1,5 @@
 angular
-	.module('playModule',['ngMaterial'])
-	// .service('navBarService', ['$q', NavBarService])
-	// .controller('PlayController', function($scope) {
-	// 	this.feature = $scope.feature;
-	// })
+	.module('playModule',['ngMaterial','sidesModule'])
 	.directive('playPage', function() {
 		return {
 			restrict: "E",

@@ -33,7 +33,6 @@ angular
                             });
 
                             var padding_val = 100/(max - min);
-                            console.log("Padding: " + padding_val);
                             // teal, orange, blue, pink, green
                             var color = d3.scale.ordinal().range(["#66c2a5","#fc8d62","#8da0cb","#e78ac3","#a6d854"]);
                             var sizeScale = d3.scale.linear()
@@ -64,10 +63,7 @@ angular
                                         return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
                                       })
                                       .on('click', function(d, i) {
-                                      	
-									  $(document).trigger("themeSelected", {"text":d.text, "color":color(i)});
-									  
-									  console.log(color(i));
+									                      $(document).trigger("themeSelected", {"text":d.text, "color":color(i)});
                                       })
                                       .text(function(d) { return d.text; });
                                 }
