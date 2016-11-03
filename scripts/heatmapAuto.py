@@ -4,6 +4,18 @@
 symbols = [".", ",", '"', "'", ";"]
 
 def getLineData(fileName):
+	""" Parses text file version of a play. Files are organized with repeating structure:
+		ACT 1
+		=====
+
+		Scene 1
+		=======
+
+		BARNARDO  Who's there?
+
+	This function uses this structure to record number of lines for each character in each act/scene.
+	Returns structure with line counts for each character in each act/scene. """
+
 	lineDensities = []
 	f = open(fileName, 'r')
 	scene = -1
@@ -11,22 +23,28 @@ def getLineData(fileName):
 	character = ""
 	for line in f:
 		wordL = line.split()
+		# Read in empty line
 		if wordL == []:
 			continue
+		# If new Act or Induction, have to create new entries in lineDensities
 		elif wordL[0] == "ACT" or wordL[0] == "INDUCTION":
 			character = ""
 			act += 1
 			scene = -1
 			lineDensities += [[]]
+		# If new Scene, have to create new entries within current Act/Induction in lineDensities
 		elif wordL[0] == "Scene":
 			character = ""
 			scene += 1
 			lineDensities[act] += [{}]
+		# Detecting words that are completely capitalized because this indicates a switch in who's speaking
 		elif wordL[0].isupper() and act >= 0 and scene >= 0 and len(wordL[0]) > 2 and (wordL[0][0] not in symbols) and (wordL[0][-1] not in symbols):
 			character = wordL[0]
+			# Ignoring punctuation following name of character speaking
 			if character[-1] == ",":
 				character = character[:-1]
 			characterLen = 1
+			# Taking into account characters with multi word names
 			for word in wordL[1:]:
 				if word.isupper() and len(word) > 2 and ("." not in word):
 					if word[-1] == ",":
@@ -35,28 +53,22 @@ def getLineData(fileName):
 					characterLen += 1
 				else:
 					break
+			# Taking into account when two characters speak at the same time
 			if "AND" in character:
 				split = character.split()
 				for word in split:
 					if word != "AND":						
-						if word not in lineDensities[act][scene]:
-							lineDensities[act][scene][word] = 0
-						if len(wordL) > characterLen:
-							lineDensities[act][scene][word] += 1
+						lineDensities = newCharacter(act, scene, lineDensities, word, wordL)
 			elif "/" in character:
 				split = character.split("/")
 				for word in split:						
-					if word not in lineDensities[act][scene]:
-						lineDensities[act][scene][word] = 0
-					if len(wordL) > characterLen:
-						lineDensities[act][scene][word] += 1
+					lineDensities = newCharacter(act, scene, lineDensities, word, wordL)
+			# Normal situation in which a single character begins new dialogue
 			else:
-				if character not in lineDensities[act][scene]:
-					lineDensities[act][scene][character] = 0
-				if len(wordL) > characterLen:
-					lineDensities[act][scene][character] += 1
+				lineDensities = newCharacter(act, scene, lineDensities, word, wordL)
 		elif character == "":
 			continue
+		# If we don't have a switch in dialogue, we add 1 to the line count of the current character(s) who's speaking
 		elif len(wordL[0]) > 1 and (wordL[0][0].isupper() or wordL[0][1].isupper()):
 			if "AND" in character:
 				split = character.split()
@@ -73,7 +85,19 @@ def getLineData(fileName):
 			continue
 	return lineDensities
 
+def newCharacter(act, scene, lineDensities, word, wordL):
+	""" Adding new character entry in lineDensities data structure when character speaks first time
+	in new scene of an act. """
+	# No dialogue on same line as character heading
+	if word not in lineDensities[act][scene]:
+		lineDensities[act][scene][word] = 0
+	# Dialogue on same line as character heading
+	if len(wordL) > characterLen:
+		lineDensities[act][scene][word] += 1
+	return lineDensities
+
 def characterList(lineDensities):
+	""" Creates list of all characters who speak in the play in order or appearance """
 	characters = []
 	for act in lineDensities:
 		for scene in act:
@@ -83,6 +107,7 @@ def characterList(lineDensities):
 	return characters
 
 def sceneList(lineDensities):
+	""" Creates list of all acts/scenes in a play """
 	sceneL = []
 	roman = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"]
 	for i in range(len(lineDensities)):
@@ -98,6 +123,7 @@ def sceneList(lineDensities):
 	return newList
 
 def formatCharacterList(characterList):
+	""" Replacing single quote chars with double quote chars for purpose of creating JSON objects """
 	strCharacterList = str(characterList)
 	newList = ""
 	for character in strCharacterList:
@@ -110,6 +136,8 @@ def formatCharacterList(characterList):
 
 #character	scene	value
 def makeTSV(lineDensities, characterList):
+	""" Creating TSV file that creates rows organized by (character, scene, # of lines).
+	File used to generate Heatmap for a specific play. """
 	f = open("Ham.tsv", 'w')
 	f.write("character	scene	value\n")
 	sceneNum = 0

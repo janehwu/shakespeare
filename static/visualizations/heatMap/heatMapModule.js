@@ -9,6 +9,7 @@ angular
   			},
             link: function(scope, elem, attrs){
                 $(document).on("playSelected", function(e, play) {
+                  // Based on which play page we're on, a certain 'play' name is passed into request
                   $.ajax({
                     type : "POST",
                     url : "get_play_content",
@@ -16,28 +17,30 @@ angular
                     contentType: 'application/json;charset=UTF-8',
                     success: function(data) {
                       var margin = { top: 20, right: 0, bottom: 50, left: 150 },
-                      // left: 120
-                      // characters = getCharacterList("Ham"),
-                      // scenes = getSceneList("Ham"),
-                      //characters = ["FIRST WITCH", "SECOND WITCH", "ALL", "THIRD WITCH", "MALCOLM", "CAPTAIN", "LENNOX", "ROSS", "DUNCAN", "ANGUS", "MACBETH", "BANQUO", "MESSENGER", "LADY MACBETH", "FLEANCE", "MACDUFF", "DONALBAIN", "PORTER", "OLD MAN", "SERVANT", "SECOND MURDERER", "FIRST MURDERER", "MURDERERS", "THIRD MURDERER", "LORDS", "MURDERER", "HECATE", "LORD", "SECOND APPARITION", "THIRD APPARITION", "FIRST APPARITION", "LADY MACDUFF", "SON", "DOCTOR", "GENTLEWOMAN", "MENTEITH", "CAITHNESS", "SEYTON", "SIWARD", "SOLDIER", "YOUNG SIWARD"],
+                      // getting character list from play JSON file
                       characters = data.characters,
+                      // getting scene list from play JSON file
                       scenes = data.scenes,
                       width = 1200 - margin.left - margin.right,
                       height = 750 - margin.top - margin.bottom,
+                      // setting dimensions of heatmap cells
                       gridWidth = Math.floor(width / scenes.length),
                       gridHeight = Math.floor(height / characters.length),
                       legendElementWidth = gridWidth * 2,
                       buckets = 9,
+                      // Gradient of blue for line densities
                       colors = ["#E2E9F7","#C6D3F0","#AABEE9","#8DA8E2","#7192DB","#557DD4","#3867CD","#1C51C6","#003CBF"];
+                      // Getting TSV file for generating correct heatmap
                       datasets = ["./static/visualizations/heatMap/heatmapTSV/" + play.filename + ".tsv"];
 
-                      // Is it ok that #chart is not defined in this document...it was in lineDensityHeat.html
+                      // Allocating space for heatmap
                       var svg = d3.select("#chart").append("svg")
                       .attr("width", width + margin.left + margin.right)
                       .attr("height", height + margin.top + margin.bottom)
                       .append("g")
                       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+                      // Putting labels for each character on the y-axis
                       var characterLabels = svg.selectAll(".characterLabel")
                       .data(characters)
                       .enter().append("text")
@@ -45,10 +48,12 @@ angular
                       .attr("x", 0)
                       .attr("y", function (d, i) { return i * gridHeight; })
                       .style("text-anchor", "end")
+                      // making character lable clickable so that we can return the name to the character bar graph visualization
                       .on('click', function(d) {$(document).trigger("characterSelected", d);})
                       .attr("transform", "translate(-6," + gridHeight + ")")
                       .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "characterLabel mono axis axis-characters" : "characterLabel mono axis"); });
 
+                      // Putting labels for each scene on the x-axis of heatmap
                       var sceneLabels = svg.selectAll(".sceneLabel")
                       .data(scenes)
                       .enter().append("text")
@@ -60,6 +65,7 @@ angular
                       .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "sceneLabel mono axis axis-scenes" : "sceneLabel mono axis"); });
 
                       var heatmapChart = function(tsvFile) {
+                        // Opening TSV file and collecting line densities for each character
                         d3.tsv(tsvFile,
                         function(d) {
                           return {
@@ -69,6 +75,7 @@ angular
                           };
                         },
                         function(error, data) {
+                          // Determining cell color depending upon character's line density
                           var colorScale = d3.scale.quantile()
                               .domain([0, buckets - 1, d3.max(data, function (d) { return d.value; })])
                               .range(colors);
@@ -78,6 +85,7 @@ angular
 
                           cards.append("title");
 
+                          // Adding cell to appropriate place in heatmap
                           cards.enter().append("rect")
                               .attr("x", function(d) { return (d.scene - 1) * gridWidth; })
                               .attr("y", function(d) { return (d.character - 1) * gridHeight; })
@@ -95,6 +103,7 @@ angular
                           
                           cards.exit().remove();
 
+                          // Creating legend showing which color corresponds to which line densities
                           var legend = svg.selectAll(".legend")
                               .data([0].concat(colorScale.quantiles()), function(d) { return d; });
 
