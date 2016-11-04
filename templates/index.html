@@ -113,10 +113,12 @@
 
         <!--D3 Dependencies-->
     <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
-<!--    <script src="//d3js.org/d3.v4.min.js" charset="utf-8"></script> -->
     <script src="//d3js.org/queue.v1.min.js"></script>
 
     <!--App Dependencies-->
+
+    <script src="{{ url_for('static', filename='../static/plays/barModule.js') }}"></script>
+
     <script src="{{ url_for('static', filename='../static/plays/playService.js') }}"></script>
     <script src="{{ url_for('static', filename='../static/plays/playModule.js') }}"></script>
     <script src="{{ url_for('static', filename='../static/plays/PlayController.js') }}"></script>
