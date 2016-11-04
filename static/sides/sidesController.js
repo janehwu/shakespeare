@@ -39,6 +39,7 @@
       success: function(data) {
           self.prev = data[1];
           self.lines = data[0];
+          self.indexes = [];
           for(var i = 0; i < data[0].length; i++) {
             self.indexes.push(i);
           }

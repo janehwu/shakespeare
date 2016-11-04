@@ -104,9 +104,16 @@ def get_sides(play, character, act_selected, scene_selected):
 									lines.append(line.text)
 								if i > 0 and scene[i-1].tag == "SPEECH":
 									numLines = len(list(scene[i-1])) - 1
-									prev_lines.append(scene[i-1][numLines].text)
-								elif i == 0:
-									prev_lines.append("(beginning of scene)")
+									prev_lines.insert(0, scene[i-1][numLines].text)
+									for j in range(numLines-1, 0, -1):
+										prev_lines.insert(0, scene[i-1][j].text)
+										if not scene[i-1][j].text:
+											line_words = []
+											for text in scene[i-1][j].itertext():
+												line_words.append(text.lstrip())
+											prev_lines.insert(0, " ".join(line_words))
+										elif scene[i-1][j].text[0].isupper():
+											break	
 								else:
 									prev_lines.append(scene[i-1].text)
 								total_lines.append(lines)

@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="../static/app.css">
   </head>
 
-  <body ng-app="shakespeareApp" layout="column" ng-controller="AppController as ctrl">
+  <body ng-cloak ng-app="shakespeareApp" layout="column" ng-controller="AppController as ctrl">
     <!--Toolbar-->
     <md-toolbar layout="row">
       <md-button class="menu" ng-show="ctrl.selected" ng-click="ctrl.toggleList($event)" aria-label="Show Play List">
