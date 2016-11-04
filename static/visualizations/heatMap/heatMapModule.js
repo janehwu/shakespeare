@@ -45,7 +45,9 @@ angular
                       .attr("x", 0)
                       .attr("y", function (d, i) { return i * gridHeight; })
                       .style("text-anchor", "end")
-                      .on('click', function(d) {$(document).trigger("characterSelected", d);})
+                      .on('click', function(d) {
+                        $(document).trigger("characterSelected", {"charName": d, "playName": play.filename});
+                        console.log([d, play.filename]);})
                       .attr("transform", "translate(-6," + gridHeight + ")")
                       .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "characterLabel mono axis axis-characters" : "characterLabel mono axis"); });
 

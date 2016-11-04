@@ -199,6 +199,18 @@ path.chord {
   color: white;
 }
 
+.bar {
+  fill: teal;
+}
+
+.bar:hover {
+  fill: purple;
+}
+
+.axis--x path {
+  display: "";
+}
+
 .legend {
   border: 1px solid #555555;
   border-radius: 5px 5px 5px 5px;
