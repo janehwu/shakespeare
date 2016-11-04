@@ -36,23 +36,24 @@ for play in filenames:
 		numEntries[word] = len(themeDic[word])
 		maxLen = max(maxLen, len(themeDic[word]))
 
-	table = [["" for i in range(len(numEntries))] for j in range(maxLen)]
+	table = [[" " for i in range(3*len(numEntries))] for j in range(maxLen)]
 
 	themeCounter = 0
 	characterCounter = 0
 	for theme in themeDic:
 		for character in themeDic[theme]:
-			table[characterCounter][themeCounter] = character + " " + str(themeDic[theme][character]) + " " + characterColor[character]
+			table[characterCounter][themeCounter*3] = character
+			table[characterCounter][themeCounter*3 + 1] = str(themeDic[theme][character])
+			table[characterCounter][themeCounter*3 + 2] = characterColor[character]
 			characterCounter += 1
 		characterCounter = 0
 		themeCounter += 1
-
 
 	with open(play + '.csv', 'wb') as csvfile:
 	    themeS = ""
 
 	    for theme in themeDic:
-	    	themeS += theme + ","
+	    	themeS += theme + "," + theme + "Lines," + theme + "Color,"
 	    themeS = themeS[:-1]
 	    themeS += "\n"
 	    csvfile.write(themeS)
