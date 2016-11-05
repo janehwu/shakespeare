@@ -49,7 +49,9 @@ angular
                       .attr("y", function (d, i) { return i * gridHeight; })
                       .style("text-anchor", "end")
                       // making character lable clickable so that we can return the name to the character bar graph visualization
-                      .on('click', function(d) {$(document).trigger("characterSelected", d);})
+                      .on('click', function(d) {
+                        $(document).trigger("characterSelected", {"charName": d, "playName": play.filename});
+                        console.log([d, play.filename]);})
                       .attr("transform", "translate(-6," + gridHeight + ")")
                       .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "characterLabel mono axis axis-characters" : "characterLabel mono axis"); });
 

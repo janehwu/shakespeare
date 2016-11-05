@@ -1,5 +1,5 @@
 angular
-  .module('shakespeareApp', ['ngMaterial', 'playModule', 'speakChordModule', 'heatMapModule', 'wordCloudModule', 'themeGraphModule'])
+  .module('shakespeareApp', ['ngMaterial', 'playModule', 'speakChordModule', 'heatMapModule', 'wordCloudModule', 'themeGraphModule', 'barModule'])
   .config(function($mdThemingProvider){
       $mdThemingProvider.theme('default')
           .primaryPalette('brown')
