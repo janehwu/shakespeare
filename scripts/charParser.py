@@ -87,17 +87,20 @@ for arg in sys.argv:
     print file
     print "------------------------"
     for char in chars:
-        csv += char.capitalize()
-        csv +=  ",\"d3.hsl(185, 1, " 
-        csv += str(lumin/100.0)
-        csv += ")\"\n"
-        lumin += luminAddition
+		char = char.split(" ")
+		char = [c.capitalize() for c in char]
+		char = " ".join(char)
+		csv += char 
+		csv +=  ",\"d3.hsl(185, 1, " 
+		csv += str(lumin/100.0)
+		csv += ")\"\n"
+		lumin += luminAddition
        
 
 
-    f = open("./src/visualizations/csvDat/" + filename + ".csv", 'w+')
+    f = open("./static/visualizations/speakChord/csv/" + filename + ".csv", 'w+')
     f.write(csv)
     
-    f = open("./src/visualizations/matrixDat/" + filename + ".json", 'w+')
+    f = open("./static/visualizations/speakChord/matrix/" + filename + ".json", 'w+')
     f.write(str(matrix))
 
