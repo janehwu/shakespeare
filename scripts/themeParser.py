@@ -111,7 +111,8 @@ for play in filenames:
 					if not line.text:
 						continue
 					for word in frequency_list:
-						if word in line.text or word.capitalize() in line.text:
+						lineWords = line.text.split(' ')
+						if word in lineWords or word.capitalize() in lineWords:
 							themes += word + ","
 							quote = line.text
 				
