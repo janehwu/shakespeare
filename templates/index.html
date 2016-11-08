@@ -66,7 +66,8 @@
 
         <!--Play content-->
         <md-content style="overflow:scroll" flex id="content">
-        <play-page ng-show="ctrl.selected" play="ctrl.selected" height="100%"></play-page>
+        <div ng-view></div>
+        <!--<play-page ng-show="ctrl.selected" play="ctrl.selected" height="100%"></play-page>-->
         <div ng-show="!ctrl.selected">
            <div style="margin:16px" class="md-headline">Shakespeare is hard to read - we're making it easier.</div>
             <div layout="row">
@@ -105,6 +106,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 
         <!--D3 Dependencies-->

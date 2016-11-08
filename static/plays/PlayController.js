@@ -2,28 +2,28 @@
     angular
        .module('playModule')
        .controller('PlayController', [
-          'navBarService', '$mdSidenav', '$mdBottomSheet', '$timeout', '$log',
+          'navBarService', '$routeParams', '$scope',
           PlayController])
        .service('navBarService', ['$q', NavBarService]);
 
   /**
    * Controller for Play page
    * @param navBarService
-   * @param $scope
+   * @param $routeParams
    * @constructor
    */
-  function PlayController( navBarService, $scope) {
+  function PlayController(navBarService, $routeParams, $scope) {
     var self = this;
 
     self.selected = "Summary";
     self.getPlayInfo  = getPlayInfo;
     self.showFeature = showFeature;
-    self.play = $scope.play;
-    self.playName = "";
+    self.playName = "hi";
     self.playChars = [];
     self.playSummary = "";
     self.playScenes = [];
-    self.file = "";
+    self.file = $routeParams.file;
+    self.scope = $scope;
 
 
     // Load all registered users
@@ -33,8 +33,10 @@
             self.features    = [].concat(features);
           });
     
-    function getPlayInfo(play) {
-      var fileName = play["filename"];
+    function getPlayInfo(play_file) {
+      var fileName = play_file;
+      var scope = self.scope;
+      var that = self;
 
       // Currently hard coded for Hamlet until JSON files fixed.
       $.ajax({
@@ -43,27 +45,31 @@
       data: String(fileName),
       contentType: 'application/json;charset=UTF-8',
       success: function(data) {
-          $.each(data, function(key, val) {
-            self.playName = data.name;
-            self.playChars = data.characters;
-            self.playSummary = data.summary;
-            self.playScenes = data.scenes;
-          });
-        }
+        $.each(data, function(key, val) {
+          self.file = fileName;
+          self.playName = data.name;
+          self.playChars = data.characters;
+          self.playSummary = data.summary;
+          self.playScenes = data.scenes;
+        });
+      }
       });
-
     }
 
     function showFeature(feature) {
       self.selected = feature;
     }
 
-    $(document).on("playSelected", function(e, play) {
-      self.getPlayInfo(play);
-      self.file = play["filename"];
-    });	  
-  }
+    $(document).on("playFileSelected", function(e, filename) {
+      self.getPlayInfo(filename);
+      self.file = filename;
+    });
 
+    $scope.$watch('self.playName', function (newValue) {
+      console.log($scope);
+      self.getPlayInfo(self.file);
+    }).bind(self);
+}
 
 /**
    * Plays DataService
