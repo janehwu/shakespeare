@@ -63,10 +63,10 @@ angular
 					
 				});
 							   
-				$(document).on("playSelected", function(e, play) {
+	//			$(document).on("playSelected", function(e, play) {
 
 
-					var json = "./static/visualizations/themeGraph/json/" + play.filename + ".json";
+					var json = "./static/visualizations/themeGraph/json/" + scope.play + ".json";
 					var width = 1200;
 					var height = 175;
 					var svg = d3.select(".themeGraph").append("svg")
@@ -220,7 +220,7 @@ angular
 
                     
                     
-                });
+      //          });
                 
             }
 		};

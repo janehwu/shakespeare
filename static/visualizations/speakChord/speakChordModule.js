@@ -1,5 +1,5 @@
 angular
-	.module('speakChordModule',['ngMaterial'])
+	.module('speakChordModule',['ngMaterial', 'ngRoute'])
 	.directive('speakChord', function($window) {
 		return {
             restrict:'EA',
@@ -8,10 +8,8 @@ angular
   				play: '='
   			},
             link: function(scope, elem, attrs){
-                $(document).on("playSelected", function(e, play) {
-                        
-                    var csv = "./static/visualizations/speakChord/csv/" + play.filename + ".csv";
-                    var json = "./static/visualizations/speakChord/matrix/" + play.filename + ".json";
+                    var csv = "./static/visualizations/speakChord/csv/" + scope.play + ".csv";
+                    var json = "./static/visualizations/speakChord/matrix/" + scope.play + ".json";
 
                     
                     var width = 900,
@@ -40,7 +38,7 @@ angular
                       .append("g")
                         .attr("id", "circle")
                         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
+                    console.log(d3.select(".Visualizations"));
                     svg.append("circle")
                         .attr("r", outerRadius);
 
@@ -110,11 +108,7 @@ angular
                         });
                       }
                     }
-
-                    
-                    
-                });
                 
-            }
+           }
 		};
-	})
+	});

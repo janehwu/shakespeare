@@ -15,10 +15,7 @@ angular
       $routeProvider.when('/play/:file', {
         templateUrl: './static/plays/play.html',
         controller: 'PlayController',
-        controllerAs: 'ctrl',
-        resolve:{params: function($route) {
-          $(document).trigger("playFileSelected", $route.current.params["file"]);
-        }}
+        controllerAs: 'ctrl'
       });
   })
   .controller('AppController', 
@@ -92,7 +89,6 @@ function AppController(navService, $mdSidenav, $scope, $location) {
     function selectPlay (play) {
       self.selected = angular.isNumber(play) ? self.plays[play] : play;
       self.searchTerm = "";
-      $(document).trigger("playSelected", self.selected);
       self.location.path("/play/" + self.selected["filename"]);
     }
 

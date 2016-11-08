@@ -8,8 +8,8 @@ angular
   				    play: '='
             },
             link: function(scope, elem, attrs){
-                $(document).on("playSelected", function(e, play) {
-                    var fileName = play.filename;
+           //     $(document).on("playSelected", function(e, play) {
+                    var fileName = scope.play;
                     var frequency_list = [];                 
                     
                     // Currently hard coded for Hamlet until JSON files fixed.
@@ -68,7 +68,7 @@ angular
                                       .text(function(d) { return d.text; });
                                 }
                           } });
-                    });
+          //          });
 
                 }
 

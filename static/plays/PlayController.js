@@ -18,13 +18,7 @@
     self.selected = "Summary";
     self.getPlayInfo  = getPlayInfo;
     self.showFeature = showFeature;
-    self.playName = "hi";
-    self.playChars = [];
-    self.playSummary = "";
-    self.playScenes = [];
-    self.file = $routeParams.file;
     self.scope = $scope;
-
 
     // Load all registered users
     navBarService
@@ -32,11 +26,11 @@
           .then( function( features ) {
             self.features    = [].concat(features);
           });
+    getPlayInfo($routeParams.file);
     
     function getPlayInfo(play_file) {
       var fileName = play_file;
-      var scope = self.scope;
-      var that = self;
+      $scope.file = fileName;
 
       // Currently hard coded for Hamlet until JSON files fixed.
       $.ajax({
@@ -46,11 +40,10 @@
       contentType: 'application/json;charset=UTF-8',
       success: function(data) {
         $.each(data, function(key, val) {
-          self.file = fileName;
-          self.playName = data.name;
-          self.playChars = data.characters;
-          self.playSummary = data.summary;
-          self.playScenes = data.scenes;
+          $scope.playName = data.name;
+          $scope.playChars = data.characters;
+          $scope.playSummary = data.summary;
+          $scope.playScenes = data.scenes;
         });
       }
       });
@@ -59,16 +52,6 @@
     function showFeature(feature) {
       self.selected = feature;
     }
-
-    $(document).on("playFileSelected", function(e, filename) {
-      self.getPlayInfo(filename);
-      self.file = filename;
-    });
-
-    $scope.$watch('self.playName', function (newValue) {
-      console.log($scope);
-      self.getPlayInfo(self.file);
-    }).bind(self);
 }
 
 /**

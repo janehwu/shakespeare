@@ -10,9 +10,6 @@
   function SidesController($scope) {
     var self = this;
 
-    self.file = $scope.file;
-    self.characters = $scope.characters;
-    self.scenes = $scope.scenes;
     self.lines = [];
     self.prev = [];
     self.indexes = [];
@@ -54,12 +51,6 @@
           $scope.$apply();
         }
       });
-    }
-    $(document).on("playSelected", function(e, play) {
-      self.character = "";
-      self.scene = "";
-      self.hasLines = false;
-      self.showError = false;
-    });   
+    } 
   }
 

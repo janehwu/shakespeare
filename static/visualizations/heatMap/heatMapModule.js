@@ -8,12 +8,12 @@ angular
   				play: '='
   			},
             link: function(scope, elem, attrs){
-                $(document).on("playSelected", function(e, play) {
+   //             $(document).on("playSelected", function(e, play) {
                   // Based on which play page we're on, a certain 'play' name is passed into request
                   $.ajax({
                     type : "POST",
                     url : "get_play_content",
-                    data: String(play.filename),
+                    data: String(scope.play),
                     contentType: 'application/json;charset=UTF-8',
                     success: function(data) {
                       var margin = { top: 20, right: 0, bottom: 50, left: 150 },
@@ -31,7 +31,7 @@ angular
                       // Gradient of blue for line densities
                       colors = ["#E2E9F7","#C6D3F0","#AABEE9","#8DA8E2","#7192DB","#557DD4","#3867CD","#1C51C6","#003CBF"];
                       // Getting TSV file for generating correct heatmap
-                      datasets = ["./static/visualizations/heatMap/heatmapTSV/" + play.filename + ".tsv"];
+                      datasets = ["./static/visualizations/heatMap/heatmapTSV/" + scope.play + ".tsv"];
 
                       // Allocating space for heatmap
                       var svg = d3.select("#chart").append("svg")
@@ -50,8 +50,7 @@ angular
                       .style("text-anchor", "end")
                       // making character lable clickable so that we can return the name to the character bar graph visualization
                       .on('click', function(d) {
-                        $(document).trigger("characterSelected", {"charName": d, "playName": play.filename});
-                        console.log([d, play.filename]);})
+                        $(document).trigger("characterSelected", {"charName": String(d), "playName": scope.play}); })
                       .attr("transform", "translate(-6," + gridHeight + ")")
                       .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "characterLabel mono axis axis-characters" : "characterLabel mono axis"); });
 
@@ -134,7 +133,7 @@ angular
                     }
                   });
                 
-                });
+      //          });
               }
 		};
 	})
