@@ -69,17 +69,13 @@ angular
 					var json = "./static/visualizations/themeGraph/json/" + scope.play + ".json";
 					var width = 1200;
 					var height = 175;
-					var svg = d3.select(".themeGraph").append("svg")
-							.attr("height", height)
-							.attr("width", width)
-							.attr("id", "chart");
 
 
 					var x = d3.scale.ordinal().rangePoints([0, width], .1),
 						y = d3.scale.linear().rangeRound([height, 0]);
 
 					
-					var g = svg.append("g");
+		
 					
 				
 				
@@ -87,6 +83,12 @@ angular
 
 					d3.json(json, function(error, data) {
 					  if (error) throw error;
+					  			var svg = d3.select(".themeGraph").append("svg")
+							.attr("height", height)
+							.attr("width", width)
+							.attr("id", "chart");
+
+							var g = svg.append("g");
 
 					  x.domain(data.map(function(d) { return d.act; }));
 					  y.domain([0, d3.max(data, function(d) { return 1; })]);

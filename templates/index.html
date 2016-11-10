@@ -18,9 +18,9 @@
   <body ng-cloak ng-app="shakespeareApp" layout="column" ng-controller="AppController as ctrl">
     <!--Toolbar-->
     <md-toolbar layout="row">
-<!--       <md-button class="menu" ng-show="ctrl.selected" ng-click="ctrl.toggleList($event)" aria-label="Show Play List">
+      <md-button class="menu" ng-show="ctrl.selected" ng-click="ctrl.toggleList($event)" aria-label="Show Play List">
         <md-icon>menu</md-icon>
-      </md-button> -->
+      </md-button>
       <md-button class="menu" ng-click="ctrl.viewHomePage()">
                 <md-icon>home</md-icon>
       </md-button>
@@ -29,7 +29,7 @@
 
 {% raw %}
     <div flex layout="row">
-<!--         <md-sidenav md-component-id='left' ng-click="ctrl.toggleList($event)" class="md-whiteframe-z2" >
+        <md-sidenav md-component-id='left' ng-click="ctrl.toggleList($event)" class="md-whiteframe-z2" >
           <md-subheader class="nav-menu">
             <md-menu style="padding-right:8px">
               <md-button class="md-no-focus sort" ng-click="$mdOpenMenu($event)">
@@ -62,7 +62,7 @@
                 </md-button>
             </md-list-item>
           </md-list>
-        </md-sidenav> -->
+        </md-sidenav>
 
         <!--Play content-->
         <md-content style="overflow:scroll" flex id="content">

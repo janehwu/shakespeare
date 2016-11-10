@@ -30,17 +30,7 @@ angular
 
                     var path = d3.svg.chord()
                         .radius(innerRadius);
-
-                    d3.selectAll("svg").remove();
-                    var svg = d3.select(".Visualizations").append("svg")
-                        .attr("width", width)
-                        .attr("height", height)
-                      .append("g")
-                        .attr("id", "circle")
-                        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-                    console.log(d3.select(".Visualizations"));
-                    svg.append("circle")
-                        .attr("r", outerRadius);
+                    
 
                     queue()
                         .defer(d3.csv, csv)
@@ -48,6 +38,14 @@ angular
                         .await(ready);
 
                     function ready(error, cities, matrix) {
+                      var svg = d3.select(".Visualizations").append("svg")
+                        .attr("width", width)
+                        .attr("height", height)
+                      .append("g")
+                        .attr("id", "circle")
+                        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+                    svg.append("circle")
+                        .attr("r", outerRadius);
                       if (error) throw error;
 
                       // Compute the chord layout.
