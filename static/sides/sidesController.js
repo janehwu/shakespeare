@@ -10,17 +10,16 @@
   function SidesController($scope) {
     var self = this;
 
-    self.file = $scope.file;
-    self.characters = $scope.characters;
-    self.scenes = $scope.scenes;
     self.lines = [];
     self.prev = [];
+    self.prevChars = [];
     self.indexes = [];
 
     self.character = "";
     self.scene = "";
     self.hasLines = false;
     self.showError = false;
+    self.showNames = false;
 
     self.selectChar = function(character) { self.character = character }
     self.selectScene = function(scene) { self.scene = scene }
@@ -39,6 +38,7 @@
       success: function(data) {
           self.prev = data[1];
           self.lines = data[0];
+          self.prevChars = data[2];
           self.indexes = [];
           for(var i = 0; i < data[0].length; i++) {
             self.indexes.push(i);
@@ -54,12 +54,6 @@
           $scope.$apply();
         }
       });
-    }
-    $(document).on("playSelected", function(e, play) {
-      self.character = "";
-      self.scene = "";
-      self.hasLines = false;
-      self.showError = false;
-    });   
+    } 
   }
 

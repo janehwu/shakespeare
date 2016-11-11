@@ -1,12 +1,26 @@
 angular
-  .module('shakespeareApp', ['ngMaterial', 'playModule', 'speakChordModule', 'heatMapModule', 'wordCloudModule', 'themeGraphModule', 'barModule'])
-  .config(function($mdThemingProvider){
+  .module('shakespeareApp', 
+    ['ngMaterial',
+     'ngRoute',
+     'playModule', 
+     'speakChordModule', 
+     'heatMapModule', 
+     'wordCloudModule', 
+     'themeGraphModule', 
+     'barModule',
+     'pieChartModule'])
+  .config(function($mdThemingProvider, $routeProvider){
       $mdThemingProvider.theme('default')
           .primaryPalette('brown')
           .accentPalette('red');
+      $routeProvider.when('/play/:file', {
+        templateUrl: './static/plays/play.html',
+        controller: 'PlayController',
+        controllerAs: 'ctrl'
+      });
   })
   .controller('AppController', 
-    ['navService', '$mdSidenav', '$scope', AppController])
+    ['navService', '$mdSidenav', '$scope', '$location', AppController])
   .service('navService', ['$q', NavService]);
 
 /**
@@ -14,9 +28,10 @@ angular
  * @param navService
  * @param $mdSidenav
  * @param $scope
+ * @param $location
  * @constructor
  */
-function AppController(navService, $mdSidenav, $scope) {
+function AppController(navService, $mdSidenav, $scope, $location) {
     var self = this;
     self.selected;
     self.plays = [];
@@ -28,6 +43,7 @@ function AppController(navService, $mdSidenav, $scope) {
     self.selectPlay = selectPlay;
 
     self.showYears = false;
+    self.location = $location;
 
     self.sortBy = "name";
     self.sortList = sortList;
@@ -36,6 +52,11 @@ function AppController(navService, $mdSidenav, $scope) {
     self.toggleSearch = toggleSearchMode;
 
     self.viewHomePage = viewHomePage;
+
+    var url = $location.path().split("/");
+    if (url.length > 1) {
+      self.selected = url[url.length-1];
+    }
 	
     // Load all plays
     navService
@@ -50,7 +71,10 @@ function AppController(navService, $mdSidenav, $scope) {
             });
           });
 
-    function viewHomePage() { self.selected = null; }
+    function viewHomePage() { 
+      self.selected = null; 
+      self.location.path("/");
+    }
 
 	
 	
@@ -70,8 +94,8 @@ function AppController(navService, $mdSidenav, $scope) {
 
     function selectPlay (play) {
       self.selected = angular.isNumber(play) ? self.plays[play] : play;
-      self.searchTerm = ""
-      $(document).trigger("playSelected", self.selected);
+      self.searchTerm = "";
+      self.location.path("/play/" + self.selected["filename"]);
     }
 
     function sortList(sortBy) {

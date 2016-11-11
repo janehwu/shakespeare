@@ -3,13 +3,12 @@ angular
 	.directive('wordCloud', function($window) {
 		return {
             restrict:'EA',
-            template:"<svg width='100%' height='100%'></svg>",
+            template:"<svg></svg>",
             scope: {
   				    play: '='
             },
             link: function(scope, elem, attrs){
-                $(document).on("playSelected", function(e, play) {
-                    var fileName = play.filename;
+                    var fileName = scope.play;
                     var frequency_list = [];                 
                     
                     // Currently hard coded for Hamlet until JSON files fixed.
@@ -47,7 +46,7 @@ angular
                                 .on("end", draw)
                                 .start();
                                 function draw(words) {
-                                  d3.select(".Themes").append("svg")
+                                  var cloud = d3.select(".Themes").append("svg")
                                       .attr("width", width)
                                       .attr("height", height)
                                       .append("g")
@@ -66,10 +65,10 @@ angular
 									                      $(document).trigger("themeSelected", {"text":d.text, "color":color(i)});
                                       })
                                       .text(function(d) { return d.text; });
+
+                                  cloud.append("title").text(function(d) { return d.size; });
                                 }
                           } });
-                    });
-
                 }
 
     };

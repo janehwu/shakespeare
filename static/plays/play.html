@@ -1,7 +1,7 @@
 <div layout="column" ng-cloak>
   <md-content>
-    <div layout="row" style="margin:8px 0 8px 0">
-      <h1 style="margin-top:8px"> {{ctrl.play["name"]}} </h1>
+    <div layout="row" style="margin:8px;padding-bottom:32px">
+      <h1 style="margin-top:8px"> {{playName}} </h1>
       <md-tabs class="feature-tabs" md-autoselect md-no-pagination="true">
         <md-tab style="width:100px" ng-click="ctrl.showFeature('Summary')">Summary</md-tab>
         <md-tab style="width:100px" ng-click="ctrl.showFeature('Themes')">Themes</md-tab>
@@ -14,23 +14,26 @@
 
     <md-card ng-show="ctrl.selected == 'Summary'" style="padding:16px" md-theme="default" md-theme-watch>
       <h2 class="md-headline">Summary</h2>
-      <p>{{ctrl.playSummary}}</p>  
+      <p>{{playSummary}}</p>  
     </md-card>
 
     <md-card ng-show="ctrl.selected == 'Sides'" style="padding:16px" md-theme="default" md-theme-watch>
-      <sides file="ctrl.file" characters="ctrl.playChars" scenes="ctrl.playScenes"></sides>
+      <sides file="file" characters="playChars" scenes="playScenes"></sides>
     </md-card>
     <div style="text-align: center" ng-show="ctrl.selected == 'Visualizations'" class="Visualizations"></div>
     <div style="text-align: center" ng-show="ctrl.selected == 'Characters'" id="chart"></div>
-      <div style="text-align: center" ng-show-"ctrl.selected == 'Characters'" class="barChart"></div>
+    	<h2 ng-show="ctrl.selected == 'Characters'"> This tab gives visualizations about the characters. The heat map below shows the number of scenes shared by two characters in the play. To see the number of lines a character speaks for each scene in this play, feel free to click on a character, and scrolling down will display the visualization. Note that to deselect the bar graph for a character, simply click on the character's name again. </h2>
+      <div style="text-align: center" ng-show="ctrl.selected == 'Characters'" class="barChart"></div>
     <div style="text-align: center" ng-show="ctrl.selected == 'Themes'" class="Themes" ng-controller="PlayController"></div>
   	<div style="text-align: center" ng-show="ctrl.selected == 'Themes'" class="themeGraph" ng-controller="PlayController"></div>
+    <div style="text-align: center" ng-show="ctrl.selected == 'Themes'" class="pieChart" ng-controller="PlayController"></div>
 
     <bar-chart></bar-chart>
-    <speak-chord></speak-chord>
-    <heat-map></heat-map>
-    <word-cloud></word-cloud>
-	<theme-graph></theme-graph>
+    <speak-chord play="file"></speak-chord>
+    <heat-map play="file"></heat-map>
+    <word-cloud play="file"></word-cloud>
+	<theme-graph play="file"></theme-graph>
+  <pie-chart play="file"></pie-chart>
 
   </md-content>
 </div>

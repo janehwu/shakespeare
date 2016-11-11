@@ -24,6 +24,9 @@
       </md-menu>
       
     <md-button class="md-raised md-cornered" ng-click="ctrl.getData()">Generate Sides</md-button>
+    <md-checkbox ng-model="ctrl.showNames" aria-label="Show previous character">
+            Show previous characters' names
+          </md-checkbox>
     </div>
     <div class="row" style="margin-bottom:16px">
       <span>{{ctrl.character}}</span>
@@ -33,12 +36,11 @@
       <div ng-show="ctrl.showError">This character does not have any lines in the selected scene.</div>
       <div ng-show="ctrl.hasLines" ng-repeat="index in ctrl.indexes">
         <br>
+        <div ng-show="ctrl.showNames" style="font-style: italic">{{ctrl.prevChars[index]}}</div>
         <div style="font-style: italic" ng-repeat="item in ctrl.prev[index] track by $index">{{item}}</div>
         <br>
         <div>{{ctrl.character}}</div>
-        <div ng-repeat="line in ctrl.lines[index] track by $index">
-          <div>{{line}}</div>
-        </div>
+        <div ng-repeat="line in ctrl.lines[index] track by $index">{{line}}</div>
       </div>
     </md-content>
   </form>
