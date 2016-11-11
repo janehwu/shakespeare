@@ -7,21 +7,7 @@ angular
 			scope: {
 				play: '='
 			},
-<<<<<<< HEAD
-			link: function(scope, elem, attrs) {
-				$(document).on("characterSelected", function(e, data) {
-					console.log(data);
-					var characterName = data.charName;
-					var playName = data.playName;
-					var margin = {top: 20, right: 0, bottom: 100, left: 60},
-						width = 1100 - margin.left - margin.right, 
-						height = 400 - margin.top - margin.bottom;
 
-					if(d3.select(".barChart" + characterName)[0][0] !== null) {
-						d3.select(".barChart" + characterName).remove();
-					}
-					else {
-=======
 				link: function(scope, elem, attrs) {
 					$(document).on("characterSelected", function(e, data) {
 						console.log(data);
@@ -49,8 +35,6 @@ angular
 							d3.select(".barChart" + characterName).remove();
 						}
 						else {
-
->>>>>>> barChart
 						var svg = d3.select(".barChart").append("svg")
 									.attr("class", function(d) { return "barChart" + characterName;})
 									.attr("width", width + margin.left + margin.right)
