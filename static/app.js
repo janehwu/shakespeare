@@ -7,7 +7,8 @@ angular
      'heatMapModule', 
      'wordCloudModule', 
      'themeGraphModule', 
-     'barModule'])
+     'barModule',
+     'pieChartModule'])
   .config(function($mdThemingProvider, $routeProvider){
       $mdThemingProvider.theme('default')
           .primaryPalette('brown')
