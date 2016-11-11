@@ -46,7 +46,7 @@ angular
                                 .on("end", draw)
                                 .start();
                                 function draw(words) {
-                                  d3.select(".Themes").append("svg")
+                                  var cloud = d3.select(".Themes").append("svg")
                                       .attr("width", width)
                                       .attr("height", height)
                                       .append("g")
@@ -65,6 +65,8 @@ angular
 									                      $(document).trigger("themeSelected", {"text":d.text, "color":color(i)});
                                       })
                                       .text(function(d) { return d.text; });
+
+                                  cloud.append("title").text(function(d) { return d.size; });
                                 }
                           } });
                 }
