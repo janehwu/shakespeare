@@ -3,12 +3,11 @@ angular
 	.directive('wordCloud', function($window) {
 		return {
             restrict:'EA',
-            template:"<svg width='100%' height='100%'></svg>",
+            template:"<svg></svg>",
             scope: {
   				    play: '='
             },
             link: function(scope, elem, attrs){
-           //     $(document).on("playSelected", function(e, play) {
                     var fileName = scope.play;
                     var frequency_list = [];                 
                     
@@ -68,8 +67,6 @@ angular
                                       .text(function(d) { return d.text; });
                                 }
                           } });
-          //          });
-
                 }
 
     };

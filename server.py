@@ -70,7 +70,6 @@ filenames = {
 }
 
 def int_to_roman(scene):
-	print scene
 	conv = [[1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'],
 			[ 100, 'C'], [ 90, 'XC'], [ 50, 'L'], [ 40, 'XL'],
 			[  10, 'X'], [  9, 'IX'], [  5, 'V'], [  4, 'IV'],
@@ -89,6 +88,7 @@ def get_sides(play, character, act_selected, scene_selected):
 
 	total_lines = []
 	total_prev_lines = []
+	total_prev_characters = []
 	for act in e.iter("ACT"):
 		if act[0].text == ("ACT " + act_selected):
 			for scene in act.iter("SCENE"):
@@ -104,7 +104,19 @@ def get_sides(play, character, act_selected, scene_selected):
 									lines.append(line.text)
 								if i > 0 and scene[i-1].tag == "SPEECH":
 									numLines = len(list(scene[i-1])) - 1
-									prev_lines.insert(0, scene[i-1][numLines].text)
+									# If there are stage directions
+									if not scene[i-1][numLines].text:
+										line_words = []
+										for text in scene[i-1][numLines].itertext():
+											line_words.append(text.lstrip())
+										prev_lines.insert(0, ": ".join(line_words))
+									else:
+										prev_lines.insert(0, scene[i-1][numLines].text)
+
+									# Find previous character, if applicable
+									total_prev_characters.append(scene[i-1].find("SPEAKER").text)
+
+									# Find previous lines, until first capitalized line
 									for j in range(numLines-1, 0, -1):
 										prev_lines.insert(0, scene[i-1][j].text)
 										if not scene[i-1][j].text:
@@ -116,9 +128,10 @@ def get_sides(play, character, act_selected, scene_selected):
 											break	
 								else:
 									prev_lines.append(scene[i-1].text)
+									total_prev_characters.append("Stage Directions")
 								total_lines.append(lines)
 								total_prev_lines.append(prev_lines)
-	return [total_lines, total_prev_lines]
+	return [total_lines, total_prev_lines, total_prev_characters]
 
 ##############################################
 

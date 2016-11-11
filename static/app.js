@@ -51,6 +51,11 @@ function AppController(navService, $mdSidenav, $scope, $location) {
     self.toggleSearch = toggleSearchMode;
 
     self.viewHomePage = viewHomePage;
+
+    var url = $location.path().split("/");
+    if (url.length > 1) {
+      self.selected = url[url.length-1];
+    }
 	
     // Load all plays
     navService
