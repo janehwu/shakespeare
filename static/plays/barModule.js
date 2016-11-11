@@ -10,7 +10,14 @@ angular
 				link: function(scope, elem, attrs) {
 					$(document).on("characterSelected", function(e, data) {
 						console.log(data);
-						var characterName = data.charName;
+
+						function parseCharName(charName) {
+							if (s.indexOf(' ') >= 0) {
+								charName.replace(" ", "");
+								console.log(charName);
+							}
+						}
+						var characterName = parseCharName(data.charName);
 						var playName = data.playName;
 						var margin = {top: 20, right: 0, bottom: 100, left: 60},
 							width = 1100 - margin.left - margin.right, 
@@ -44,7 +51,7 @@ angular
 						    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 						    //.attr("transform", "translate(" + 20 + "," + 20 + ")");
 
-						var path = "./static/visualizations/tsvDat";
+						var path = "./static/visualizations/barGraph/tsvDat";
 
 						d3.tsv(path + "/" + playName + "/" + characterName + ".tsv", function(d) {
 						  d.numLines = +d.numLines;
@@ -55,23 +62,6 @@ angular
 						  var numScenes = data.length;
 						  x.domain(data.map(function(d) { return d.scene; }));
 						  y.domain([0, d3.max(data, function(d) { return d.numLines + 10 - (d.numLines % 10); })]);
-
-						  // g.append("g")
-						  //     .attr("class", "axis axis--x")
-						  //     .attr("transform", "translate(0," + height + ")")
-						  //     .call(d3.axisBottom(x));
-
-						  // g.append("g")
-						  //     .attr("class", "axis axis--y")
-						  //     .call(d3.axisLeft(y).ticks(10))
-						  //   .append("text")
-						  //     .attr("transform", "rotate(-90)")
-						  //     .attr("y", 6)
-						  //     .attr("dy", "0.71em")
-						  //     .attr("text-anchor", "end")
-						  //     .text("Frequency");
-
-						  //----part that i am adding to deal with d4
 						  
 						  				
 

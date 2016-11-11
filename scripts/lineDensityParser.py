@@ -121,7 +121,7 @@ for play in filenames:
 	#for i in range(totalScenes):
 
 	#create directory for each play
-	path = "../static/visualizations/tsvDat/"
+	path = "../static/visualizations/barGraph/tsvDat/"
 
 	if not os.path.isdir(path + directory):
 		os.mkdir(path + directory, 0755)
@@ -202,7 +202,8 @@ for play in filenames:
 			tsv += "\n"
 		print "character: ", numLines, "lines: ", tsv
 		charFilename = chars[numLines].replace(" ", "")
-		f = open("../static/visualizations/tsvDat/" + directory + "/" + charFilename + ".tsv", 'w+')
+		newCharFilename = charFilename.upper();
+		f = open("../static/visualizations/barGraph/tsvDat/" + directory + "/" + newCharFilename + ".tsv", 'w+')
 		f.write(tsv)
 
 
