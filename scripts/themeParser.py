@@ -112,7 +112,7 @@ for play in filenames:
 						continue
 					for word in frequency_list:
 						lineWords = line.text.split(' ')
-						if word in lineWords or word.capitalize() in lineWords:
+						if word in lineWords or word.capitalize() in lineWords or (word + "s") in lineWords:
 							themes += word + ","
 							quote = line.text
 				

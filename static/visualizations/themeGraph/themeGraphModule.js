@@ -26,8 +26,14 @@ angular
 						var hue = d.color;
 						var color = d3.hsl(parseInt(hue, 10), 1, .5);
 						
+						if(themes.indexOf("hands") != -1){
+								console.log("hands");
+							}
+						
 						// change the color of lines with the selected theme
-						if((themes.indexOf(text) != -1) || (themes.indexOf(text[0].toUpperCase() + text.substr(1)) != -1) ){ 
+						if((themes.indexOf(text) != -1) || 
+						   (themes.indexOf(text[0].toUpperCase() + text.substr(1)) != -1) ||
+						   (themes.indexOf(text+"s") != -1)){ 
 							return color;
 						}
 						else {
@@ -38,7 +44,9 @@ angular
 						var themes = d.theme.split(",");
 
 						// change the width of lines with the selected theme
-						if((themes.indexOf(text) != -1) || (themes.indexOf(text[0].toUpperCase() + text.substr(1)) != -1)) {
+						if((themes.indexOf(text) != -1) || 
+						   (themes.indexOf(text[0].toUpperCase() + text.substr(1)) != -1) ||
+						   (themes.indexOf(text+"s") != -1)) {
 							return 5;
 						}
 						else {
@@ -51,7 +59,9 @@ angular
 						var themes = d.theme.split(",");
 
 						// set a hover feature for lines with the selected theme
-						if( (themes.indexOf(text) != -1) || (themes.indexOf(text[0].toUpperCase() + text.substr(1)) != -1) ){ 
+						if((themes.indexOf(text) != -1) || 
+						   (themes.indexOf(text[0].toUpperCase() + text.substr(1)) != -1) ||
+						   (themes.indexOf(text+"s") != -1)){ 
 							var message = "Act: " + d.act + " Scene: " + d.scene + "          " + d.character + ": " + 
 				   		"\"" + d.quote + "\"";
 				   			focus.select("text").html(message);
