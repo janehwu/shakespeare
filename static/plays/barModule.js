@@ -7,6 +7,7 @@ angular
 			scope: {
 				play: '='
 			},
+<<<<<<< HEAD
 			link: function(scope, elem, attrs) {
 				$(document).on("characterSelected", function(e, data) {
 					console.log(data);
@@ -20,6 +21,36 @@ angular
 						d3.select(".barChart" + characterName).remove();
 					}
 					else {
+=======
+				link: function(scope, elem, attrs) {
+					$(document).on("characterSelected", function(e, data) {
+						console.log(data);
+
+						function parseCharName(charName) {
+							if (charName.indexOf(' ') >= 0) {
+								charName.replace(" ", "");
+								console.log(charName);
+							}
+						}
+						var fullcharName = data.charName;
+						var characterName = data.charName.replace(" ","");
+						console.log("characterName: " + characterName);
+						var playName = data.playName;
+						var margin = {top: 20, right: 0, bottom: 100, left: 60},
+							width = 1100 - margin.left - margin.right, 
+							height = 400 - margin.top - margin.bottom;
+						// var width = 800,
+						//     height = 500;
+						console.log("test: " + d3.select(".barChart"+ characterName)[0]);
+						console.log("test2: " + d3.select(".barChart"+ characterName)[0][0]);
+
+						if(d3.select(".barChart" + characterName)[0][0] !== null) {
+							console.log(d3.select(".barChart" +characterName));
+							d3.select(".barChart" + characterName).remove();
+						}
+						else {
+
+>>>>>>> barChart
 						var svg = d3.select(".barChart").append("svg")
 									.attr("class", function(d) { return "barChart" + characterName;})
 									.attr("width", width + margin.left + margin.right)
@@ -34,7 +65,7 @@ angular
 						var g = svg.append("g")
 						    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-						var path = "./static/visualizations/tsvDat";
+						var path = "./static/visualizations/barGraph/tsvDat";
 
 						d3.tsv(path + "/" + playName + "/" + characterName + ".tsv", function(d) {
 						  d.numLines = +d.numLines;
@@ -77,7 +108,7 @@ angular
 						  			.append("text")
 						  				.attr("transform", "translate(" + width/2.0 + ",0)")
 						  				.attr("stroke", "#000")
-						  				.text(characterName);
+						  				.text(fullcharName);
 
 						  svg.select(".domain")
 						  		.attr("display", "none");
