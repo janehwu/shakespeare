@@ -12,12 +12,14 @@ angular
 						console.log(data);
 
 						function parseCharName(charName) {
-							if (s.indexOf(' ') >= 0) {
+							if (charName.indexOf(' ') >= 0) {
 								charName.replace(" ", "");
 								console.log(charName);
 							}
 						}
-						var characterName = parseCharName(data.charName);
+						var fullcharName = data.charName;
+						var characterName = data.charName.replace(" ","");
+						console.log("characterName: " + characterName);
 						var playName = data.playName;
 						var margin = {top: 20, right: 0, bottom: 100, left: 60},
 							width = 1100 - margin.left - margin.right, 
@@ -96,7 +98,7 @@ angular
 						  			.append("text")
 						  				.attr("transform", "translate(" + width/2.0 + ",0)")
 						  				.attr("stroke", "#000")
-						  				.text(characterName);
+						  				.text(fullcharName);
 
 						  svg.select(".domain")
 						  		.attr("display", "none");

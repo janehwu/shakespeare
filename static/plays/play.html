@@ -22,7 +22,9 @@
     </md-card>
     <div style="text-align: center" ng-show="ctrl.selected == 'Visualizations'" class="Visualizations"></div>
     <div style="text-align: center" ng-show="ctrl.selected == 'Characters'" id="chart"></div>
+    	<!--<h2 ng-show="ctrl.selected == 'Characters'"> This tab gives visualizations about the characters. The heat map below shows the number of scenes shared by two characters in the play. To see the number of lines a character speaks for each scene in this play, feel free to click on a character, and scrolling down will display the visualization. Note that to deselect the bar graph for a character, simply click on the character's name again. </h2>-->
       <div style="text-align: center" ng-show="ctrl.selected == 'Characters'" class="barChart"></div>
+
     <div style="text-align: center" ng-show="ctrl.selected == 'Themes'" class="Themes" ng-controller="PlayController"></div>
   	<div style="text-align: center" ng-show="ctrl.selected == 'Themes'" class="themeGraph" ng-controller="PlayController"></div>
 
