@@ -24,7 +24,7 @@ angular
 						var playName = data.playName;
 						var margin = {top: 20, right: 0, bottom: 100, left: 60},
 							width = 1100 - margin.left - margin.right, 
-							height = 400 - margin.top - margin.bottom;
+							height = 300 - margin.top - margin.bottom;
 						// var width = 800,
 						//     height = 500;
 						console.log("test: " + d3.select(".barChart"+ characterName)[0]);
@@ -71,9 +71,17 @@ angular
 
 						  g.append("g")
 						  				.attr("class", "x axis")
-						  				.attr("transform", "translate(" + ((width-60)/numScenes)/2 + "," + height + ")")
+						  				.attr("transform", "translate(" + (((width-60)/numScenes)/2) + "," + (height+8) + ")")
+						  	  			//.attr("transform", "rotate(-45)")
 						  				.attr("stroke", "#000")
-						  				.call(xAxis);
+						  				.call(xAxis)
+						  				.selectAll("text")
+						  				.attr("transform", "rotate(-55)")
+    									//.style("text-anchor", "end");
+    									
+    //.attr("y", 0)
+    //.attr("x", 9)
+    //.attr("dy", ".35em")
 
 						  g.append("g")
 						  				.attr("class", "y axis")
@@ -101,7 +109,9 @@ angular
 						    .data(data)
 						    .enter().append("rect")
 						      .attr("class", "bar")
-						      .attr("x", function(d) { return x(d.scene) ; })
+						      .attr("x", function(d) { 
+						      	//d.attr("transform", "rotate(-45)")
+						      	return x(d.scene) ; })
 						      .attr("y", function(d) { return y(d.numLines); })
 						      .attr("width", function(d) {return (width-60)/numScenes;})//x.bandwidth())
 						      .attr("height", function(d) { return height - y(d.numLines); })

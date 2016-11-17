@@ -15,7 +15,7 @@ angular
 						data: String(scope.play),
 						contentType: 'application/json;charset=UTF-8',
 						success: function(data) {
-							var margin = { top: 20, right: 0, bottom: 50, left: 150 },
+							var margin = { top: 30, right: 0, bottom: 50, left: 150 },
 							// getting character list from play JSON file
 							characters = data.characters,
 							// getting scene list from play JSON file
@@ -38,7 +38,9 @@ angular
 							.attr("height", height + margin.top + margin.bottom)
 							.append("g")
 							.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+							// .selectAll("text")
+    			// 				.attr("transform", "rotate(1)")
+    			// 				.style("text-anchor", "start");
 							// Putting labels for each character on the y-axis
 							var characterLabels = svg.selectAll(".characterLabel")
 							.data(characters)
@@ -51,18 +53,28 @@ angular
 							.on('click', function(d) {
 								$(document).trigger("characterSelected", {"charName": String(d), "playName": scope.play}); })
 							.attr("transform", "translate(-6," + gridHeight + ")")
+
 							.attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "characterLabel mono axis axis-characters" : "characterLabel mono axis"); });
 
 							// Putting labels for each scene on the x-axis of heatmap
 							var sceneLabels = svg.selectAll(".sceneLabel")
+							
 							.data(scenes)
 							.enter().append("text")
 							.text(function(d) { return d; })
-							.attr("x", function(d, i) { return i * gridWidth; })
-							.attr("y", 0)
+							.attr("x", function(d, i) { return ((i * gridWidth)/2.0) + 2; })
+							.attr("y", function(d, i) { return -1.0*((i * gridWidth)/2.0)*(-1.732)})
+
 							.style("text-anchor", "middle")
-							.attr("transform", "translate(" + gridWidth / 2 + ", -6)")
+							.attr("transform", "translate(" + gridWidth / 2 + ", -6) rotate(-60)")
+
 							.attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "sceneLabel mono axis axis-scenes" : "sceneLabel mono axis"); });
+							
+							
+								//.attr("class", "text")
+							// svg.selectAll(".sceneLabel")
+							// 	.selectAll("text")
+							// 	.attr("transform", "rotate(-60)");
 
 							var heatmapChart = function(tsvFile) {
 								// Opening TSV file and collecting line densities for each character
