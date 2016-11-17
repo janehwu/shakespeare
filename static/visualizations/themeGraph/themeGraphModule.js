@@ -209,7 +209,7 @@ angular
 						
 					var colorCounter = -1, widthCounter = -1;
 					var marginalColor = 1.0/data.length;
-					var marginalWidth = width*1.0/data.length;
+					var marginalWidth = (width-5)*1.0/(data.length);
 						
 					svg.append("g")
 							.attr("class", "xAxis")
@@ -255,7 +255,7 @@ angular
 						.data(data)
 						.enter().append("rect")
 						  .attr("class", "themeBar")
-						  .attr("x", function(d) { widthCounter++; return widthCounter*marginalWidth-5; })
+						  .attr("x", function(d) { widthCounter++; return widthCounter*marginalWidth ; })
 						  .attr("y", function(d) { return 15; })
 						  .attr("width", function(d) { return width/data.length; })
 						  .attr("height", function(d) { return height*2.0/3; })
