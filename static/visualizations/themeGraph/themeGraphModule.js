@@ -13,6 +13,28 @@ angular
                 $(document).on("themeSelected", function (e,data) {
 					
 					var text = data.text;
+					
+					d3.select(".Themes")
+						.style("float", "right")
+						.select("svg")
+						.selectAll("text")
+						.style("fill", function(d){
+						
+							if(d.text === text){
+								return "#940088";
+							}
+							else{
+								return d3.hsl(185, 1, .29);
+							}
+					});
+					
+//					d3.select(".themeGraph")
+//						.style("float", "right");
+//					
+					d3.select(".pieChart")
+						.style("float", "left");
+//					
+					
 					var focus = d3.select(".focus");
 					var lineLength = d3.selectAll(".themeBar")[0].length;
 					
@@ -24,11 +46,7 @@ angular
 						var themes = d.theme.split(",");
 
 						var hue = d.color;
-						var color = d3.hsl(parseInt(hue, 10), 1, .5);
-						
-						if(themes.indexOf("hands") != -1){
-								console.log("hands");
-							}
+						var color = d3.hsl(0, 0, .69420);
 						
 						// change the color of lines with the selected theme
 						if((themes.indexOf(text) != -1) || 
@@ -54,10 +72,48 @@ angular
 						}
 					})
 					 .on("mouseover", function() { focus.style("display", "inline");})
-					 .on("mouseout", function() { focus.style("display", "none")})
+					 .on("mouseout", function(d) { 
+						
+						// change pieChart slice back to gray
+						d3.select(".pieChart")
+							.select("svg")
+							.select(".slices")
+							.select(".slice." + d.character.split(" ").join("delim"))
+							.style("fill", d3.hsl(0, 0, .69420));
+						
+						d3.selectAll(".themeBar")
+							.style("fill", d3.hsl(0, 0, .69420));
+						
+						focus.style("display", "none")})
+					
 				     .on("mousemove", function(d) {
+												
 						var themes = d.theme.split(",");
-
+						
+						// Make sure pie chart slices are all gray (reset their color)
+						d3.select(".pieChart")
+							.select("svg")
+							.select(".slices")
+							.selectAll(".slice")
+							.style("fill", d3.hsl(0,0,.69420));
+					
+						// reset themeBar's colors
+						d3.selectAll(".themeBar")
+							.style("fill", d3.hsl(0, 0, .69420));
+					
+						this.style.fill = d3.hsl(parseInt(d.color), 1, .5);
+					
+//						
+//						d3.select(this)[0][0].fill = d3.hsl(parseInt(d.color), 1, .5);
+//						
+						// when hovering over a character, change color of pie chart slice
+						d3.select(".pieChart")
+							.select("svg")
+							.select(".slices")
+							.select(".slice." + d.character.split(" ").join("delim"))
+							.attr("style", "fill:" + d3.hsl(parseInt(d.color), 1, .5));
+						
+						
 						// set a hover feature for lines with the selected theme
 						if((themes.indexOf(text) != -1) || 
 						   (themes.indexOf(text[0].toUpperCase() + text.substr(1)) != -1) ||
@@ -78,7 +134,7 @@ angular
 
 					var json = "./static/visualizations/themeGraph/json/" + scope.play + ".json";
 					var width = 1200;
-					var height = 175;
+					var height = 225;
 
 
 					var x = d3.scale.ordinal().rangePoints([0, width], .1),
@@ -146,7 +202,7 @@ angular
 					
 					focus.append("text")
 						 .attr("x", 9)
-						 .attr("y", 160)
+						 .attr("y", 210)
 						 .attr("dy", ".35em")
 						 .attr("style", "white-space:pre;");
 
@@ -199,7 +255,7 @@ angular
 						.data(data)
 						.enter().append("rect")
 						  .attr("class", "themeBar")
-						  .attr("x", function(d) { widthCounter++; return widthCounter*marginalWidth; })
+						  .attr("x", function(d) { widthCounter++; return widthCounter*marginalWidth-5; })
 						  .attr("y", function(d) { return 15; })
 						  .attr("width", function(d) { return width/data.length; })
 						  .attr("height", function(d) { return height*2.0/3; })

@@ -13,8 +13,8 @@ angular
                   var theme = String(data.text);
                   console.log(theme);
 
-                   var width = 960,
-                        height = 500,
+                   var width = 600,
+                        height = 400,
                         radius = Math.min(width, height) / 2;
 
                   d3.select(".pieChart").select("svg").remove()
@@ -45,6 +45,14 @@ angular
                   var outerArc = d3.svg.arc()
                     .innerRadius(radius * 0.9)
                     .outerRadius(radius * 0.9);
+					
+//					    var arc = d3.svg.arc()
+//                    .outerRadius(radius )
+//                    .innerRadius(radius * 0.5);
+//
+//                  var outerArc = d3.svg.arc()
+//                    .innerRadius(radius )
+//                    .outerRadius(radius );
 
                   svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
@@ -98,7 +106,54 @@ angular
                           var hue = 0.0;
                           var color = d3.hsl(parseFloat(hue), 0, .69420);
                           return color; })
-                        .attr("class", "slice");
+                        .attr("class", function(d){
+						  return "slice " + String(d.data.name).split(" ").join("delim");
+					  	})
+					  	.on("mousemove", function(dat) {
+						  var char = dat.data.name;
+						  
+						  // Change color of pie chart slice
+						  d3.select(".slice." + char.split(" ").join("delim"))
+						  	.style("fill", d3.hsl( parseInt(dat.data.color), 1, .5));
+						  
+						  d3.select(".focus").style("display", "inline");
+						  d3.select(".focus").select("text").html(char);
+						  
+						  
+						  
+						  // change color of all themeGraph bars with the same character
+						  d3.select(".themeGraph")
+							  .select("#chart")
+							  .selectAll(".themeBar")
+						  		.style("fill", function(d){
+							  		if(d.character === char){
+										return d3.hsl(d.color, 1, .5);
+									}
+							  		else{
+										return d3.hsl(0,0,.69420);
+									}
+						  		});
+//						  		.style("width", function(d){
+//							  		if(d.character === char && d.theme.indexOf(theme) != -1) {
+//										return 10;
+//									}
+//						  		});
+					  		
+					  	})
+					  .on("mouseout", function(dat) {
+						  var char = dat.data.name;
+						  
+						  // change pie chart slice color back to gray
+						  d3.select(".slice." + char.split(" ").join("delim"))
+						  	.style("fill", d3.hsl(0, 0, .69420));
+						  
+						  d3.select(".focus").style("display", "none");
+						  
+						  // change themeBars' color back to gray
+						  d3.selectAll(".themeBar")
+						  	.style("fill", d3.hsl(0, 0, .69420));
+						  
+					  });
 
                       slice   
                         .transition().duration(1000)

@@ -20,7 +20,7 @@ angular
                         success: function(data) {
                             frequency_list = data;
 
-                            var width = 1000;
+                            var width = 700;
                             var height = 400;
                             var min = 100;
                             var max = 0;
@@ -55,7 +55,7 @@ angular
                                       .data(words)
                                     .enter().append("text")
                                       .style("font-size", function(d) { return d.size + "px"; })
-                                      .style("fill", function(d, i) { return color(i); })
+                                      .style("fill", function(d, i) { return d3.hsl(185, 1, .29);})//return color(i); })
                                       .attr("text-anchor", "middle")
                                       .attr("cursor", "pointer")
                                       .attr("transform", function(d) {
