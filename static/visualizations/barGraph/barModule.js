@@ -10,28 +10,56 @@ angular
 
 				link: function(scope, elem, attrs) {
 					$(document).on("characterSelected", function(e, data) {
-						console.log(data);
+//						console.log("ddddddata");
+//						console.log(data);
+//						
+//						console.log("d333333");
+//						console.log(d3.selectAll(".characterLabel"));
+						
+						
+						d3.select("." + data.charName.split(" ").join("delim"))
+							.style("font-weight", function(d){
 
+								if(this.style.fontWeight === "bolder"){
+									return "";
+								}
+								else {
+									return "bolder";
+								}
+							});
+//						
+//						d3.selectAll(".characterLabel")
+////							.select("text")
+//							.style("font-weight", function(d){
+//								
+//								if(d === data.charName){
+//									return "bold";
+//								}
+//								
+								
+//						});
+						
+						
 						function parseCharName(charName) {
 							if (charName.indexOf(' ') >= 0) {
 								charName.replace(" ", "");
-								console.log(charName);
+//								console.log(charName);
 							}
 						}
 						var fullcharName = data.charName;
 						var characterName = data.charName.replace(" ","");
-						console.log("characterName: " + characterName);
+//						console.log("characterName: " + characterName);
 						var playName = data.playName;
 						var margin = {top: 20, right: 0, bottom: 100, left: 60},
 							width = 1100 - margin.left - margin.right, 
 							height = 300 - margin.top - margin.bottom;
 						// var width = 800,
 						//     height = 500;
-						console.log("test: " + d3.select(".barChart"+ characterName)[0]);
-						console.log("test2: " + d3.select(".barChart"+ characterName)[0][0]);
+//						console.log("test: " + d3.select(".barChart"+ characterName)[0]);
+//						console.log("test2: " + d3.select(".barChart"+ characterName)[0][0]);
 
 						if(d3.select(".barChart" + characterName)[0][0] !== null) {
-							console.log(d3.select(".barChart" +characterName));
+//							console.log(d3.select(".barChart" +characterName));
 							d3.select(".barChart" + characterName).remove();
 						}
 						else {
@@ -56,7 +84,7 @@ angular
 						  return d;
 						}, function(error, data) {
 						  if (error) throw error;
-						  console.log("data " + data.length);
+//						  console.log("data " + data.length);
 						  var numScenes = data.length;
 						  x.domain(data.map(function(d) { return d.scene; }));
 						  y.domain([0, d3.max(data, function(d) { return d.numLines + 10 - (d.numLines % 10); })]);

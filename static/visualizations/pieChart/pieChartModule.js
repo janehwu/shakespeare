@@ -117,7 +117,7 @@ angular
 						  	.style("fill", d3.hsl( parseInt(dat.data.color), 1, .5));
 						  
 						  d3.select(".focus").style("display", "inline");
-						  d3.select(".focus").select("text").html(char);
+						  d3.select(".focus").select("text").html(char + " says " + theme + " " + dat.data.lines + " times.");
 						  
 						  
 						  

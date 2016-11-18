@@ -20,7 +20,7 @@ angular
 							characters = data.characters,
 							// getting scene list from play JSON file
 							scenes = data.scenes,
-							width = 1200 - margin.left - margin.right,
+							width = 1300 - margin.left - margin.right,
 							height = 750 - margin.top - margin.bottom,
 							// setting dimensions of heatmap cells
 							gridWidth = Math.floor(width / scenes.length),
@@ -48,13 +48,18 @@ angular
 							.text(function (d) { return d; })
 							.attr("x", 0)
 							.attr("y", function (d, i) { return i * gridHeight; })
+							.attr("cursor", "pointer")
 							.style("text-anchor", "end")
 							// making character lable clickable so that we can return the name to the character bar graph visualization
 							.on('click', function(d) {
 								$(document).trigger("characterSelected", {"charName": String(d), "playName": scope.play}); })
 							.attr("transform", "translate(-6," + gridHeight + ")")
 
-							.attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "characterLabel mono axis axis-characters" : "characterLabel mono axis"); });
+							.attr("class", function (d, i) { 
+								var charClassName = d.split(" ").join("delim");
+								
+								return ((i >= 0 && i <= 4) ? "characterLabel mono axis axis-characters " + charClassName : "characterLabel mono axis " + charClassName); 
+							});
 
 							// Putting labels for each scene on the x-axis of heatmap
 							var sceneLabels = svg.selectAll(".sceneLabel")
