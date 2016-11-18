@@ -1,5 +1,5 @@
 @media print {
-      .menu, .menu *, md-toolbar, md-toolbar *, md-tabs, md-tabs *, .sides-menu * {display:none !important;}
+      .menu, .menu *, md-toolbar, md-toolbar *, md-tabs, md-tabs *, .sides-description, .sides-menu * {display:none !important;}
       .printable, .printable * {
         display: block;
         border: none !important;
@@ -30,6 +30,9 @@ html, body {
   height: 38px;
   margin: 16px;
   min-width: 1%;
+}
+md-toolbar {
+  /*position:fixed !important;*/
 }
 md-toolbar h1 {
   margin-left: 16px;
