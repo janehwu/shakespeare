@@ -71,6 +71,7 @@ angular
 							.attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "sceneLabel mono axis axis-scenes" : "sceneLabel mono axis"); });
 							
 							
+							
 								//.attr("class", "text")
 							// svg.selectAll(".sceneLabel")
 							// 	.selectAll("text")
@@ -136,6 +137,8 @@ angular
 										.attr("y", height + gridHeight);
 
 									legend.exit().remove();
+
+
 
 								});  
 							};
