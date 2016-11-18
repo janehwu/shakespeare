@@ -1,3 +1,20 @@
+@media print {
+      .menu, .menu *, md-toolbar, md-toolbar *, md-tabs, md-tabs *, .sides-menu * {display:none !important;}
+      .printable, .printable * {
+        display: block;
+        border: none !important;
+        box-shadow: none !important;
+        margin: 0;
+      }
+      .layout-row {
+        padding: 0 !important;
+        margin: 0;
+      }
+      .sides {
+        text-decoration: underline;
+      }
+}
+
 html, body {
   font-family: 'Open Sans', sans-serif;
   font-size:14px;

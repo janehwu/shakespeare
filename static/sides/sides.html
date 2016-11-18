@@ -1,6 +1,6 @@
 <div class="row" style="height=100%">
   <form class="col s12">
-    <div class="row">
+    <div class="row sides-menu">
       <md-menu>
        <md-button class="md-raised md-cornered" ng-click="$mdOpenMenu($event)" aria-label="Open sample menu">
          Character
@@ -28,9 +28,8 @@
             Show previous characters' names
           </md-checkbox>
     </div>
-    <div class="row" style="margin-bottom:16px">
-      <span>{{ctrl.character}}</span>
-      <span>{{ctrl.scene}}</span>
+    <div class="row sides" style="margin:8px 0 16px 0">
+      <span>{{ctrl.character}} {{ctrl.scene}}</span>
     </div>
     <md-content>
       <div ng-show="ctrl.showError">This character does not have any lines in the selected scene.</div>
