@@ -10,6 +10,8 @@
   function SidesController($scope) {
     var self = this;
 
+    self.dispScenes = self.scenes;
+
     self.lines = [];
     self.prev = [];
     self.prevChars = [];
@@ -44,8 +46,32 @@
       "WT": "win_tale"
     };
 
-    self.selectChar = function(character) { self.character = character }
-    self.selectScene = function(scene) { self.scene = scene }
+    self.selectChar = function(character) { 
+      self.character = character;
+      self.filterOptions();
+    }
+    self.selectScene = function(scene) { 
+      self.scene = scene;
+    }
+
+    self.filterOptions = function() {
+      if(self.character == '') return;
+      self.dispScenes = [];
+      jQuery.get('./static/visualizations/barGraph/tsvDat/' + self.file + '/' + self.character + '.tsv', function(data) {
+        var charScenes = []
+        var scenes = data.split("\n");
+        console.log(scenes);
+        scenes.shift();
+        scenes.forEach(function(scene) {
+          var sceneList = scene.split("\t");
+          if (sceneList[1] > 0) {
+            charScenes.push(sceneList[0]);
+          }
+        });
+        self.dispScenes = charScenes;
+        $scope.$apply();
+      });
+    }
 
     self.intToRoman = function(num) {
       if (!+num)
