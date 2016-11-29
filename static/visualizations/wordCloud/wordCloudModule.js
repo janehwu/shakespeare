@@ -13,10 +13,8 @@ angular
                     
                     // Currently hard coded for Hamlet until JSON files fixed.
                     $.ajax({
-                        type : "POST",
-                        url : "get_word_frequencies",
-                        data: String(fileName),
-                        contentType: 'application/json;charset=UTF-8',
+                        dataType : "json",
+                        url : "../static/visualizations/wordCloud/json/" + String(fileName) + ".json",
                         success: function(data) {
                             frequency_list = data;
 

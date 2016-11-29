@@ -10,10 +10,8 @@ angular
 			link: function(scope, elem, attrs){
 					// Based on which play page we're on, a certain 'play' name is passed into request
 					$.ajax({
-						type : "POST",
-						url : "get_play_content",
-						data: String(scope.play),
-						contentType: 'application/json;charset=UTF-8',
+						dataType: "json",
+						url : "../static/plays/json/" + String(scope.play) + ".json",
 						success: function(data) {
 							var margin = { top: 30, right: 0, bottom: 50, left: 150 },
 							// getting character list from play JSON file

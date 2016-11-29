@@ -34,10 +34,10 @@
 
       // Currently hard coded for Hamlet until JSON files fixed.
       $.ajax({
-      type : "POST",
-      url : "get_play_content",
-      data: String(fileName),
-      contentType: 'application/json;charset=UTF-8',
+      dataType : "json",
+      url : "../static/plays/json/" + String(fileName) + ".json",
+      //data: String(fileName),
+      //contentType: 'application/json;charset=UTF-8',
       success: function(data) {
         $.each(data, function(key, val) {
           $scope.playName = data.name;
