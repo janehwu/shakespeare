@@ -39,22 +39,25 @@ angular
 					//                set the width to be wider for easy hover
 					// 				  set mouse hovering to display the quote on hover
 					d3.selectAll(".themeBar")
-					  .attr("fill", function(d) {  
-						var themes = d.theme.split(",");
-
-						var hue = d.color;
-						var color = d3.hsl(0, 0, .69420);
-						
-						// change the color of lines with the selected theme
-						if((themes.indexOf(text) != -1) || 
-						   (themes.indexOf(text[0].toUpperCase() + text.substr(1)) != -1) ||
-						   (themes.indexOf(text+"s") != -1)){ 
-							return color;
-						}
-						else {
-							return d3.hsl(0, 0, .9);
-						}
-		  			})
+						.style("fill", d3.hsl(0, 0, .69420))
+//					  .attr("fill", function(d) {  
+//						var themes = d.theme.split(",");
+//
+//						var hue = d.color;
+//						var color = d3.hsl(0, 0, .69420);
+//						
+//						// change the color of lines with the selected theme
+//						if((themes.indexOf(text) != -1) || 
+//						   (themes.indexOf(text[0].toUpperCase() + text.substr(1)) != -1) ||
+//						   (themes.indexOf(text+"s") != -1)){ 
+//							return color;
+//						}
+//						else {
+//							return d3.hsl(0, 0, .9);
+//						}
+//						return d3.hsl(0,0,.9);
+//		  			})
+					 .attr("clicked", "false")
 				     .attr("width", function(d){
 						var themes = d.theme.split(",");
 
