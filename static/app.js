@@ -57,8 +57,6 @@ function AppController(navService, $mdSidenav, $scope, $location) {
     if (url.length > 1) {
       self.selected = url[url.length-1];
     }
-    console.log(window.screen.availHeight);
-    console.log(window.screen.availWidth);
 	
     // Load all plays
     navService

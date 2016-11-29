@@ -56,11 +56,11 @@
 
     self.filterOptions = function() {
       if(self.character == '') return;
+      var character = self.character.replace(/\s+/g, '');
       self.dispScenes = [];
-      jQuery.get('./static/visualizations/barGraph/tsvDat/' + self.file + '/' + self.character + '.tsv', function(data) {
+      jQuery.get('./static/visualizations/barGraph/tsvDat/' + self.file + '/' + character + '.tsv', function(data) {
         var charScenes = []
         var scenes = data.split("\n");
-        console.log(scenes);
         scenes.shift();
         scenes.forEach(function(scene) {
           var sceneList = scene.split("\t");
