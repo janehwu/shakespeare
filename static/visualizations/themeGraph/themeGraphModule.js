@@ -28,12 +28,9 @@ angular
 							}
 					});
 					
-//					d3.select(".themeGraph")
-//						.style("float", "right");
-//					
+					// Move the pieChart over !! woo.
 					d3.select(".pieChart")
-						.style("float", "left");
-//					
+						.style("float", "left");		
 					
 					var focus = d3.select(".focus");
 					var lineLength = d3.selectAll(".themeBar")[0].length;
@@ -79,47 +76,59 @@ angular
 							.select("svg")
 							.select(".slices")
 							.select(".slice." + d.character.split(" ").join("delim"))
-							.style("fill", d3.hsl(0, 0, .69420));
+							.style("fill", function(d) {
+							  	if(this.attributes.hasOwnProperty("clicked") &&
+								 	this.attributes.clicked.value === "true"){
+								  	return this.style.fill;
+							  	}
+							  	return d3.hsl(0, 0, .69420);
+						  });
 						
+						// If a bar is related to a clicked pie chart slice, keep its color
 						d3.selectAll(".themeBar")
-							.style("fill", d3.hsl(0, 0, .69420));
+							.style("fill", function(d) {
+							  	if(this.attributes.hasOwnProperty("clicked") &&
+								 	this.attributes.clicked.value === "true"){
+								  	return this.style.fill;
+							  	}
+							  	return d3.hsl(0, 0, .69420);
+						  });
 						
 						focus.style("display", "none")})
 					
-				     .on("mousemove", function(d) {
-												
-						var themes = d.theme.split(",");
-						
-						// Make sure pie chart slices are all gray (reset their color)
-						d3.select(".pieChart")
-							.select("svg")
-							.select(".slices")
-							.selectAll(".slice")
-							.style("fill", d3.hsl(0,0,.69420));
-					
-						// reset themeBar's colors
+				     .on("mousemove", function(dat) {
+						var char = dat.character		
+						var themes = dat.theme.split(",");
+
+						// Make sure bars related to a clicked pie slice stay colored
 						d3.selectAll(".themeBar")
-							.style("fill", d3.hsl(0, 0, .69420));
+							.style("fill", function(d){
+							  		if(this.attributes.hasOwnProperty("clicked") &&
+										   this.attributes.clicked.value === "true"){
+										return this.style.fill;
+									}
+							  		else{
+										return d3.hsl(0,0,.69420);
+									}
+						  		});
 					
-						this.style.fill = d3.hsl(parseInt(d.color), 1, .5);
+						// color the hovered bar
+						this.style.fill = d3.hsl(parseInt(dat.color), 1, .5);
 					
-//						
-//						d3.select(this)[0][0].fill = d3.hsl(parseInt(d.color), 1, .5);
-//						
 						// when hovering over a character, change color of pie chart slice
 						d3.select(".pieChart")
 							.select("svg")
 							.select(".slices")
-							.select(".slice." + d.character.split(" ").join("delim"))
-							.attr("style", "fill:" + d3.hsl(parseInt(d.color), 1, .5));
+							.select(".slice." + dat.character.split(" ").join("delim"))
+							.style("fill", d3.hsl(parseInt(dat.color), 1, .5));
 						
 						
 						// set a hover feature for lines with the selected theme
 						if((themes.indexOf(text) != -1) || 
 						   (themes.indexOf(text[0].toUpperCase() + text.substr(1)) != -1) ||
 						   (themes.indexOf(text+"s") != -1)){ 
-							var message = "Act: " + d.act + " Scene: " + d.scene + "          " + d.character + ": " + 
-				   		"\"" + d.quote + "\"";
+							var message = "Act: " + dat.act + " Scene: " + dat.scene + "          " + dat.character + ": " + 
+				   		"\"" + dat.quote + "\"";
 				   			focus.select("text").html(message);
 						}
 						else {
@@ -128,168 +137,93 @@ angular
 					});
 					
 				});
-							   
-	//			$(document).on("playSelected", function(e, play) {
 
-
-					var json = "./static/visualizations/themeGraph/json/" + scope.play + ".json";
-					var width = 1200;
-					var height = 225;
-
-
-					var x = d3.scale.ordinal().rangePoints([0, width], .1),
-						y = d3.scale.linear().rangeRound([height, 0]);
-
-					
-		
-					
+				var json = "./static/visualizations/themeGraph/json/" + scope.play + ".json";
+				var width = 1200;
+				var height = 225;
 				
+				var x = d3.scale.ordinal().rangePoints([0, width], .1),
+					y = d3.scale.linear().rangeRound([height, 0]);
 				
+				// get the json data and use it to create the visualization
+				d3.json(json, function(error, data) {
+					if (error) throw error;
 					
-
-					d3.json(json, function(error, data) {
-					  if (error) throw error;
-					  			var svg = d3.select(".themeGraph").append("svg")
-							.attr("height", height)
-							.attr("width", width)
-							.attr("id", "chart");
-
-							var g = svg.append("g");
-
-					  x.domain(data.map(function(d) { return d.act; }));
-					  y.domain([0, d3.max(data, function(d) { return 1; })]);
-												
-
-
-
-//					  g.append("g")
-//						  .attr("class", "axis axis--x")
-//						  .attr("transform", "translate(0," + height + ")")
-//						  .call(d3.axisBottom(x));
-
-					//  g.append("g")
-					//      .attr("class", "axis axis--y")
-					//      .call(d3.axisLeft(y).ticks(10, "%"))
-					//    .append("text")
-					//      .attr("transform", "rotate(-90)")
-					//      .attr("y", 6)
-					//      .attr("dy", "0.71em")
-					//      .attr("text-anchor", "end")
-					//      .text("Frequency");
-
-						
-						// which lines have a scene change
-						// multiple by width to get where to put tick!! (offset value)
-						
-//						var oldScene = 0;
-//						var oldAct = 0;
-//						var sceneLoc = {};
-//						var counter = 0;
-//						
-//						data.forEach(function(d) {
-//							if (d.scene != oldScene || d.act != oldAct){
-//								var actAndScene = d.act + " " + d.scene;
-//								sceneLoc[actAndScene] = counter;
-//								oldScene = d.scene;
-//								oldAct = d.act;
-//							}
-//							counter += 1;
-//						});
-												
-						var focus = svg.append("g")
-								   .attr("class", "focus")
-					   	 		   .attr("style", "display: none;");
+					// Create the svg tag for our visualization
+					var svg = d3.select(".themeGraph").append("svg")
+					.attr("height", height)
+					.attr("width", width)
+					.attr("id", "chart");
+					
+					var g = svg.append("g");
+					
+					x.domain(data.map(function(d) { return d.act; }));
+					y.domain([0, d3.max(data, function(d) { return 1; })]);
+					
+					// create the html for displaying a themeBar's quote/character
+					var focus = svg.append("g")
+					.attr("class", "focus")
+					.attr("style", "display: none;");
 					
 					focus.append("text")
-						 .attr("x", 9)
-						 .attr("y", 210)
-						 .attr("dy", ".35em")
-						 .attr("style", "white-space:pre;");
-
-						
+						.attr("x", 9)
+						.attr("y", 210)
+						.attr("dy", ".35em")
+						.attr("style", "white-space:pre;");
+					
+					
+					// determine the width of each bar (color is not used I believe)
 					var colorCounter = -1, widthCounter = -1;
 					var marginalColor = 1.0/data.length;
 					var marginalWidth = (width-5)*1.0/(data.length);
-						
+					
 					svg.append("g")
-							.attr("class", "xAxis")
-							.attr("transform", "translate(0," + (height-50) + ")")
-					
-						
-						var startTick = svg.select(".xAxis").append("g")
-							.attr("class", "tick")
-							.attr("transform", "translate(0,0)");
-						
-						startTick.append("line")
-							.attr("y2", 6)
-							.attr("x2", 0);
-						
-						startTick.append("text")
-							.attr("dy", ".71em")
-							.attr("y", 9)
-							.attr("x", 0)
-							.text("start");
-						
-						var endTick = svg.select(".xAxis").append("g")
-							.attr("class", "tick")
-							.attr("transform", "translate(" + (width-30) + ",0)");
-						
-						endTick.append("line")
-							.attr("y2", 6)
-							.attr("x2", 0);
-						
-						endTick.append("text")
-							.attr("dy", ".71em")
-							.attr("y", 9)
-							.attr("x", 0)
-							.text("end");
-						
-						
+						.attr("class", "xAxis")
+						.attr("transform", "translate(0," + (height-50) + ")")
 					
 					
-						
-						
+					// set a start and end text
+					var startTick = svg.select(".xAxis").append("g")
+					.attr("class", "tick")
+					.attr("transform", "translate(0,0)");
 					
-						
-					  g.selectAll(".themeBar")
+					startTick.append("line")
+						.attr("y2", 6)
+						.attr("x2", 0);
+					
+					startTick.append("text")
+						.attr("dy", ".71em")
+						.attr("y", 9)
+						.attr("x", 0)
+						.text("start");
+					
+					var endTick = svg.select(".xAxis").append("g")
+					.attr("class", "tick")
+					.attr("transform", "translate(" + (width-30) + ",0)");
+					
+					endTick.append("line")
+						.attr("y2", 6)
+						.attr("x2", 0);
+					
+					endTick.append("text")
+						.attr("dy", ".71em")
+						.attr("y", 9)
+						.attr("x", 0)
+						.text("end");
+					
+					//create the themeBars visualization with a gray fill color 
+					g.selectAll(".themeBar")
 						.data(data)
 						.enter().append("rect")
-						  .attr("class", "themeBar")
-						  .attr("x", function(d) { widthCounter++; return widthCounter*marginalWidth ; })
-						  .attr("y", function(d) { return 15; })
-						  .attr("width", function(d) { return width/data.length; })
-						  .attr("height", function(d) { return height*2.0/3; })
-						  .attr("fill", function(d) { return d3.hsl(0, 0, .9);})
-						 
-						
+						.attr("class", "themeBar")
+						.attr("x", function(d) { widthCounter++; return widthCounter*marginalWidth ; })
+						.attr("y", function(d) { return 15; })
+						.attr("width", function(d) { return width/data.length; })
+						.attr("height", function(d) { return height*2.0/3; })
+						.attr("fill", function(d) { return d3.hsl(0, 0, .9);})
+					
+					
 					});
-					
-
-					
-					
-					
-					// Add an elaborate mouseover title for each chord.
-//                      chord.append("title").text(function(d) {
-//                        return cities[d.source.index].name
-//                            + " → " + cities[d.target.index].name
-//                            + ": " + formatPercent(d.source.value)
-//                            + "\n" + cities[d.target.index].name
-//                            + " → " + cities[d.source.index].name
-//                            + ": " + formatPercent(d.target.value);
-//                      });
-//
-//                      function mouseover(d, i) {
-//                        chord.classed("fade", function(p) {
-//                          return p.source.index != i
-//                              && p.target.index != i;
-//                        });
-//                      }
-         
-
-                    
-                    
-      //          });
-                
             }
 		};
 	})

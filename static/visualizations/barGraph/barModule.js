@@ -9,57 +9,39 @@ angular
 			},
 
 				link: function(scope, elem, attrs) {
-					$(document).on("characterSelected", function(e, data) {
-//						console.log("ddddddata");
-//						console.log(data);
-//						
-//						console.log("d333333");
-//						console.log(d3.selectAll(".characterLabel"));
-						
+					$(document).on("characterSelected", function(e, data) {		
 						
 						d3.select("." + data.charName.split(" ").join("delim"))
-							.style("font-weight", function(d){
-
-								if(this.style.fontWeight === "bolder"){
-									return "";
+							.style("fill", function(d){
+								if(this.style.fill === "rgb(70, 70, 70)"){
+									return "rgb(127, 15, 126)";
 								}
 								else {
-									return "bolder";
+									return "rgb(70, 70, 70)";
 								}
-							});
-//						
-//						d3.selectAll(".characterLabel")
-////							.select("text")
-//							.style("font-weight", function(d){
-//								
-//								if(d === data.charName){
-//									return "bold";
-//								}
-//								
-								
-//						});
-						
+							})
+							.style("font-weight", function(d){
+									if(this.style.fontWeight === "bolder"){
+										return "";
+									}
+									else {
+										return "bolder";
+									}
+								});
 						
 						function parseCharName(charName) {
 							if (charName.indexOf(' ') >= 0) {
 								charName.replace(" ", "");
-//								console.log(charName);
 							}
 						}
 						var fullcharName = data.charName;
 						var characterName = data.charName.replace(" ","");
-//						console.log("characterName: " + characterName);
 						var playName = data.playName;
 						var margin = {top: 20, right: 0, bottom: 100, left: 60},
 							width = 1100 - margin.left - margin.right, 
 							height = 300 - margin.top - margin.bottom;
-						// var width = 800,
-						//     height = 500;
-//						console.log("test: " + d3.select(".barChart"+ characterName)[0]);
-//						console.log("test2: " + d3.select(".barChart"+ characterName)[0][0]);
 
 						if(d3.select(".barChart" + characterName)[0][0] !== null) {
-//							console.log(d3.select(".barChart" +characterName));
 							d3.select(".barChart" + characterName).remove();
 						}
 						else {
@@ -84,7 +66,6 @@ angular
 						  return d;
 						}, function(error, data) {
 						  if (error) throw error;
-//						  console.log("data " + data.length);
 						  var numScenes = data.length;
 						  x.domain(data.map(function(d) { return d.scene; }));
 						  y.domain([0, d3.max(data, function(d) { return d.numLines + 10 - (d.numLines % 10); })]);
@@ -100,22 +81,16 @@ angular
 						  g.append("g")
 						  				.attr("class", "x axis")
 						  				.attr("transform", "translate(" + (((width-60)/numScenes)/2) + "," + (height+8) + ")")
-						  	  			//.attr("transform", "rotate(-45)")
 						  				.attr("stroke", "#000")
 						  				.call(xAxis)
 						  				.selectAll("text")
 						  				.attr("transform", "rotate(-55)")
-    									//.style("text-anchor", "end");
     									
-    //.attr("y", 0)
-    //.attr("x", 9)
-    //.attr("dy", ".35em")
 
 						  g.append("g")
 						  				.attr("class", "y axis")
 						  				.attr("stroke", "#000")
 						  				.call(yAxis)
-						  				//.call(d3.axisLeft(y).ticks(10))
 						  			.append("text")
 						  				.attr("transform", "rotate(-90)")
 						  				.attr("y", -45)
@@ -138,10 +113,9 @@ angular
 						    .enter().append("rect")
 						      .attr("class", "bar")
 						      .attr("x", function(d) { 
-						      	//d.attr("transform", "rotate(-45)")
 						      	return x(d.scene) ; })
 						      .attr("y", function(d) { return y(d.numLines); })
-						      .attr("width", function(d) {return (width-60)/numScenes;})//x.bandwidth())
+						      .attr("width", function(d) {return (width-60)/numScenes;})
 						      .attr("height", function(d) { return height - y(d.numLines); })
 						       ;
 

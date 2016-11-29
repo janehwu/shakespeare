@@ -15,7 +15,7 @@
     <h4 ng-show="ctrl.selected == 'Visualizations'"> This tab gives visualizations about relationships between characters. The theme graph below shows how many lines each character shares with the other characters in the play. To see a specific character's relationships, hover over the character's name. The thickness of each arc represents the number of lines shared. </h4>
     <h4 ng-show="ctrl.selected == 'Characters'"> This tab gives visualizations about the characters. The heat map below shows the number of scenes shared by two characters in the play. To see the number of lines a character speaks for each scene in this play, feel free to click on a character, and scrolling down will display the visualization. Note that to deselect the bar graph for a character, simply click on the character's name again. </h4>
     <h4 class="sides-description" ng-show="ctrl.selected == 'Sides'"> This tab is the sides feature. “Side” is theatre jargon for a small piece of a script. In Shakespeare’s time, the actors sometimes got only their lines, not the whole play. To generate sides for a give character, act, and scene, select the appropriate items in the dropdowns and click "Generate sides." Check the "Show previous characters" checkbox to enable/disable displaying the previous character's names.  </h4>
-    <md-card ng-show="ctrl.selected == 'Summary'" style="padding:16px" md-theme="default" md-theme-watch>
+    <md-card ng-show="ctrl.selected == 'Summary'" style="padding:16px; max-width:1200px; margin-left: auto; margin-right:auto;" md-theme="default" md-theme-watch>
       <h2 class="md-headline">Summary</h2>
       <p>{{playSummary}}</p>  
     </md-card>

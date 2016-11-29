@@ -45,14 +45,6 @@ angular
                   var outerArc = d3.svg.arc()
                     .innerRadius(radius * 0.9)
                     .outerRadius(radius * 0.9);
-					
-//					    var arc = d3.svg.arc()
-//                    .outerRadius(radius )
-//                    .innerRadius(radius * 0.5);
-//
-//                  var outerArc = d3.svg.arc()
-//                    .innerRadius(radius )
-//                    .outerRadius(radius );
 
                   svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
@@ -129,30 +121,80 @@ angular
 							  		if(d.character === char){
 										return d3.hsl(d.color, 1, .5);
 									}
+							  		else if(this.attributes.hasOwnProperty("clicked") &&
+										   this.attributes.clicked.value === "true"){
+										return this.style.fill;
+									}
 							  		else{
 										return d3.hsl(0,0,.69420);
 									}
-						  		});
-//						  		.style("width", function(d){
-//							  		if(d.character === char && d.theme.indexOf(theme) != -1) {
-//										return 10;
-//									}
-//						  		});
-					  		
+						  		});					  		
 					  	})
 					  .on("mouseout", function(dat) {
 						  var char = dat.data.name;
 						  
 						  // change pie chart slice color back to gray
 						  d3.select(".slice." + char.split(" ").join("delim"))
-						  	.style("fill", d3.hsl(0, 0, .69420));
+						  	.style("fill", function(d) {
+							  	if(this.attributes.hasOwnProperty("clicked") &&
+								 	this.attributes.clicked.value === "true"){
+								  	return this.style.fill;
+							  	}
+							  	return d3.hsl(0, 0, .69420);
+						  });
 						  
 						  d3.select(".focus").style("display", "none");
 						  
 						  // change themeBars' color back to gray
 						  d3.selectAll(".themeBar")
-						  	.style("fill", d3.hsl(0, 0, .69420));
+						  	.style("fill", function(d) {
+							  	if(this.attributes.hasOwnProperty("clicked") &&
+								 	this.attributes.clicked.value === "true"){
+								  	return this.style.fill;
+							  	}
+							  	return d3.hsl(0, 0, .69420);
+						  });
 						  
+					  })
+					  .on("click", function(dat) {
+						  console.log(dat);
+						  
+						  var char = dat.data.name;
+						  
+						  // Change color of pie chart slice
+						  d3.select(".slice." + char.split(" ").join("delim"))
+						  	.style("fill", d3.hsl( parseInt(dat.data.color), 1, .5))
+						  	.attr("clicked", function(d) {
+							  if (this.attributes.hasOwnProperty("clicked") &&
+								  this.attributes.clicked.value === "true"){return "false";}
+							  return "true";
+						  });
+						  
+						  // change color of all themeGraph bars with the same character
+						  d3.selectAll(".themeBar")
+						  		.attr("clicked", function(d) {
+							  		if (this.attributes.hasOwnProperty("clicked") &&
+								  		this.attributes.clicked.value === "true" &&
+								  		d.character === char){return "false";}
+							  		else if(d.character === char){ return "true";}
+							  		else if (this.attributes.hasOwnProperty("clicked") &&
+								  		this.attributes.clicked.value === "true") {return "true";}
+							  		else if (this.attributes.hasOwnProperty("clicked") &&
+								  		this.attributes.clicked.value === "false") {return "false";}
+							  		return "";
+								 })
+						  		.style("fill", function(d){
+							  		if(d.character === char){
+										return d3.hsl(d.color, 1, .5);
+									}
+							  		else if(this.attributes.hasOwnProperty("clicked") &&
+										   this.attributes.clicked.value === "true"){
+										return this.style.fill;
+									}
+							  		else{
+										return d3.hsl(0,0,.69420);
+									}
+						  		});
 					  });
 
                       slice   
@@ -183,7 +225,6 @@ angular
                         });
                       
                       function midAngle(d){
-                        // console.log(d.startAngle + (d.endAngle - d.startAngle)/2);
                         return d.startAngle + (d.endAngle - d.startAngle)/2;
                       }
 
