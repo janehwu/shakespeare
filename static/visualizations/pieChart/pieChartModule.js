@@ -11,11 +11,10 @@ angular
                 $(document).on("themeSelected", function (e,data) {
 
                   var theme = String(data.text);
-                  console.log(theme);
 
-                   var width = 600,
+                   var width = 620,
                         height = 400,
-                        radius = Math.min(width, height) / 2;
+                        radius = (height - 70) / 2;
 
                   d3.select(".pieChart").select("svg").remove()
                   var svg = d3.select(".pieChart")
@@ -157,7 +156,6 @@ angular
 						  
 					  })
 					  .on("click", function(dat) {
-						  console.log(dat);
 						  
 						  var char = dat.data.name;
 						  
@@ -220,8 +218,9 @@ angular
                         .append("text")
                         .attr("dy", ".35em")
                         .text(function(d) {
-                          // console.log(d.data.name);
-                          return d.data.name;
+                          if (d.endAngle - d.startAngle > 0.30){
+                            return d.data.name;
+                          }
                         });
                       
                       function midAngle(d){
@@ -236,7 +235,13 @@ angular
                           return function(t) {
                             var d2 = interpolate(t);
                             var pos = outerArc.centroid(d2);
-                            pos[0] = radius * (midAngle(d2) < Math.PI ? 1 : -1);
+                            var mid = midAngle(d2);
+                            if ( ((mid > 0.0) && (mid < 0.785)) || ((mid > 2.355) && (mid < 3.925)) || (mid > 5.495) ){
+                                pos[0] = radius * 0.63 * (midAngle(d2) < Math.PI ? 1 : -1);
+                              }
+                            else{
+                                pos[0] = radius * 0.90 * (midAngle(d2) < Math.PI ? 1 : -1);
+                              }
                             return "translate("+ pos +")";
                           };
                         })
@@ -265,7 +270,7 @@ angular
                           .attr("stroke-width", 2)
                           .attr("fill", "none");
 
-                      polyline.transition().duration(1000)
+                      polyline.transition().duration(10)
                         .attrTween("points", function(d){
                           this._current = this._current || d;
                           var interpolate = d3.interpolate(this._current, d);
@@ -273,8 +278,21 @@ angular
                           return function(t) {
                             var d2 = interpolate(t);
                             var pos = outerArc.centroid(d2);
-                            pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
-                            return [arc.centroid(d2), outerArc.centroid(d2), pos];
+                            if (d2.endAngle - d2.startAngle > 0.30){
+                              var mid = midAngle(d2);
+                              if (((mid > 0.0) && (mid < 0.785)) || ((mid > 2.355) && (mid < 3.925)) || (mid > 5.495)){
+                                pos[0] = radius * 0.62 * (midAngle(d2) < Math.PI ? 1 : -1);
+                              }
+                              else{
+                                pos[0] = radius * 0.89 * (midAngle(d2) < Math.PI ? 1 : -1);
+                              }
+                              var arcCentroid = arc.centroid(d2);
+                              var outerCentroid = outerArc.centroid(d2);
+                              return [[arcCentroid[0], arcCentroid[1]], [outerCentroid[0], outerCentroid[1]], pos];
+                            }
+                            else{
+                              return [[0.0,0.0], [0.0,0.0], [0.0,0.0]];
+                            }
                           };      
                         });
                       
