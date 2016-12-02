@@ -6,7 +6,7 @@ import xml.etree.ElementTree
 import sys
 import os
 
-
+# dictionary to easily convert from xml naming scheme to those used for json
 filenames = {
     "a_and_c": "Ant" ,  "all_well": "AWW",
     "as_you": "AYL"  ,  "com_err": "Err" ,
@@ -115,10 +115,6 @@ for play in filenames:
 	print "totalScenes", totalScenes
 	print "totalChars", totalChars
 	characterLines = [[]]*totalChars
-	#print characterLines
-
-	#for character in chars:
-	#for i in range(totalScenes):
 
 	#create directory for each play
 	path = "../static/visualizations/barGraph/tsvDat/"
@@ -127,7 +123,7 @@ for play in filenames:
 		os.mkdir(path + directory, 0755)
 
 	counterForIndex = -1
-	for scene in allCharsLines: #also get index of this and should be good
+	for scene in allCharsLines: #also gets index 
 		counterForIndex += 1
 		for character in chars:
 			#print "character", character
@@ -164,7 +160,7 @@ for play in filenames:
 	# 				characterLines[index] += [whichScene, scene[key]]
 	# 			print "characterLines", characterLines
 
-	print "hopefuly correct", characterLines
+	# print "hopefuly correct", characterLines
 
 	# answer should be: 
 	# [
@@ -174,18 +170,10 @@ for play in filenames:
 	# 	[([1,1], 1)]
 	# ]
 
-	#create all the tsv files for each play:
 
-	# def deleteContent(fileToDelete):
-	# 	fileToDelete.seek(0)
-	# 	fileToDelete.truncate()
+	# this block of code creates all the tsv files for each play
 
-
-
-	print directory
-
-	#print file
-	print "------------------------"
+	# print directory
 
 	#generates files for each character of a play and puts it in folder for that play
 	#characterLines = [['Act1_S1', 2, 'Act2_S1', 1], ['Act1_S2', 4, 'Act2_S2', 3], ['Act1_S3', 6], ['Act1_S1', 1]]
@@ -205,24 +193,5 @@ for play in filenames:
 		newCharFilename = charFilename.upper();
 		f = open("../static/visualizations/barGraph/tsvDat/" + directory + "/" + newCharFilename + ".tsv", 'w+')
 		f.write(tsv)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
