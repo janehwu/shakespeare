@@ -10,10 +10,8 @@ angular
 			link: function(scope, elem, attrs){
 					// Based on which play page we're on, a certain 'play' name is passed into request
 					$.ajax({
-						type : "POST",
-						url : "get_play_content",
-						data: String(scope.play),
-						contentType: 'application/json;charset=UTF-8',
+						dataType: "json",
+						url : "../static/plays/json/" + String(scope.play) + ".json",
 						success: function(data) {
 							var margin = { top: 30, right: 0, bottom: 50, left: 150 },
 							// getting character list from play JSON file
@@ -38,9 +36,7 @@ angular
 							.attr("height", height + margin.top + margin.bottom)
 							.append("g")
 							.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-							// .selectAll("text")
-    			// 				.attr("transform", "rotate(1)")
-    			// 				.style("text-anchor", "start");
+							
 							// Putting labels for each character on the y-axis
 							var characterLabels = svg.selectAll(".characterLabel")
 							.data(characters)
@@ -50,8 +46,10 @@ angular
 							.attr("y", function (d, i) { return i * gridHeight; })
 							.attr("cursor", "pointer")
 							.style("text-anchor", "end")
-							// making character lable clickable so that we can return the name to the character bar graph visualization
+							.style("fill", "rgb(70, 70, 70)")
 							.on('click', function(d) {
+								
+								// when a character is clicked, trigger the barChart to appear
 								$(document).trigger("characterSelected", {"charName": String(d), "playName": scope.play}); })
 							.attr("transform", "translate(-6," + gridHeight + ")")
 
@@ -76,12 +74,6 @@ angular
 							.attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "sceneLabel mono axis axis-scenes" : "sceneLabel mono axis"); });
 							
 							
-							
-								//.attr("class", "text")
-							// svg.selectAll(".sceneLabel")
-							// 	.selectAll("text")
-							// 	.attr("transform", "rotate(-60)");
-
 							var heatmapChart = function(tsvFile) {
 								// Opening TSV file and collecting line densities for each character
 								d3.tsv(tsvFile,

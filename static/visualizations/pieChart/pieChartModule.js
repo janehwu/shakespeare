@@ -11,11 +11,10 @@ angular
                 $(document).on("themeSelected", function (e,data) {
 
                   var theme = String(data.text);
-                  console.log(theme);
 
-                   var width = 600,
+                   var width = 620,
                         height = 400,
-                        radius = Math.min(width, height) / 2;
+                        radius = (height - 70) / 2;
 
                   d3.select(".pieChart").select("svg").remove()
                   var svg = d3.select(".pieChart")
@@ -45,14 +44,6 @@ angular
                   var outerArc = d3.svg.arc()
                     .innerRadius(radius * 0.9)
                     .outerRadius(radius * 0.9);
-					
-//					    var arc = d3.svg.arc()
-//                    .outerRadius(radius )
-//                    .innerRadius(radius * 0.5);
-//
-//                  var outerArc = d3.svg.arc()
-//                    .innerRadius(radius )
-//                    .outerRadius(radius );
 
                   svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
@@ -129,30 +120,79 @@ angular
 							  		if(d.character === char){
 										return d3.hsl(d.color, 1, .5);
 									}
+							  		else if(this.attributes.hasOwnProperty("clicked") &&
+										   this.attributes.clicked.value === "true"){
+										return this.style.fill;
+									}
 							  		else{
 										return d3.hsl(0,0,.69420);
 									}
-						  		});
-//						  		.style("width", function(d){
-//							  		if(d.character === char && d.theme.indexOf(theme) != -1) {
-//										return 10;
-//									}
-//						  		});
-					  		
+						  		});					  		
 					  	})
 					  .on("mouseout", function(dat) {
 						  var char = dat.data.name;
 						  
 						  // change pie chart slice color back to gray
 						  d3.select(".slice." + char.split(" ").join("delim"))
-						  	.style("fill", d3.hsl(0, 0, .69420));
+						  	.style("fill", function(d) {
+							  	if(this.attributes.hasOwnProperty("clicked") &&
+								 	this.attributes.clicked.value === "true"){
+								  	return this.style.fill;
+							  	}
+							  	return d3.hsl(0, 0, .69420);
+						  });
 						  
 						  d3.select(".focus").style("display", "none");
 						  
 						  // change themeBars' color back to gray
 						  d3.selectAll(".themeBar")
-						  	.style("fill", d3.hsl(0, 0, .69420));
+						  	.style("fill", function(d) {
+							  	if(this.attributes.hasOwnProperty("clicked") &&
+								 	this.attributes.clicked.value === "true"){
+								  	return this.style.fill;
+							  	}
+							  	return d3.hsl(0, 0, .69420);
+						  });
 						  
+					  })
+					  .on("click", function(dat) {
+						  
+						  var char = dat.data.name;
+						  
+						  // Change color of pie chart slice
+						  d3.select(".slice." + char.split(" ").join("delim"))
+						  	.style("fill", d3.hsl( parseInt(dat.data.color), 1, .5))
+						  	.attr("clicked", function(d) {
+							  if (this.attributes.hasOwnProperty("clicked") &&
+								  this.attributes.clicked.value === "true"){return "false";}
+							  return "true";
+						  });
+						  
+						  // change color of all themeGraph bars with the same character
+						  d3.selectAll(".themeBar")
+						  		.attr("clicked", function(d) {
+							  		if (this.attributes.hasOwnProperty("clicked") &&
+								  		this.attributes.clicked.value === "true" &&
+								  		d.character === char){return "false";}
+							  		else if(d.character === char){ return "true";}
+							  		else if (this.attributes.hasOwnProperty("clicked") &&
+								  		this.attributes.clicked.value === "true") {return "true";}
+							  		else if (this.attributes.hasOwnProperty("clicked") &&
+								  		this.attributes.clicked.value === "false") {return "false";}
+							  		return "";
+								 })
+						  		.style("fill", function(d){
+							  		if(d.character === char){
+										return d3.hsl(d.color, 1, .5);
+									}
+							  		else if(this.attributes.hasOwnProperty("clicked") &&
+										   this.attributes.clicked.value === "true"){
+										return this.style.fill;
+									}
+							  		else{
+										return d3.hsl(0,0,.69420);
+									}
+						  		});
 					  });
 
                       slice   
@@ -178,12 +218,12 @@ angular
                         .append("text")
                         .attr("dy", ".35em")
                         .text(function(d) {
-                          // console.log(d.data.name);
-                          return d.data.name;
+                          if (d.endAngle - d.startAngle > 0.30){
+                            return d.data.name;
+                          }
                         });
                       
                       function midAngle(d){
-                        // console.log(d.startAngle + (d.endAngle - d.startAngle)/2);
                         return d.startAngle + (d.endAngle - d.startAngle)/2;
                       }
 
@@ -195,7 +235,13 @@ angular
                           return function(t) {
                             var d2 = interpolate(t);
                             var pos = outerArc.centroid(d2);
-                            pos[0] = radius * (midAngle(d2) < Math.PI ? 1 : -1);
+                            var mid = midAngle(d2);
+                            if ( ((mid > 0.0) && (mid < 0.785)) || ((mid > 2.355) && (mid < 3.925)) || (mid > 5.495) ){
+                                pos[0] = radius * 0.63 * (midAngle(d2) < Math.PI ? 1 : -1);
+                              }
+                            else{
+                                pos[0] = radius * 0.90 * (midAngle(d2) < Math.PI ? 1 : -1);
+                              }
                             return "translate("+ pos +")";
                           };
                         })
@@ -224,7 +270,7 @@ angular
                           .attr("stroke-width", 2)
                           .attr("fill", "none");
 
-                      polyline.transition().duration(1000)
+                      polyline.transition().duration(10)
                         .attrTween("points", function(d){
                           this._current = this._current || d;
                           var interpolate = d3.interpolate(this._current, d);
@@ -232,8 +278,21 @@ angular
                           return function(t) {
                             var d2 = interpolate(t);
                             var pos = outerArc.centroid(d2);
-                            pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
-                            return [arc.centroid(d2), outerArc.centroid(d2), pos];
+                            if (d2.endAngle - d2.startAngle > 0.30){
+                              var mid = midAngle(d2);
+                              if (((mid > 0.0) && (mid < 0.785)) || ((mid > 2.355) && (mid < 3.925)) || (mid > 5.495)){
+                                pos[0] = radius * 0.62 * (midAngle(d2) < Math.PI ? 1 : -1);
+                              }
+                              else{
+                                pos[0] = radius * 0.89 * (midAngle(d2) < Math.PI ? 1 : -1);
+                              }
+                              var arcCentroid = arc.centroid(d2);
+                              var outerCentroid = outerArc.centroid(d2);
+                              return [[arcCentroid[0], arcCentroid[1]], [outerCentroid[0], outerCentroid[1]], pos];
+                            }
+                            else{
+                              return [[0.0,0.0], [0.0,0.0], [0.0,0.0]];
+                            }
                           };      
                         });
                       
