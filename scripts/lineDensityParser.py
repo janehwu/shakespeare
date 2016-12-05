@@ -84,21 +84,27 @@ for play in filenames:
 			for speech in scene.iter("SPEECH"):
 				for speaker in speech.iter("SPEAKER"):
 
-					if speaker.text not in chars:
-						chars += [speaker.text]
+					if speaker.text.replace(" ", "") not in chars:
+						chars += [speaker.text.replace(" ", "")]
 					lineCount = 0
 					for line in speech.iter("LINE"):
+                        # lineCount += 1
+                        # if (speaker.text in sceneLines):
+                        #     sceneLines[speaker.text] += (lineCount+1)/2
+                        # else:
+                        #     sceneLines[speaker.text] = (lineCount+1)/2 
+                        # lineCount = 0
+
 						lineCount += 1
-						if (speaker.text in sceneLines):
-							sceneLines[speaker.text] += (lineCount+1)/2
-						else:
-							sceneLines[speaker.text] = (lineCount+1)/2 
-						lineCount = 0
+					if (speaker.text.replace(" ", "") in sceneLines):
+						sceneLines[speaker.text.replace(" ", "")] += lineCount
+					else:
+						sceneLines[speaker.text.replace(" ", "")] = lineCount
 			#print "sceneLines with scene: ", sceneCount, sceneLines
 			allCharsLines += [sceneLines]
 			sceneCount += 1
 
-		
+		print allCharsLines
 
 	#print "sceneLines: ", sceneLines
 	#print "playFormat: ", playFormat
@@ -121,7 +127,7 @@ for play in filenames:
 	#for i in range(totalScenes):
 
 	#create directory for each play
-	path = "../static/visualizations/barGraph/tsvDat/"
+	path = "../static/visualizations/barGraph/OurtsvDat/"
 
 	if not os.path.isdir(path + directory):
 		os.mkdir(path + directory, 0755)
@@ -135,7 +141,14 @@ for play in filenames:
 			whichScene = "" + roman[str(playFormat[counterForIndex][0])] + "." + str(playFormat[counterForIndex][1])
 			index = chars.index(character)
 			#print "index", index
+			print character
+			print scene
+			print characterLines[index]
+			print index
+			print whichScene
+			
 			if character in scene:
+				print scene[character]
 				if characterLines[index] == []:
 					characterLines[index] = [whichScene, scene[character]]
 				else:
@@ -197,13 +210,18 @@ for play in filenames:
 		tsv += "\n"
 		for i in range(0, len(characterLines[numLines]) - 1, 2):
 			print i
+			print chars[numLines]
+			print characterLines[numLines][i]
+			print characterLines[numLines][i+1]
 			tsv += str(characterLines[numLines][i])
 			tsv += "\t" + str(characterLines[numLines][i+1])
 			tsv += "\n"
 		print "character: ", numLines, "lines: ", tsv
-		charFilename = chars[numLines].replace(" ", "")
+		charFilename = chars[numLines].replace(" ", "delim")
 		newCharFilename = charFilename.upper();
-		f = open("../static/visualizations/barGraph/tsvDat/" + directory + "/" + newCharFilename + ".tsv", 'w+')
+		print newCharFilename
+		print tsv
+		f = open("../static/visualizations/barGraph/OurtsvDat/" + directory + "/" + newCharFilename + ".tsv", 'w+')
 		f.write(tsv)
 
 

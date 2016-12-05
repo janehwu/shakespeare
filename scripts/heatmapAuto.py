@@ -1,158 +1,255 @@
-# lineDensities is a list of Acts
-# Each index in lineDensities is a list of scenes
-# Each scene contains a dictionary of (character : # lines)
-symbols = [".", ",", '"', "'", ";"]
+#created by Srinidhi Srinivasan
+#Line Density Parser that reads in XML files of the plays and gathers info
+# in a 2D array holding how many lines a character speaks per scene. 
 
-def getLineData(fileName):
-	""" Parses text file version of a play. Files are organized with repeating structure:
-		ACT 1
-		=====
-
-		Scene 1
-		=======
-
-		BARNARDO  Who's there?
-
-	This function uses this structure to record number of lines for each character in each act/scene.
-	Returns structure with line counts for each character in each act/scene. """
-
-	lineDensities = []
-	f = open(fileName, 'r')
-	scene = -1
-	act = -1
-	character = ""
-	for line in f:
-		wordL = line.split()
-		# Read in empty line
-		if wordL == []:
-			continue
-		# If new Act or Induction, have to create new entries in lineDensities
-		elif wordL[0] == "ACT" or wordL[0] == "INDUCTION":
-			character = ""
-			act += 1
-			scene = -1
-			lineDensities += [[]]
-		# If new Scene, have to create new entries within current Act/Induction in lineDensities
-		elif wordL[0] == "Scene":
-			character = ""
-			scene += 1
-			lineDensities[act] += [{}]
-		# Detecting words that are completely capitalized because this indicates a switch in who's speaking
-		elif wordL[0].isupper() and act >= 0 and scene >= 0 and len(wordL[0]) > 2 and (wordL[0][0] not in symbols) and (wordL[0][-1] not in symbols):
-			character = wordL[0]
-			# Ignoring punctuation following name of character speaking
-			if character[-1] == ",":
-				character = character[:-1]
-			characterLen = 1
-			# Taking into account characters with multi word names
-			for word in wordL[1:]:
-				if word.isupper() and len(word) > 2 and ("." not in word):
-					if word[-1] == ",":
-						word = word[:-1]
-					character += (" " + word)
-					characterLen += 1
-				else:
-					break
-			# Taking into account when two characters speak at the same time
-			if "AND" in character:
-				split = character.split()
-				for word in split:
-					if word != "AND":						
-						lineDensities = newCharacter(act, scene, lineDensities, word, wordL)
-			elif "/" in character:
-				split = character.split("/")
-				for word in split:						
-					lineDensities = newCharacter(act, scene, lineDensities, word, wordL)
-			# Normal situation in which a single character begins new dialogue
-			else:
-				lineDensities = newCharacter(act, scene, lineDensities, word, wordL)
-		elif character == "":
-			continue
-		# If we don't have a switch in dialogue, we add 1 to the line count of the current character(s) who's speaking
-		elif len(wordL[0]) > 1 and (wordL[0][0].isupper() or wordL[0][1].isupper()):
-			if "AND" in character:
-				split = character.split()
-				for word in split:
-					if word != "AND":
-						lineDensities[act][scene][word] += 1
-			elif "/" in character:
-				split = character.split("/")
-				for word in split:
-					lineDensities[act][scene][word] += 1
-			else:
-				lineDensities[act][scene][character] += 1
-		else:
-			continue
-	return lineDensities
-
-def newCharacter(act, scene, lineDensities, word, wordL):
-	""" Adding new character entry in lineDensities data structure when character speaks first time
-	in new scene of an act. """
-	# No dialogue on same line as character heading
-	if word not in lineDensities[act][scene]:
-		lineDensities[act][scene][word] = 0
-	# Dialogue on same line as character heading
-	if len(wordL) > characterLen:
-		lineDensities[act][scene][word] += 1
-	return lineDensities
-
-def characterList(lineDensities):
-	""" Creates list of all characters who speak in the play in order or appearance """
-	characters = []
-	for act in lineDensities:
-		for scene in act:
-			for character in scene:
-				if character not in characters:
-					characters += [character]
-	return characters
-
-def sceneList(lineDensities):
-	""" Creates list of all acts/scenes in a play """
-	sceneL = []
-	roman = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"]
-	for i in range(len(lineDensities)):
-		for j in range(len(lineDensities[i])):
-			sceneL += [roman[i] + "." + str(j + 1)]
-	strSceneList = str(sceneL)
-	newList = ""
-	for character in strSceneList:
-		if character == "'":
-			newList += '"'
-		else:
-			newList += character
-	return newList
-
-def formatCharacterList(characterList):
-	""" Replacing single quote chars with double quote chars for purpose of creating JSON objects """
-	strCharacterList = str(characterList)
-	newList = ""
-	for character in strCharacterList:
-		if character == "'":
-			newList += '"'
-		else:
-			newList += character
-	return newList
+import xml.etree.ElementTree
+import sys
+import os
+import math
 
 
-#character	scene	value
-def makeTSV(lineDensities, characterList):
-	""" Creating TSV file that creates rows organized by (character, scene, # of lines).
-	File used to generate Heatmap for a specific play. """
-	f = open("Ham.tsv", 'w')
-	f.write("character	scene	value\n")
-	sceneNum = 0
-	for act in lineDensities:
-		for scene in act:
-			sceneNum += 1
-			for character in scene:
-				characterNum = characterList.index(character) + 1
-				lines = scene[character]
-				f.write(str(characterNum) + "	" + str(sceneNum) + "	" + str(lines) + "\n")
+filenames = {
+    "a_and_c": "Ant" ,  "all_well": "AWW",
+    "as_you": "AYL"  ,  "com_err": "Err" ,
+    "coriolan": "Cor",  "cymbelin": "Cym",
+    "dream": "MND"   ,  "hamlet": "Ham"  ,
+    "hen_iv_1": "H41",  "hen_iv_2": "H42",
+    "hen_v": "H5"    ,  "hen_vi_1": "H61",
+    "hen_vi_2": "H62",  "hen_vi_3": "H63",
+    "hen_viii": "H8" ,  "j_caesar": "JC" ,
+    "john":"Jn"      ,  "lear": "Lr"     , 
+    "lll": "LLL"     ,  "m_for_m": "MM"  , 
+    "m_wives": "Wiv" ,  "macbeth": "Mac" ,
+    "merchant": "MV" ,  "much_ado": "Ado" ,
+    "othello": "Oth" ,  "pericles": "Per",
+    "r_and_j": "Rom" ,  "rich_ii": "R2"  ,
+    "rich_iii": "R3" ,  "t_night": "TN"  ,
+    "taming": "Shr"  ,  "tempest": "Tmp" ,
+    "timon": "Tim"   ,  "titus": "Tit"   ,
+    "troilus": "Tro" ,  "two_gent": "TGV",
+    "win_tale": "WT"
+}
 
-	f.close()
+roman = {
+    "1": "I",
+    "2": "II", 
+    "3": "III", 
+    "4": "IV", 
+    "5": "V", 
+    "6": "VI", 
+    "7": "VII", 
+    "8": "VIII", 
+    "9": "IX", 
+    "10": "X"
 
-lineDensities = getLineData("Ham.txt")
-characterList = characterList(lineDensities)
-print formatCharacterList(characterList)
-print sceneList(lineDensities)
-makeTSV(lineDensities, characterList)
+}
+
+
+
+directory = ""
+for play in filenames:
+    relpath = "../xml/" + play + ".xml"
+    filename = os.path.join(os.path.dirname(__file__), relpath)
+    print "filename", filename
+    slashIndex = filename.index("/")
+    filenameNew = filename[slashIndex + 1:]
+    slashIndex2 = filenameNew.index("/")
+    extensionIndex = filenameNew.index(".xml")
+    filenameNew2 = filenameNew[slashIndex2 + 1: extensionIndex]
+    print "filenameNew2", filenameNew2
+    directory = filenames[filenameNew2]
+
+
+    e = xml.etree.ElementTree.parse(filename).getroot()
+
+    #chars: list of all characters;
+    #sceneChars: 2d list of characters: 2d list of character per scene. 
+
+    #what i want is a 2d array where the rows are all the characters and the
+    #columns are tuples with the scene number and the number of lines. 
+
+    chars = []
+    actCount = 0;
+    playFormat = []
+    charsInScene = {} #dictionary
+    allCharsLines = []
+    index = 0
+
+
+    for act in e.iter("ACT"):
+        actCount += 1
+        sceneCount = 1
+        for scene in act.iter("SCENE"):
+            sceneLines = {}
+            playFormat += [[actCount, sceneCount]]
+            for speech in scene.iter("SPEECH"):
+                for speaker in speech.iter("SPEAKER"):
+
+                    if speaker.text.replace(" ", "") not in chars:
+                        chars += [speaker.text.replace(" ", "")]
+                    lineCount = 0
+                    for line in speech.iter("LINE"):
+                        # lineCount += 1
+                        # if (speaker.text in sceneLines):
+                        #     sceneLines[speaker.text] += (lineCount+1)/2
+                        # else:
+                        #     sceneLines[speaker.text] = (lineCount+1)/2 
+                        # lineCount = 0
+
+                        lineCount += 1
+                    if (speaker.text.replace(" ", "") in sceneLines):
+                        sceneLines[speaker.text.replace(" ", "")] += lineCount
+                    else:
+                        sceneLines[speaker.text.replace(" ", "")] = lineCount
+            #print "sceneLines with scene: ", sceneCount, sceneLines
+            allCharsLines += [sceneLines]
+            sceneCount += 1
+
+    # print allCharsLines
+
+        
+
+    # print "sceneLines: ", sceneLines
+    # print "playFormat: ", playFormat
+    # print "allCharsLines: ", allCharsLines
+    # print "characters: ", chars
+
+    # actAndScene = [[1, 1], [1, 2], [1, 3], [2, 1], [2, 2]]
+    # characters = [{'First Witch': 2, 'Fifth Witch': 1}, {'Second Witch': 4}, {'Third Witch': 6}, {'First Witch': 1}, {'Second Witch': 3}]
+    # chars = ['First Witch', 'Second Witch', 'Third Witch', 'Fifth Witch']
+    #want to be in format: character = [("Act1_S1", # of lines), ("Act1_S2", # of lines)]
+
+    output = "character\tscene\tvalue\n"
+    sceneNum = 0
+    for sceneData in allCharsLines:
+        sceneNum += 1
+        totalLines = 0
+        for lineNum in sceneData.values():
+            totalLines += lineNum
+        for character in sceneData:
+            charNum = chars.index(character) + 1
+            charVal = math.ceil(sceneData[character]*100.0/totalLines)
+            output += str(charNum) + "\t" + str(sceneNum) + "\t" + str(charVal) + "\n"
+
+    # print output
+
+    charOutput = ""
+    for char in chars:
+        charOutput += char.upper() + ", "
+
+    print charOutput
+            
+    
+    # totalScenes = len(playFormat)
+    # totalChars = len(chars)
+    # print "totalScenes", totalScenes
+    # print "totalChars", totalChars
+    # characterLines = [[]]*totalChars
+    # #print characterLines
+
+    # #for character in chars:
+    # #for i in range(totalScenes):
+
+    #create directory for each play
+    path = "../static/visualizations/heatMap/OurtsvDat/"
+
+    if not os.path.isdir(path + directory):
+        os.mkdir(path + directory, 0755)
+
+    # counterForIndex = -1
+    # for scene in allCharsLines: #also get index of this and should be good
+    #     counterForIndex += 1
+    #     for character in chars:
+    #         #print "character", character
+    #         #print "actAndScene", playFormat[counterForIndex]
+    #         whichScene = "" + roman[str(playFormat[counterForIndex][0])] + "." + str(playFormat[counterForIndex][1])
+    #         index = chars.index(character)
+    #         #print "index", index
+    #         if character in scene:
+    #             if characterLines[index] == []:
+    #                 characterLines[index] = [whichScene, scene[character]]
+    #             else:
+    #                 characterLines[index] += [whichScene, scene[character]]
+    #         else :
+    #             if characterLines[index] == []:
+    #                 characterLines[index] = [whichScene, 0]
+    #             else:
+    #                 characterLines[index] += [whichScene, 0]
+            #print "characterLines", characterLines
+        #counterForIndex += 1
+
+    # counterForIndex = -1
+    # for scene in allCharsLines: #also get index of this and should be good
+    #   counterForIndex += 1
+    #   for key in scene:
+    #       print "key", key
+    #       if key in scene:
+    #           print "actAndScene", playFormat[counterForIndex]
+    #           whichScene = "Act" + str(playFormat[counterForIndex][0]) + "_S" + str(playFormat[counterForIndex][1])
+    #           index = chars.index(key)
+    #           print "index", index
+    #           if characterLines[index] == []:
+    #               characterLines[index] = [whichScene, scene[key]]
+    #           else:
+    #               characterLines[index] += [whichScene, scene[key]]
+    #           print "characterLines", characterLines
+
+    # print "hopefuly correct", characterLines
+
+    # answer should be: 
+    # [
+    #   [([1,1], 2), ([2,1], 1)],
+    #   [([1,2], 4), ([2,2], 3)],
+    #   [([1,3], 6)], 
+    #   [([1,1], 1)]
+    # ]
+
+    #create all the tsv files for each play:
+
+    # def deleteContent(fileToDelete):
+    #   fileToDelete.seek(0)
+    #   fileToDelete.truncate()
+
+
+
+    print directory
+
+    #print file
+    print "------------------------"
+
+    #generates files for each character of a play and puts it in folder for that play
+    #characterLines = [['Act1_S1', 2, 'Act2_S1', 1], ['Act1_S2', 4, 'Act2_S2', 3], ['Act1_S3', 6], ['Act1_S1', 1]]
+    #chars = ['First Witch', 'Second Witch', 'Third Witch', 'Fifth Witch']
+    # for numLines in range(len(characterLines)):
+    #     tsv = ""
+    #     print "numLines", numLines
+    #     tsv += "scene" + "\t" + "numLines"
+    #     tsv += "\n"
+    #     for i in range(0, len(characterLines[numLines]) - 1, 2):
+    #         print i
+    #         tsv += str(characterLines[numLines][i])
+    #         tsv += "\t" + str(characterLines[numLines][i+1])
+    #         tsv += "\n"
+    #     print "character: ", numLines, "lines: ", tsv
+    #     charFilename = chars[numLines].replace(" ", "")
+    #     newCharFilename = charFilename.upper();
+        
+    f = open("../static/visualizations/heatMap/OurtsvDat/" + directory + ".tsv", 'w+')
+    f.write(output)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
