@@ -65,7 +65,7 @@ for play in filenames:
 	print charColorMap
 	# Common Shakespeare words
 	shakespeareStopWords = []
-	with open("./scripts/wordCloud/stopwords.txt") as f:
+	with open("wordCloud/stopwords.txt") as f:
 	    shakespeareStopWords = f.readlines()
 	for i in range(len(shakespeareStopWords)):
 		shakespeareStopWords[i] = shakespeareStopWords[i].strip("\n")
@@ -76,7 +76,14 @@ for play in filenames:
 			for line in speech.iter("LINE"):
 				if not line.text:
 					continue
-				words = [word.lower().replace(",","").replace(".","").replace("?","").replace("!","").replace("--","").replace("'s","")
+				words = [word.lower().replace(",","")
+					.replace(".","")
+					.replace("?","")
+					.replace("!","")
+					.replace("--","")
+					.replace("'s","")
+					.replace(";","")
+					.replace(":","")
 					for word in line.text.split()]
 				for word in words:
 					if (word not in stopwords.words('english')) and (word not in shakespeareStopWords):

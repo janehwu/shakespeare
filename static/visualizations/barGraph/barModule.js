@@ -9,8 +9,9 @@ angular
 			},
 
 				link: function(scope, elem, attrs) {
-					$(document).on("characterSelected", function(e, data) {		
-						
+					//if the character name is clicked on in the heat map visualization
+					// then we can make a bar graph appear or disappear depending. 
+					$(document).on("characterSelected", function(e, data) {
 						d3.select("." + data.charName.split(" ").join("delim"))
 							.style("fill", function(d){
 								if(this.style.fill === "rgb(70, 70, 70)"){
@@ -19,6 +20,21 @@ angular
 								else {
 									return "rgb(70, 70, 70)";
 								}
+						// console.log("last letter of charactername:" + characterName.charAt(characterName.length -1));
+						// var fileList = [];
+						// if (characterName.charAt(characterName.length -1) == 'S') {
+						// 	var files = fs.readdirSync(path);
+						// 	console.log("list of files: " + files);
+						// 	for (var characterFile in files) {
+						// 		var searchName = characterName.substr(0, characterName.length - 2);
+						// 		if (characterFile.indexOf(searchName) !== -1) {
+						// 			fileList.push(characterFile);
+						// 		}
+						// 	}
+						// 	console.log("fileList: " + fileList);
+						// 	});
+						// }
+						// console.log("characterName: " + characterName);
 							})
 							.style("font-weight", function(d){
 									if(this.style.fontWeight === "bolder"){
@@ -40,6 +56,8 @@ angular
 						var margin = {top: 20, right: 0, bottom: 100, left: 60},
 							width = 1100 - margin.left - margin.right, 
 							height = 300 - margin.top - margin.bottom;
+						// console.log("test: " + d3.select(".barChart"+ characterName)[0]);
+						// console.log("test2: " + d3.select(".barChart"+ characterName)[0][0]);
 
 						if(d3.select(".barChart" + characterName)[0][0] !== null) {
 							d3.select(".barChart" + characterName).remove();

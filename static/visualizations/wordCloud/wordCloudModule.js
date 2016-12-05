@@ -34,7 +34,7 @@ angular
                             var color = d3.scale.ordinal().range(["#66c2a5","#fc8d62","#8da0cb","#e78ac3","#a6d854"]);
                             var sizeScale = d3.scale.linear()
                             .domain([min, max])
-                            .range([20,60]);
+                            .range([min,max]);
 
                             d3.layout.cloud().size([width, height])
                                 .words(frequency_list)
