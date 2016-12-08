@@ -14,7 +14,7 @@ angular
                     // Currently hard coded for Hamlet until JSON files fixed.
                     $.ajax({
                         dataType : "json",
-                        url : "../static/visualizations/wordCloud/json/" + String(fileName) + ".json",
+                        url : "./static/visualizations/wordCloud/json/" + String(fileName) + ".json",
                         success: function(data) {
                             frequency_list = data;
 
