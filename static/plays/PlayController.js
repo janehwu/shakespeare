@@ -35,7 +35,7 @@
       // Currently hard coded for Hamlet until JSON files fixed.
       $.ajax({
       dataType : "json",
-      url : "../static/plays/json/" + String(fileName) + ".json",
+      url : "./static/plays/json/" + String(fileName) + ".json",
       //data: String(fileName),
       //contentType: 'application/json;charset=UTF-8',
       success: function(data) {
