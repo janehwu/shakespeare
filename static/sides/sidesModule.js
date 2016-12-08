@@ -10,7 +10,7 @@ angular
   				characters: "=",
   				scenes: "="
   			},
-         	templateUrl: '../static/sides/sides.html',
+         	templateUrl: './static/sides/sides.html',
          	bindToController: true
 		};
 	});
