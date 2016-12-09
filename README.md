@@ -10,9 +10,18 @@ Our website uses the following components:
 - HTML
 - CSS
 - AngularJS 1 as an MVC framework
+- Javascript
 - D3 for visualizations
 
+## Data Storage/File Structure
+
+## Python Scripts/XML
+
+##
 
 ## Running Server
 
+To develop with our website, you should first clone the repository and then you must run a simple Python server with the following command:
+```
 $ python -m SimpleHTTPServer
+```
