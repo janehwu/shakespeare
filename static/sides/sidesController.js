@@ -10,15 +10,19 @@
   function SidesController($scope) {
     var self = this;
 
+    self.dispChars = self.characters;
     self.dispScenes = self.scenes;
+
+    self.charText = "CHARACTER";
+    self.sceneText = "ACT/SCENE";
 
     self.lines = [];
     self.prev = [];
     self.prevChars = [];
     self.indexes = [];
 
-    self.character = "";
-    self.scene = "";
+    self.character;
+    self.scene;
     self.hasLines = false;
     self.showError = false;
     self.showNames = false;
@@ -48,14 +52,25 @@
 
     self.selectChar = function(character) { 
       self.character = character;
-      self.filterOptions();
+      self.filterScenes();
+      self.charText = character;
+      if(self.character != null && self.scene != null) {
+        self.getData();
+        self.dispScenes = self.scenes;
+      }
     }
     self.selectScene = function(scene) { 
       self.scene = scene;
+      self.filterChars();
+      self.sceneText = scene;
+      if(self.character != null && self.scene != null) {
+        self.getData();
+        self.dispScenes = self.scenes;
+      }
     }
 
-    self.filterOptions = function() {
-      if(self.character == '') return;
+    self.filterScenes = function() {
+      if(self.character == null) return;
       var character = self.character.replace(/\s+/g, '');
       self.dispScenes = [];
       jQuery.get('./static/visualizations/barGraph/tsvDat/' + self.file + '/' + character + '.tsv', function(data) {
@@ -69,6 +84,26 @@
           }
         });
         self.dispScenes = charScenes;
+        $scope.$apply();
+      });
+    }
+
+    self.filterChars = function() {
+      var filteredCharList = [];
+      if(self.scene == null) return;
+      jQuery.get('./static/visualizations/heatMap/heatmapTSV/' + self.file + '.tsv', function(data) {
+        var sceneChars = [];
+        var cells = data.split("\n");
+
+        cells.shift();
+        cells.forEach(function(cell) {
+          var thisCell = cell.split("\t");
+          if(thisCell[1] == self.scenes.indexOf(self.scene) + 1) { //This is the scene
+            filteredCharList.push(self.characters[parseInt(thisCell[0],10) + 1]);
+          }
+        });
+
+        self.dispChars = filteredCharList;
         $scope.$apply();
       });
     }
@@ -118,7 +153,7 @@
                         if(element.tagName == 'SPEECH') {
                           var elemChildren = Array.prototype.slice.call(element.children); //This CHARACTER
                           var speaker = elemChildren[0].textContent;
-                          if(speaker == self.character) { //Each speech, need to get all lines + prev
+                          if(speaker.toUpperCase() == self.character) { //Each speech, need to get all lines + prev
                             var lines = [];
                             var prev_lines = [];
 

@@ -3,10 +3,10 @@
     <div class="row sides-menu">
       <md-menu>
        <md-button class="md-raised md-cornered" ng-click="$mdOpenMenu($event)" aria-label="Open sample menu">
-         Character
+        {{ctrl.charText}}
        </md-button>
        <md-menu-content>
-         <md-menu-item ng-repeat="item in ctrl.characters">
+         <md-menu-item ng-repeat="item in ctrl.dispChars">
           <md-button ng-click="ctrl.selectChar(item)">{{item}}</md-button>
         </md-menu-item>
        </md-menu-content>
@@ -14,7 +14,7 @@
       
       <md-menu>
        <md-button class="md-raised md-cornered" ng-click="$mdOpenMenu($event)" aria-label="Open sample menu">
-         Act/Scene
+         {{ctrl.sceneText}}
        </md-button>
        <md-menu-content>
          <md-menu-item ng-repeat="item in ctrl.dispScenes">
@@ -23,13 +23,12 @@
        </md-menu-content>
       </md-menu>
       
-    <md-button class="md-raised md-cornered" ng-click="ctrl.getData()">Generate Sides</md-button>
+    <!--md-button class="md-raised md-cornered" ng-click="ctrl.getData()">Generate Sides</md-button-->
     <md-checkbox ng-model="ctrl.showNames" aria-label="Show previous character">
             Show previous characters' names
           </md-checkbox>
     </div>
     <div class="row sides" style="margin:8px 0 16px 0">
-      <span>{{ctrl.character}} {{ctrl.scene}}</span>
     </div>
     <md-content>
       <div ng-show="ctrl.showError">This character does not have any lines in the selected scene.</div>
