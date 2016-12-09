@@ -30,7 +30,28 @@
 	  <div style="text-align: center;" ng-show="ctrl.selected == 'Themes'" class="pieChart" ng-controller="PlayController"></div>
   	<div style="text-align: center" ng-show="ctrl.selected == 'Themes'" class="themeGraph" ng-controller="PlayController"></div>
 
-    
+    <pre ng-show="ctrl.selected == 'Reader'">  Shakespeare is hard to visualize, so
+	   We are making it easier to read
+	   From the main page, just click a play and go
+	   Our app will give you all you'll ever need
+
+	   HTML, javascript, CSS
+	   We used Angular, MVC, D3
+	   Modular code was our key to success
+	   XML plus python makes csv
+
+	   Pie chart, heatmap, theme graph, bar graph, and sides
+	   Don't forget about that other speak chord
+	   Find themes, who says them, and where they reside
+	   Compare character's lines, you won't be bored
+
+	   So if you like plays, pretty graphs, or blue
+	   Come check out our web app, Prof. Ben said woo
+	</pre>
+
+	
+	  <img src="./static/jane shakespeare.JPG" ng-show="ctrl.selected == 'Reader'">
+	  
 
     <bar-chart ng-show="ctrl.selected == 'Characters'"></bar-chart>
     <speak-chord ng-show="ctrl.selected == 'Visualizations'"play="file"></speak-chord>
