@@ -50,13 +50,27 @@
       "WT": "win_tale"
     };
 
+    self.clearData = function() {
+      self.charText = "CHARACTER";
+      self.sceneText = "ACT/SCENE";
+      self.character = null;
+      self.scene = null;
+      self.dispChars = self.characters;
+      self.dispScenes = self.scenes;
+      self.lines = [];
+      self.prev = [];
+      self.prevChars = [];
+      self.hasLines = false;
+      self.showError = false;
+      self.showNames = false;
+    }
+
     self.selectChar = function(character) { 
       self.character = character;
       self.filterScenes();
       self.charText = character;
       if(self.character != null && self.scene != null) {
         self.getData();
-        self.dispScenes = self.scenes;
       }
     }
     self.selectScene = function(scene) { 
@@ -65,7 +79,6 @@
       self.sceneText = scene;
       if(self.character != null && self.scene != null) {
         self.getData();
-        self.dispScenes = self.scenes;
       }
     }
 
@@ -99,7 +112,7 @@
         cells.forEach(function(cell) {
           var thisCell = cell.split("\t");
           if(thisCell[1] == self.scenes.indexOf(self.scene) + 1) { //This is the scene
-            filteredCharList.push(self.characters[parseInt(thisCell[0],10) + 1]);
+            filteredCharList.push(self.characters[parseInt(thisCell[0],10) - 1]);
           }
         });
 
