@@ -5,6 +5,14 @@ Shakespeare’s works have been performed and analyzed for centuries, yet truly 
 ## Authors
 Anthony Romm, Srinidhi Srinivasan, Alex Trudeau, Jane Wu
 
+## Run Time Components
+Our website uses the following components:
+- HTML
+- CSS
+- AngularJS 1 as an MVC framework
+- D3 for visualizations
+
+
 ## Running Server
 
 $ python -m SimpleHTTPServer
