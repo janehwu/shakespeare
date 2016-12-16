@@ -16,6 +16,7 @@ Our website uses the following components:
 ## Data Storage/File Structure
 
 ## Python Scripts/XML
+Our visualizations are created by parsing Shakespeare's texts. Specifically, we use Python scripts and Shakespeare plays in XML format, found [here](https://www.ibiblio.org/xml/examples/shakespeare/), to create the backend data for our various visualizations. These can be represented in `JSON`, `CSV`, or `TSV` files depending on the needs of the specific visualization.
 
 ##
 
@@ -25,3 +26,4 @@ To develop with our website, you should first clone the repository and then you 
 ```
 $ python -m SimpleHTTPServer
 ```
+
